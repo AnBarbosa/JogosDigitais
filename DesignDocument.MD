@@ -1,4 +1,4 @@
-# <NOME A DEFINIR>
+# NOME A DEFINIR
 ## Game Design Document
 
 Copyright notice / author information / boring legal stuff nobody likes
