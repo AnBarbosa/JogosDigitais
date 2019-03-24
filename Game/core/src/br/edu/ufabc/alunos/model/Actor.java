@@ -6,7 +6,8 @@ public class Actor {
 
 	private int x;
 	private int y;
-	private TileMap map;
+	protected TileMap map;
+	
 	
 	public Actor(TileMap map, int x, int y) {
 		super();
@@ -14,6 +15,16 @@ public class Actor {
 		this.y = y;
 		this.map = map;
 		map.putActorAt(this, x, y);
+		
+		
+	}
+	
+	public float getWorldX() {
+		return x;
+	}
+	
+	public float getWorldY() {
+		return x;
 	}
 	
 	public int getX() {
@@ -56,6 +67,11 @@ public class Actor {
 
 	public void setMap(TileMap map) {
 		this.map = map;
+		
+	}
+
+	public void update(float delta) {
+		// TODO Auto-generated method stub
 		
 	}
 	

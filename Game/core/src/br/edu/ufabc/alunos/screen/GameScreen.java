@@ -9,6 +9,7 @@ import br.edu.ufabc.alunos.controllers.PlayerController;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.core.Settings;
 import br.edu.ufabc.alunos.model.Actor;
+import br.edu.ufabc.alunos.model.AnimatedActor;
 import br.edu.ufabc.alunos.model.Camera;
 import br.edu.ufabc.alunos.model.TileMap;
 import br.edu.ufabc.alunos.util.Log;
@@ -34,14 +35,13 @@ public class GameScreen extends AbstractScreen {
 		grass[1] = new Texture(Gdx.files.internal("Tile/32x32/grass2.png"));
 		
 		map = new TileMap(10,10);
-		player = new Actor(map, 0,0);
+		player = new AnimatedActor(map, 0,0);
 		controller = new PlayerController(player);
 		camera = new Camera();
 
 	}
 
-	@Override
-	public void render(float delta) {
+	private void getInputs() {
 
 		if(Gdx.input.isKeyJustPressed(Keys.Q)){
 			Gdx.app.exit();		
@@ -92,8 +92,12 @@ public class GameScreen extends AbstractScreen {
 			Log.debug = false;
 		}
 		
-		
-		camera.update(player.getX()+0.5f, player.getY()+0.5f);
+	}
+	@Override
+	public void render(float delta) {
+		this.getInputs();
+		player.update(delta);
+		camera.update(player.getWorldX()+0.5f, player.getWorldY()+0.5f);
 		
 		float worldStartX = Gdx.graphics.getWidth()/2 - camera.getCameraX()*Settings.SCALED_TILE_SIZE;
 		float worldStartY = Gdx.graphics.getHeight()/2- camera.getCameraY()*Settings.SCALED_TILE_SIZE;
@@ -115,8 +119,8 @@ public class GameScreen extends AbstractScreen {
 		
 		
 		batch.draw(playerTexture, 
-				worldStartX+player.getX()*Settings.SCALED_TILE_SIZE, // O personagem anda de tile em tile 
-				worldStartY+player.getY()*Settings.SCALED_TILE_SIZE); 
+				worldStartX+player.getWorldX()*Settings.SCALED_TILE_SIZE, // O personagem anda de tile em tile 
+				worldStartY+player.getWorldY()*Settings.SCALED_TILE_SIZE); 
 		batch.end();
 		
 	}
