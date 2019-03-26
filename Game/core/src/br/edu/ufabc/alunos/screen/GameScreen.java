@@ -10,6 +10,7 @@ import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.core.Settings;
 import br.edu.ufabc.alunos.model.Actor;
 import br.edu.ufabc.alunos.model.Camera;
+import br.edu.ufabc.alunos.model.TERRAIN;
 import br.edu.ufabc.alunos.model.TileMap;
 import br.edu.ufabc.alunos.util.Log;
 
@@ -30,8 +31,8 @@ public class GameScreen extends AbstractScreen {
 		batch = new SpriteBatch();
 		playerTexture = new Texture(Gdx.files.internal("PlaceHolder.png"));
 		grass = new Texture[2];
-		grass[0] = new Texture(Gdx.files.internal("Tile/32x32/grass.png"));
-		grass[1] = new Texture(Gdx.files.internal("Tile/32x32/grass2.png"));
+		grass[0] = new Texture(Gdx.files.internal(TERRAIN.GRASS_1.getTexturePath()));
+		grass[1] = new Texture(Gdx.files.internal(TERRAIN.GRASS_2.getTexturePath()));
 		
 		map = new TileMap(10,10);
 		player = new Actor(map, 0,0);

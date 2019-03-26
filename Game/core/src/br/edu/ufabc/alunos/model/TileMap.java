@@ -88,7 +88,11 @@ public class TileMap {
 
 	public boolean removeActor(Actor actor, int x, int y) {
 		Tile t = this.getTile(x, y);
-		if(t.getActor().equals(actor)) {
+		if(t == null) {
+			return false;
+		}
+		Actor currentActor = t.getActor();
+		if(currentActor != null && currentActor.equals(actor)) {
 			t.setActor(null);
 			return true;
 		} else {
