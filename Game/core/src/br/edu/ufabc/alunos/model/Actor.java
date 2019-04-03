@@ -4,8 +4,8 @@ import br.edu.ufabc.alunos.util.Log;
 
 public class Actor {
 
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 	protected TileMap map;
 	
 	
@@ -45,6 +45,9 @@ public class Actor {
 		}
 	}
 	
+	public boolean move(DIRECTION dir) {
+		return this.move(dir.getX(), dir.getY());
+	}
 
 	private void setX(int x) {
 		this.x = x;
