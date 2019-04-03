@@ -1,13 +1,20 @@
 package br.edu.ufabc.alunos.model;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+import br.edu.ufabc.alunos.model.world.YSortable;
 import br.edu.ufabc.alunos.util.Log;
 
-public class Actor {
+public class Actor implements YSortable {
 
 	protected int x;
 	protected int y;
 	protected TileMap map;
 	private String name = "Unnamed";
+	private static Texture actorTexture;
+	private boolean visible = true;
 	
 	
 	public void setName(String name) {
@@ -20,6 +27,7 @@ public class Actor {
 		this.y = y;
 		this.map = map;
 		map.putActorAt(this, x, y);
+		actorTexture = new Texture(Gdx.files.internal("PlaceHolder.png"));
 	}
 	
 	public float getWorldX() {
@@ -76,12 +84,34 @@ public class Actor {
 
 	public void update(float delta) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("Actor update.");
 	}
 
-	public Object getName() {
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public TextureRegion getSprite() {
+		return new TextureRegion(Actor.actorTexture);
+	}
+
+	@Override
+	public float getSizeX() {
 		// TODO Auto-generated method stub
-		return null;
+		return Actor.actorTexture.getWidth();
+	}
+
+	@Override
+	public float getSizeY() {
+		// TODO Auto-generated method stub
+		return Actor.actorTexture.getHeight();
+	}
+
+	@Override
+	public boolean isVisible() {
+		// TODO Auto-generated method stub
+		return this.visible;
 	}
 	
 }

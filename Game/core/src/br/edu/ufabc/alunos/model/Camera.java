@@ -14,7 +14,8 @@ public class Camera {
 	private float cameraY = 0f;
 	
 	public void update(float newCamX, float newCamY) {
-		this.cameraX = newCamX;
-		this.cameraY = newCamY;
+		// +0.5f to center the camera on the player's tile.
+		this.cameraX = newCamX+0.5f;
+		this.cameraY = newCamY+0.5f;
 	}
 }

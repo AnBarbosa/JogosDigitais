@@ -2,18 +2,20 @@ package br.edu.ufabc.alunos.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import br.edu.ufabc.alunos.screen.GameScreen;
+import br.edu.ufabc.alunos.screen.WorldGameScreen;
 
 public class GameApplication extends Game {
 	
 	
-	private GameScreen screen;
-	private AssetManager assetManager;
+	private Screen screen;
+	private static AssetManager assetManager;
 	@Override
 	public void create() {
 		
@@ -23,11 +25,12 @@ public class GameApplication extends Game {
 		assetManager.load("Tile/32x32/grass2.png", Texture.class);
 		assetManager.load("PlaceHolder.png", Texture.class);
 		assetManager.load("tutorial/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
+		assetManager.load("tutorial/graphics_unpacked/tiles/small_house.png", Texture.class);
 		while(!assetManager.isFinished()) {
 			assetManager.update();
 		}
 		
-		screen = new GameScreen(this);
+		screen = new WorldGameScreen(this);
 		this.setScreen(screen);
 	}
 	
@@ -40,8 +43,8 @@ public class GameApplication extends Game {
 		
 	}
 
-	public AssetManager getAssetManager() {
-		return this.assetManager;
+	public static AssetManager getAssetManager() {
+		return assetManager;
 	}
 
 }

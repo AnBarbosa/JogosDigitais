@@ -78,6 +78,7 @@ public class AnimatedActor extends Actor{
 	
 	@Override
 	public void update(float delta) {
+	
 		if(this.animationState==ANIMATION_STATE.WALKING) {
 			
 			this.positinalAnimationTimer += delta;
@@ -144,4 +145,10 @@ public class AnimatedActor extends Actor{
 		assert (animationState==ANIMATION_STATE.STANDING || animationState==ANIMATION_STATE.WALKING) : System.out.printf("getSprite(): Cannot get a TextureRegion. Unknown state: %s", animationState);
 		throw new RuntimeException("Cannot get a TextureRegion to state "+animationState.toString());
 	}
+	
+	@Override
+	public float getSizeX() { return 1;}
+	@Override
+	public float getSizeY() { return 1;}
+	
 }
