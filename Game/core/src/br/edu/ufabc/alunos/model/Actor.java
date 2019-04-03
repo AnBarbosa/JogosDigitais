@@ -7,16 +7,19 @@ public class Actor {
 	protected int x;
 	protected int y;
 	protected TileMap map;
+	private String name = "Unnamed";
 	
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public Actor(TileMap map, int x, int y) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.map = map;
 		map.putActorAt(this, x, y);
-		
-		
 	}
 	
 	public float getWorldX() {
@@ -39,6 +42,8 @@ public class Actor {
 		int nextY = this.getY() + dy;
 		if(map.isPassable(nextX, nextY)) {
 			this.setPosition(nextX,  nextY);
+			this.setX(nextX);
+			this.setY(nextY);
 			return true;
 		} else {
 			return false;			
@@ -57,15 +62,11 @@ public class Actor {
 		this.y = y;
 	}
 
+	
 	public void setPosition(int x, int y) {
-		map.removeActor(this, this.getX(), this.getY());
-		if(map.putActorAt(this, x, y)) {
-			this.setX(x);
-			this.setY(y);
-			Log.printf("Player moved to %d, %d\n", x, y);
-		} else {
-			Log.printf("Cannot put player on %d, %d. Occupied position?\n", x, y);
-		}
+		map.moveActorFromTo(this, getX(), getY(), x, y);
+		this.setX(x);
+		this.setY(y);
 	}
 
 	public void setMap(TileMap map) {
@@ -76,6 +77,11 @@ public class Actor {
 	public void update(float delta) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public Object getName() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

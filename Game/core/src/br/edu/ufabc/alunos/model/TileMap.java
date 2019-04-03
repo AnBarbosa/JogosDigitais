@@ -85,6 +85,19 @@ public class TileMap {
 			return false;			
 		}
 	}
+	
+	public boolean moveActorFromTo(Actor actor, int oldX, int oldY, int newX, int newY) {
+		if(this.putActorAt(actor, newX, newY)) {
+			if(this.removeActor(actor, oldX, oldY)) {
+				return true;
+			} else {
+				Log.printf("Te actor was added to %d, %d but we could not remove it from from %d, %d.\nCheck if it is on this position.", newX, newY, oldX, oldY);
+			}
+		} else {
+			Log.printf("Could not put actor %s on %d, %d.", actor.getName(), newX, newY);
+		}
+		return false;
+	}
 
 	public boolean removeActor(Actor actor, int x, int y) {
 		Tile t = this.getTile(x, y);
