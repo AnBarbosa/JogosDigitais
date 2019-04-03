@@ -3,7 +3,11 @@ package br.edu.ufabc.alunos.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import br.edu.ufabc.alunos.controllers.PlayerController;
 import br.edu.ufabc.alunos.core.GameApplication;
@@ -11,18 +15,21 @@ import br.edu.ufabc.alunos.core.Settings;
 import br.edu.ufabc.alunos.model.Actor;
 import br.edu.ufabc.alunos.model.AnimatedActor;
 import br.edu.ufabc.alunos.model.Camera;
+import br.edu.ufabc.alunos.model.DIRECTION;
 import br.edu.ufabc.alunos.model.TileMap;
+import br.edu.ufabc.alunos.util.AnimationSet;
 import br.edu.ufabc.alunos.util.Log;
 
 public class GameScreen extends AbstractScreen {
 
 	private Texture playerTexture;
 	private Texture[] grass;
-	private Actor player;
+	private AnimatedActor player;
 	private PlayerController controller;
 	private SpriteBatch batch;
 	private TileMap map;
 	private Camera camera;
+	
 	
 	
 	public GameScreen(GameApplication game) {
@@ -34,11 +41,29 @@ public class GameScreen extends AbstractScreen {
 		grass[0] = new Texture(Gdx.files.internal("Tile/32x32/grass.png"));
 		grass[1] = new Texture(Gdx.files.internal("Tile/32x32/grass2.png"));
 		
+		
+		TextureAtlas atlas = game.getAssetManager().get("tutorial/graphics_packed/tiles/tilepack.atlas");
+		
+		Animation[] anims = new Animation[DIRECTION.values().length];
+		anims[DIRECTION.NORTH.ordinal()] = new Animation(0.3f/2f, atlas.findRegions("brendan_walk_north"), PlayMode.LOOP_PINGPONG);
+		anims[DIRECTION.SOUTH.ordinal()] = new Animation(0.3f/2f, atlas.findRegions("brendan_walk_south"), PlayMode.LOOP_PINGPONG);
+		anims[DIRECTION.EAST.ordinal()] = new Animation(0.3f/2f, atlas.findRegions("brendan_walk_east"), PlayMode.LOOP_PINGPONG);
+		anims[DIRECTION.WEST.ordinal()] = new Animation(0.3f/2f, atlas.findRegion("brendan_walk_west"), PlayMode.LOOP_PINGPONG);
+		
+		TextureRegion[] stands = new TextureRegion[DIRECTION.values().length];
+		stands[DIRECTION.NORTH.ordinal()] = atlas.findRegion("brendan_stand_north");
+		stands[DIRECTION.SOUTH.ordinal()] = atlas.findRegion("brendan_stand_south");
+		stands[DIRECTION.EAST.ordinal()] = atlas.findRegion("brendan_stand_east");
+		stands[DIRECTION.WEST.ordinal()] = atlas.findRegion("brendan_stand_west");
+		
+		AnimationSet animations = new AnimationSet(anims, stands);
+
 		map = new TileMap(10,10);
-		player = new AnimatedActor(map, 0,0);
+		player = new AnimatedActor(map, 0,0, animations);
 		controller = new PlayerController(player);
 		camera = new Camera();
 
+		
 	}
 
 	private void getInputs() {
@@ -92,10 +117,13 @@ public class GameScreen extends AbstractScreen {
 			Log.debug = false;
 		}
 		
+		
+		
 	}
 	@Override
 	public void render(float delta) {
 		this.getInputs();
+		controller.update(delta);
 		player.update(delta);
 		camera.update(player.getWorldX()+0.5f, player.getWorldY()+0.5f);
 		
@@ -118,7 +146,7 @@ public class GameScreen extends AbstractScreen {
 		
 		
 		
-		batch.draw(playerTexture, 
+		batch.draw(player.getSprite(), 
 				worldStartX+player.getWorldX()*Settings.SCALED_TILE_SIZE, // O personagem anda de tile em tile 
 				worldStartY+player.getWorldY()*Settings.SCALED_TILE_SIZE); 
 		batch.end();
