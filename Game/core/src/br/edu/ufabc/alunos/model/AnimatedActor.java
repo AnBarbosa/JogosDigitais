@@ -40,6 +40,7 @@ public class AnimatedActor extends Actor{
 	}
 	
 	private void initializeMove(int dx, int dy) {
+		
 		this.srcX = this.x;
 		this.srcY = this.y;
 		this.destX = this.x+dx;
@@ -51,6 +52,7 @@ public class AnimatedActor extends Actor{
 	}
 	
 	private void initializeMove(DIRECTION d) {
+		this.facing = d;
 		initializeMove(d.getX(), d.getY()); 
 	}
 	

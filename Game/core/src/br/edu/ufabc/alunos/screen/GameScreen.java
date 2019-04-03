@@ -15,11 +15,8 @@ import br.edu.ufabc.alunos.core.Settings;
 import br.edu.ufabc.alunos.model.Actor;
 import br.edu.ufabc.alunos.model.AnimatedActor;
 import br.edu.ufabc.alunos.model.Camera;
-
 import br.edu.ufabc.alunos.model.DIRECTION;
-
 import br.edu.ufabc.alunos.model.TERRAIN;
-
 import br.edu.ufabc.alunos.model.TileMap;
 import br.edu.ufabc.alunos.util.AnimationSet;
 import br.edu.ufabc.alunos.util.Log;
@@ -51,8 +48,8 @@ public class GameScreen extends AbstractScreen {
 		Animation[] anims = new Animation[DIRECTION.values().length];
 		anims[DIRECTION.NORTH.ordinal()] = new Animation(0.3f/2f, atlas.findRegions("brendan_walk_north"), PlayMode.LOOP_PINGPONG);
 		anims[DIRECTION.SOUTH.ordinal()] = new Animation(0.3f/2f, atlas.findRegions("brendan_walk_south"), PlayMode.LOOP_PINGPONG);
-		anims[DIRECTION.EAST.ordinal()] = new Animation(0.3f/2f, atlas.findRegions("brendan_walk_east"), PlayMode.LOOP_PINGPONG);
-		anims[DIRECTION.WEST.ordinal()] = new Animation(0.3f/2f, atlas.findRegion("brendan_walk_west"), PlayMode.LOOP_PINGPONG);
+		anims[DIRECTION.EAST.ordinal()] =  new Animation(0.3f/2f, atlas.findRegions("brendan_walk_east"), PlayMode.LOOP_PINGPONG);
+		anims[DIRECTION.WEST.ordinal()] =  new Animation(0.3f/2f, atlas.findRegions("brendan_walk_west"), PlayMode.LOOP_PINGPONG);
 		
 		TextureRegion[] stands = new TextureRegion[DIRECTION.values().length];
 		stands[DIRECTION.NORTH.ordinal()] = atlas.findRegion("brendan_stand_north");
