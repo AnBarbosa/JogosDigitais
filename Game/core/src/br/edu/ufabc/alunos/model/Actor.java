@@ -113,5 +113,6 @@ public class Actor implements YSortable {
 		// TODO Auto-generated method stub
 		return this.visible;
 	}
+
 	
 }

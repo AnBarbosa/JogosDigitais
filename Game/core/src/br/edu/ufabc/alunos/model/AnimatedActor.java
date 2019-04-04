@@ -19,12 +19,14 @@ import br.edu.ufabc.alunos.util.AnimationSet;
  */
 public class AnimatedActor extends Actor{
 	
+	private static final float REFACE_TIME = 0.1f;
+	private static final float ANIM_TOTAL_TIME = 0.25f;
+
 	private float worldX, worldY;
 	
 	private int srcX, srcY;
 	private int destX, destY;
 	private float positinalAnimationTimer; // Control the interpolated displacement on screen.
-	private final float ANIM_TOTAL_TIME = 0.5f;
 	
 	
 	private DIRECTION facing;
@@ -36,7 +38,7 @@ public class AnimatedActor extends Actor{
 	private ANIMATION_STATE animationState;
 	
 	public enum ANIMATION_STATE{
-		WALKING, STANDING;
+		WALKING, STANDING, REFACING;
 	}
 
 	public AnimatedActor(TileMap map, int x, int y, AnimationSet animations) {
@@ -101,6 +103,16 @@ public class AnimatedActor extends Actor{
 				}
 			}
 		}
+		 
+		
+		if(this.animationState==ANIMATION_STATE.REFACING) {
+			positinalAnimationTimer += delta;
+			if(positinalAnimationTimer > REFACE_TIME) {
+				this.animationState = ANIMATION_STATE.STANDING;
+			}
+		}
+
+		// Reset contitions to next cicle
 		wasMoveRequestedThisFrame = false;
 	}
 	
@@ -121,6 +133,7 @@ public class AnimatedActor extends Actor{
 			this.setPosition(nextX,  nextY);
 			return true;
 		} else {
+			reface(DIRECTION.getOpposite(directionTo));
 			return false;			
 		}
 	}
@@ -142,8 +155,21 @@ public class AnimatedActor extends Actor{
 		if(animationState==ANIMATION_STATE.WALKING) {
 			return (TextureRegion) animations.getWalking(facing).getKeyFrame(frameAnimationTimer);
 		}
-		assert (animationState==ANIMATION_STATE.STANDING || animationState==ANIMATION_STATE.WALKING) : System.out.printf("getSprite(): Cannot get a TextureRegion. Unknown state: %s", animationState);
+		if(animationState==ANIMATION_STATE.REFACING) {
+			return (TextureRegion) animations.getWalking(facing).getKeyFrame(0);
+		}
+		assert (animationState!= null) : System.out.printf("getSprite(): Cannot get a TextureRegion. Unknown state: %s", animationState);
 		throw new RuntimeException("Cannot get a TextureRegion to state "+animationState.toString());
+	}
+
+	public void reface(DIRECTION dir) {
+		if(animationState == ANIMATION_STATE.STANDING) {
+			if(facing != dir) {
+				animationState = ANIMATION_STATE.REFACING;
+				facing = dir;
+				positinalAnimationTimer = 0;
+			}
+		}
 	}
 	
 	@Override

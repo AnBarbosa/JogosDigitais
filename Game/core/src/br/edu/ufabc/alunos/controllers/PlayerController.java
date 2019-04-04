@@ -13,6 +13,7 @@ public class PlayerController extends InputAdapter {
 	private int dx=0;
 	private int dy=0;
 	private Actor player;
+
 	
 	public enum COMMAND {
 		UP(0), RIGHT(1), DOWN(2), LEFT(4);

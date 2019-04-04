@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 
-import br.edu.ufabc.alunos.controllers.PlayerController;
+import br.edu.ufabc.alunos.controllers.PlayerControllerWithTimer;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.model.Actor;
 import br.edu.ufabc.alunos.model.AnimatedActor;
@@ -24,7 +24,7 @@ import br.edu.ufabc.alunos.util.Log;
 
 public class WorldGameScreen extends AbstractScreen {
 
-	private PlayerController controller;
+	private PlayerControllerWithTimer controller;
 	
 	private World world;
 	private Actor player;
@@ -55,7 +55,7 @@ public class WorldGameScreen extends AbstractScreen {
 
 		world = new World(100,100);
 		player = new AnimatedActor(world.getMap(), 50, 50, animations);
-		controller = new PlayerController(player);
+		controller = new PlayerControllerWithTimer(player);
 		camera = new Camera();
 		worldRenderer = new WorldRenderer(getApp().getAssetManager(), world);
 		world.addActor(player);
