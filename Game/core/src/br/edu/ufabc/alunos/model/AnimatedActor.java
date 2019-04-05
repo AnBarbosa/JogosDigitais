@@ -76,6 +76,8 @@ public class AnimatedActor extends Actor{
 		this.worldY = destY;
 		this.srcX = 0;
 		this.srcY = 0;
+		this.destX = 0;
+		this.destY = 0;
 	}
 	
 	@Override
@@ -83,23 +85,27 @@ public class AnimatedActor extends Actor{
 	
 		if(this.animationState==ANIMATION_STATE.WALKING) {
 			
-			this.positinalAnimationTimer += delta;
-			this.frameAnimationTimer += delta;
+			positinalAnimationTimer += delta;
+			frameAnimationTimer += delta;
 			// Updating visual position of actor
-			this.worldX = Interpolation.linear.apply(this.srcX, this.destX, this.positinalAnimationTimer/this.ANIM_TOTAL_TIME);
-			this.worldY = Interpolation.linear.apply(this.srcY, this.destY, this.positinalAnimationTimer/this.ANIM_TOTAL_TIME);
+			worldX = Interpolation.linear.apply(srcX, destX, positinalAnimationTimer/ANIM_TOTAL_TIME);
+			worldY = Interpolation.linear.apply(srcY, destY, positinalAnimationTimer/ANIM_TOTAL_TIME);
 			// If animTimer > ANIM_TIME then we already finished the animation.
-			if(this.positinalAnimationTimer > this.ANIM_TOTAL_TIME) {
+			if(positinalAnimationTimer > ANIM_TOTAL_TIME) {
 				// If we passed the ANIM_TIME, then we should correct the frameTimer.
-				float leftOverTime = this.positinalAnimationTimer-this.ANIM_TOTAL_TIME;
-				this.frameAnimationTimer -= leftOverTime;
-				this.finishMoveAnimation();
+				float leftOverTime = positinalAnimationTimer-ANIM_TOTAL_TIME;
+				frameAnimationTimer -= leftOverTime;
+				finishMoveAnimation();
 				// If the player requested to move again, we move:
-				if(this.wasMoveRequestedThisFrame) {
-					move(facing);
+				if(wasMoveRequestedThisFrame) {
+					if(move(facing)) {
+						positinalAnimationTimer += leftOverTime;
+						worldX = Interpolation.linear.apply(srcX, destX, positinalAnimationTimer/ANIM_TOTAL_TIME);
+						worldY = Interpolation.linear.apply(srcY, destY, positinalAnimationTimer/ANIM_TOTAL_TIME);
+					}
 				} else {
 					// If we won't move again, we return to frame 0
-					this.frameAnimationTimer = 0f;
+					frameAnimationTimer = 0f;
 				}
 			}
 		}
@@ -112,7 +118,7 @@ public class AnimatedActor extends Actor{
 			}
 		}
 
-		// Reset contitions to next cicle
+		// Reset
 		wasMoveRequestedThisFrame = false;
 	}
 	

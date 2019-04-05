@@ -30,12 +30,12 @@ public class WorldGameScreen extends AbstractScreen {
 	private Actor player;
 	private Camera camera;
 	
-	private SpriteBatch batch;
+	protected SpriteBatch batch;
 	private WorldRenderer worldRenderer;
 	
 	public WorldGameScreen(GameApplication game) {
 		super(game);
-		batch = new SpriteBatch();
+batch = new SpriteBatch();
 		
 		TextureAtlas atlas = game.getAssetManager().get("tutorial/graphics_packed/tiles/tilepack.atlas");
 		

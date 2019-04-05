@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import br.edu.ufabc.alunos.screen.GameScreen;
+import br.edu.ufabc.alunos.screen.GameScreenWithUI;
 import br.edu.ufabc.alunos.screen.WorldGameScreen;
 
 public class GameApplication extends Game {
@@ -30,7 +31,7 @@ public class GameApplication extends Game {
 			assetManager.update();
 		}
 		
-		screen = new WorldGameScreen(this);
+		screen = new GameScreenWithUI(this);
 		this.setScreen(screen);
 	}
 	

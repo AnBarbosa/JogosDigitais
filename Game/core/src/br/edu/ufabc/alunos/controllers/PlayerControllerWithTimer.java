@@ -12,7 +12,7 @@ import br.edu.ufabc.alunos.model.DIRECTION;
 
 public class PlayerControllerWithTimer extends InputAdapter {
 	
-	private static final float WALK_REFACE_THRESHOLD = 0.15f;
+	private static final float WALK_REFACE_THRESHOLD = 0.1f;
 
 
 	private float[] buttonTimer;
