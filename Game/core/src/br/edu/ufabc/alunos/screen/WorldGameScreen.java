@@ -1,6 +1,7 @@
 package br.edu.ufabc.alunos.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -24,6 +25,7 @@ import br.edu.ufabc.alunos.utils.Log;
 
 public class WorldGameScreen extends AbstractScreen {
 
+	
 	private PlayerControllerWithTimer controller;
 	
 	private World world;
@@ -35,7 +37,7 @@ public class WorldGameScreen extends AbstractScreen {
 	
 	public WorldGameScreen(GameApplication game) {
 		super(game);
-batch = new SpriteBatch();
+			batch = new SpriteBatch();
 		
 		TextureAtlas atlas = game.getAssetManager().get("tutorial/graphics_packed/tiles/tilepack.atlas");
 		
@@ -56,6 +58,7 @@ batch = new SpriteBatch();
 		world = new World(100,100);
 		player = new AnimatedActor(world.getMap(), 50, 50, animations);
 		controller = new PlayerControllerWithTimer(player);
+		super.addInputProcessor(controller);
 		camera = new Camera();
 		worldRenderer = new WorldRenderer(getApp().getAssetManager(), world);
 		world.addActor(player);
@@ -151,11 +154,6 @@ batch = new SpriteBatch();
 		
 	}
 	
-	@Override
-	public void show() {
-		Gdx.input.setInputProcessor(controller);
-		
-	}
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub

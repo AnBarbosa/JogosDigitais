@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
 import br.edu.ufabc.alunos.model.Actor;
@@ -139,11 +140,13 @@ public class PlayerControllerWithTimer extends InputAdapter {
 				processed = false;
 				break;
 		}
+		
 		return processed;
 	}
 	
 	@Override
 	public boolean keyUp(int keycode) {
+		System.out.println("Player Controller: KeyUP " + keycode + "("+Input.Keys.toString(keycode)+")");
 		boolean processed = false;
 		switch(keycode) {
 			case Keys.UP:
