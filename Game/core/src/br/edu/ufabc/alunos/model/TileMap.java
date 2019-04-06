@@ -2,7 +2,7 @@ package br.edu.ufabc.alunos.model;
 
 import java.util.Arrays;
 
-import br.edu.ufabc.alunos.util.Log;
+import br.edu.ufabc.alunos.utils.Log;
 
 public class TileMap {
 

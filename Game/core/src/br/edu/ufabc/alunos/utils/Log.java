@@ -1,4 +1,4 @@
-package br.edu.ufabc.alunos.util;
+package br.edu.ufabc.alunos.utils;
 
 public class Log {
 	public static boolean debug = false;

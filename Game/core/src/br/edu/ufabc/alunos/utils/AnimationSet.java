@@ -1,4 +1,4 @@
-package br.edu.ufabc.alunos.util;
+package br.edu.ufabc.alunos.utils;
 
 import java.util.HashMap;
 import java.util.Map;

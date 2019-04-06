@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import br.edu.ufabc.alunos.model.world.YSortable;
-import br.edu.ufabc.alunos.util.Log;
+import br.edu.ufabc.alunos.utils.Log;
 
 public class Actor implements YSortable {
 

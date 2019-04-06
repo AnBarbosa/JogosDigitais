@@ -6,17 +6,21 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-import br.edu.ufabc.alunos.screen.GameScreen;
 import br.edu.ufabc.alunos.screen.GameScreenWithUI;
-import br.edu.ufabc.alunos.screen.WorldGameScreen;
+import br.edu.ufabc.alunos.utils.SkinGenerator;
 
 public class GameApplication extends Game {
 	
 	
 	private Screen screen;
+	private Skin skin;
+	
 	private static AssetManager assetManager;
+	
 	@Override
 	public void create() {
 		
@@ -27,10 +31,13 @@ public class GameApplication extends Game {
 		assetManager.load("PlaceHolder.png", Texture.class);
 		assetManager.load("tutorial/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
 		assetManager.load("tutorial/graphics_unpacked/tiles/small_house.png", Texture.class);
+		assetManager.load("tutorial/graphics_packed/ui/uipack.atlas", TextureAtlas.class);
+		assetManager.load("tutorial/font/small_letters_font.fnt", BitmapFont.class);
+		
 		while(!assetManager.isFinished()) {
 			assetManager.update();
 		}
-		
+		skin = SkinGenerator.generateSkin(assetManager);
 		screen = new GameScreenWithUI(this);
 		this.setScreen(screen);
 	}
@@ -46,6 +53,10 @@ public class GameApplication extends Game {
 
 	public static AssetManager getAssetManager() {
 		return assetManager;
+	}
+
+	public Skin getSkin() {
+		return skin;
 	}
 
 }

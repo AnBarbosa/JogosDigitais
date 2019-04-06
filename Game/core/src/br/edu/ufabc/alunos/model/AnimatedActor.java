@@ -3,7 +3,7 @@ package br.edu.ufabc.alunos.model;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 
-import br.edu.ufabc.alunos.util.AnimationSet;
+import br.edu.ufabc.alunos.utils.AnimationSet;
 /** 
  *  This class will animate the movement of the actor based on it ANIMATION_STATE and the fields variables.
  *  The current 'position' on the visual world is represented by the worldX and wolrdY(obtained by getWorldX() and getWorldY().

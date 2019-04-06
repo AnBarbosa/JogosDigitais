@@ -18,8 +18,8 @@ import br.edu.ufabc.alunos.model.Camera;
 import br.edu.ufabc.alunos.model.DIRECTION;
 import br.edu.ufabc.alunos.model.TERRAIN;
 import br.edu.ufabc.alunos.model.TileMap;
-import br.edu.ufabc.alunos.util.AnimationSet;
-import br.edu.ufabc.alunos.util.Log;
+import br.edu.ufabc.alunos.utils.AnimationSet;
+import br.edu.ufabc.alunos.utils.Log;
 
 public class GameScreen extends AbstractScreen {
 
