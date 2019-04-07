@@ -1,4 +1,4 @@
-package br.edu.ufabc.alunos.model.ui;
+package br.edu.ufabc.alunos.ui;
 
 
 import java.util.ArrayList;
@@ -60,9 +60,11 @@ public class OptionBox extends Table {
 	}
 
 	public void moveUp() {
-		selected++;
-		selected = selected % options.size();
-		calculateArrowsVisibility();
+		if(options.size()>0) {
+			selected++;
+			selected = selected % options.size();
+			calculateArrowsVisibility();
+		}
 	}
 	
 	public void moveDown() {

@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+import br.edu.ufabc.alunos.controllers.Controls;
 import br.edu.ufabc.alunos.screen.GameScreenWithUI;
 import br.edu.ufabc.alunos.utils.SkinGenerator;
 
@@ -23,7 +24,7 @@ public class GameApplication extends Game {
 	
 	@Override
 	public void create() {
-		
+		Controls.defaultInit();
 		this.assetManager = new AssetManager();
 
 		assetManager.load("Tile/32x32/grass.png", Texture.class);
@@ -44,7 +45,7 @@ public class GameApplication extends Game {
 	
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(255,0,0,1f);
+		Gdx.gl.glClearColor(0,0,0,1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		super.render();

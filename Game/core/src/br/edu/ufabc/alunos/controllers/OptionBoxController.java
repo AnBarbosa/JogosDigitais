@@ -1,10 +1,11 @@
 package br.edu.ufabc.alunos.controllers;
 
 import com.badlogic.gdx.Input.Keys;
+
+import br.edu.ufabc.alunos.ui.OptionBox;
+
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-
-import br.edu.ufabc.alunos.model.ui.OptionBox;
 
 public class OptionBoxController extends InputAdapter {
 

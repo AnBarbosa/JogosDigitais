@@ -1,4 +1,4 @@
-package br.edu.ufabc.alunos.model.ui;
+package br.edu.ufabc.alunos.ui;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -18,7 +18,7 @@ public class DialogueBox extends Table {
 	private DIALOG_STATE state = DIALOG_STATE.IDLE;
 	
 	private enum DIALOG_STATE {ANIMATING, IDLE} ;
-	private Label textLabel;
+	protected Label textLabel;
 	
 	public DialogueBox(Skin skin) {
 		super(skin);
@@ -64,17 +64,20 @@ public class DialogueBox extends Table {
 		}
 	}
 
-	private void setText(String text) {
+	protected void setText(String text) {
 		if(!text.contains("\n")) {
 			text += "\n";
 		}
 		this.textLabel.setText(text);
+		this.textLabel.setWrap(true);
+		this.textLabel.pack();
 	}
 	
 	@Override
 	public float getPrefWidth() {
 		return PREFERED_WIDTH;
 	}
+	
 	
 	public boolean isFinished() {
 		return state==DIALOG_STATE.IDLE;

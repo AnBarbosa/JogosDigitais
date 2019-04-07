@@ -26,7 +26,7 @@ import br.edu.ufabc.alunos.utils.Log;
 public class WorldGameScreen extends AbstractScreen {
 
 	
-	private PlayerControllerWithTimer controller;
+	protected PlayerControllerWithTimer playerController;
 	
 	private World world;
 	private Actor player;
@@ -57,8 +57,8 @@ public class WorldGameScreen extends AbstractScreen {
 
 		world = new World(100,100);
 		player = new AnimatedActor(world.getMap(), 50, 50, animations);
-		controller = new PlayerControllerWithTimer(player);
-		super.addInputProcessor(controller);
+		playerController = new PlayerControllerWithTimer(player);
+		super.addInputProcessor(playerController);
 		camera = new Camera();
 		worldRenderer = new WorldRenderer(getApp().getAssetManager(), world);
 		world.addActor(player);
@@ -85,7 +85,7 @@ public class WorldGameScreen extends AbstractScreen {
 	@Override
 	public void render(float delta) {
 		getDebugInputs();
-		controller.update(delta);
+		playerController.update(delta);
 		camera.update(player.getWorldX(), player.getWorldY());
 		world.update(delta);
 		

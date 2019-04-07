@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class SkinGenerator {
@@ -55,6 +56,11 @@ public class SkinGenerator {
 		LabelStyle labelStyle = new LabelStyle();
 		labelStyle.font = skin.getFont("font");
 		skin.add("default", labelStyle);
+		
+		TextFieldStyle textFieldStyle = new TextFieldStyle();
+		textFieldStyle.font = skin.getFont("font");
+		textFieldStyle.fontColor = new Color(0,0,0,1);
+		skin.add("default", textFieldStyle);
 		
 		LabelStyle labelStyleSmall = new LabelStyle();
 		labelStyleSmall.font = skin.getFont("small_letter_font");
