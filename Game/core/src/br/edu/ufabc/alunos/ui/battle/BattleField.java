@@ -59,7 +59,24 @@ public class BattleField extends Table {
 
 
 	public void okPressed() {
-		System.out.println("OK PRESSED.");
+		if(state==BATTLE_STATE.CHOSE_ACTION) {
+			switch(options.getSelected()) {
+			case ATAQUE_MAGICO:
+				printOnScreen("Você ataca com magia negra!");
+				break;
+			case ATAQUE_FISICO:
+				printOnScreen("Meteoro de Pegasus!");
+				break;
+			case FUGIR:
+				printOnScreen("Covarde.");
+				break;
+			default:
+				System.out.println("OPÇÃO INVÁLIDA.");
+				printOnScreen("Opção Inválida. Desculpe, mas eu não esperava que você fosse capaz de fazer isso.");
+			}
+		} else {
+			System.out.println("Wait your turn.");
+		}
 		
 	}
 
@@ -67,6 +84,22 @@ public class BattleField extends Table {
 	public void cancelPressed() {
 		System.out.println("Cancelado");
 		
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		if(state == BATTLE_STATE.DISPLAYING_TEXT) {
+			if(description.isFinished()) {
+				state = BATTLE_STATE.CHOSE_ACTION;
+			}
+	}
+		
+	}
+	
+	public void printOnScreen(String text) {
+		description.animateText(text);
+		state = BATTLE_STATE.DISPLAYING_TEXT;
 	}
 	
 	 
