@@ -2,6 +2,7 @@ package br.edu.ufabc.alunos.ui.battle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -15,6 +16,8 @@ public class CharaBox extends Table {
 	//private HPBar bar;
 	private Image fighter;
 	private VerticalGroup uiContainer;
+	private int maxHP;
+	private int currHP;
 	
 	public CharaBox(Skin skin) {
 		super(skin);
@@ -29,5 +32,27 @@ public class CharaBox extends Table {
 		uiContainer.addActor(hpLabel);
 		uiContainer.addActor(fighter);
 	}
+	
+	public CharaBox maxHP(int value) {
+		this.maxHP = value;
+		updateHP();
+		return this;
+	}
+	public CharaBox currHP(int value) {
+		this.currHP = value;
+		updateHP();
+		return this;
+	}
+	
+	public void heal(int value) {
+		this.currHP(MathUtils.clamp(value, 0, maxHP)); 
+	}
+	
+	public void updateHP() {
+		float fracao = currHP/maxHP;
+		hpLabel.setText("HP: "+currHP+"/"+maxHP);
+	}
+	
+	
 	
 }

@@ -2,13 +2,13 @@ package br.edu.ufabc.alunos.controllers;
 
 import com.badlogic.gdx.InputAdapter;
 
-import br.edu.ufabc.alunos.ui.battle.BattleStage;
+import br.edu.ufabc.alunos.ui.battle.BattleField;
 
 public class BattleController extends InputAdapter {
-	private BattleStage battle;
+	private BattleField battle;
 	
 	
-	public BattleController(BattleStage battle) {
+	public BattleController(BattleField battle) {
 		this.battle = battle;
 	}
 

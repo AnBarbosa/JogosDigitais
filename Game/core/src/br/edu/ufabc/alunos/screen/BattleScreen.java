@@ -2,7 +2,6 @@ package br.edu.ufabc.alunos.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,15 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
+import br.edu.ufabc.alunos.controllers.BattleController;
 import br.edu.ufabc.alunos.core.GameApplication;
-import br.edu.ufabc.alunos.ui.battle.BattleStage;
+import br.edu.ufabc.alunos.ui.battle.BattleField;
 
 
 public class BattleScreen extends AbstractScreen {
 	
-
+	private BattleController controller;	
 	private int uiScale = 2;
 	
 	private Stage battleStage;
@@ -39,7 +38,8 @@ public class BattleScreen extends AbstractScreen {
 		rootBattle = new Table();
 		rootBattle.setFillParent(true);
 		battleStage.addActor(rootBattle);
-		rootBattle.add(new BattleStage(getApp().getSkin())).expand().align(Align.center).pad(10f);
+		BattleField bf = new BattleField(getApp().getSkin()); 
+		rootBattle.add(bf).expand().align(Align.center).pad(10f);
 		
 		// Fade
 		fadeStage = new Stage(new ScreenViewport());
@@ -50,11 +50,16 @@ public class BattleScreen extends AbstractScreen {
 		fade.setFillParent(true);
 		fade.add(black);
 		fadeStage.addActor(fade);
+		
+		
+		controller = new BattleController(bf);
+		
+		addInputProcessor(controller);
 	}
 
 	@Override
 	public void render(float delta) {
-		System.out.println("Rendering Battle Screen.");
+		
 		debugCommands();
 		battleStage.act(delta);
 		fadeStage.act(delta);
@@ -68,9 +73,13 @@ public class BattleScreen extends AbstractScreen {
 
 	private void debugCommands() {
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-			game.setScreen(new GameScreenWithUI(game));
+			changeBack();
 		}
 
+	}
+	
+	private void changeBack() {
+		game.setScreen(new GameScreenWithUI(game));
 	}
 
 	@Override
@@ -79,6 +88,8 @@ public class BattleScreen extends AbstractScreen {
 		battleStage.getViewport().update(width/uiScale,  height/uiScale, true);
 		
 	}
+	
+
 
 	@Override
 	public void pause() {

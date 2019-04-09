@@ -59,7 +59,7 @@ public class OptionBox extends Table {
 		}
 	}
 
-	public void moveUp() {
+	public void moveDown( ) {
 		if(options.size()>0) {
 			selected++;
 			selected = selected % options.size();
@@ -67,7 +67,7 @@ public class OptionBox extends Table {
 		}
 	}
 	
-	public void moveDown() {
+	public void moveUp() {
 		selected--;
 		if(selected < 0) {
 			selected += options.size();
