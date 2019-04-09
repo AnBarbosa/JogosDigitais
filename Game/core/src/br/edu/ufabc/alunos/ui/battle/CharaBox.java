@@ -33,6 +33,8 @@ public class CharaBox extends Table {
 		fighter = new Image(sprite);
 		
 		
+		
+		
 		uiContainer.addActor(hpLabel);
 		uiContainer.addActor(fighter);
 	}
@@ -57,6 +59,5 @@ public class CharaBox extends Table {
 		hpLabel.setText("HP: "+currHP+"/"+maxHP);
 	}
 	
-	
-	
+
 }
