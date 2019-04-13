@@ -2,13 +2,13 @@ package br.edu.ufabc.alunos.ui.battle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.badlogic.gdx.utils.Align;
 
 public class CharaBox extends Table {
 
@@ -18,8 +18,8 @@ public class CharaBox extends Table {
 	private VerticalGroup uiContainer;
 	private int maxHP;
 	private int currHP;
-	
-	public CharaBox(Skin skin) {
+	private boolean horizontalFlip;
+	public CharaBox(Skin skin, boolean horizontalFlip ) {
 		super(skin);
 		this.setBackground("optionbox");
 		uiContainer = new VerticalGroup();
@@ -27,7 +27,11 @@ public class CharaBox extends Table {
 		
 		uiContainer.debugAll();
 		hpLabel = new Label("HP", this.getSkin());
-		fighter = new Image(new Texture(Gdx.files.internal("tutorial/graphics/pokemon/bulbasaur.png")));
+		
+		Sprite sprite = new Sprite(new Texture(Gdx.files.internal("tutorial/graphics/pokemon/bulbasaur.png")));
+		sprite.flip(horizontalFlip, false);
+		fighter = new Image(sprite);
+		
 		
 		uiContainer.addActor(hpLabel);
 		uiContainer.addActor(fighter);

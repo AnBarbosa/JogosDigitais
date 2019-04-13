@@ -27,8 +27,8 @@ public class BattleField extends Table {
 		int largura = 200;
 		int pad = 20;
 		state = BATTLE_STATE.CHOSE_ACTION;
-		player = new CharaBox(skin);
-		enemy  = new CharaBox(skin);
+		player = new CharaBox(skin, true);
+		enemy  = new CharaBox(skin, false);
 		description = new FixedSizeDialogue(skin, largura,100);
 		options = new OptionBox(skin);
 		int i = 0;
