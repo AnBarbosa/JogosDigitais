@@ -3,13 +3,14 @@ package br.edu.ufabc.alunos.ui.battle;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.text.TextAction;
+
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
+import cm.badlogic.gdx.utils.Align;
 
 import br.edu.ufabc.alunos.battle.actions.BattleAction;
 import br.edu.ufabc.alunos.battle.actions.SerieOfActions;
-import br.edu.ufabc.alunos.battle.actions.TextAction;
 import br.edu.ufabc.alunos.ui.OptionBox;
 
 public class BattleField extends Table {
@@ -108,7 +109,6 @@ public class BattleField extends Table {
 
 
 	public void okPressed() {
-		
 		switch(options.getSelected()) {
 		case ATAQUE_FISICO:
 			currentAction = new TextAction(this, "Você ataca com sua espada");
@@ -126,7 +126,7 @@ public class BattleField extends Table {
 			currentAction = new SerieOfActions(this, acoes);
 			break;
 		}
-		if(currentAction != null && state==BATTLE_STATE.CHOSE_ACTION) {
+		if(state==BATTLE_STATE.CHOSE_ACTION && currentAction != null) {
 			currentAction.doAction();
 		}
 		
@@ -143,14 +143,22 @@ public class BattleField extends Table {
 		
 	}
 	
-	public void displayText(String text) {
-		this.description.animateText(text);
-		this.state = BATTLE_STATE.DISPLAYING_TEXT;
-	}
 
-	public boolean displayFinished() {
-		return this.description.isFinished();
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		if(state == BATTLE_STATE.DISPLAYING_TEXT) {
+			if(description.isFinished()) {
+				state = BATTLE_STATE.CHOSE_ACTION;
+			}
+	}
 		
 	}
+	
+	public void printOnScreen(String text) {
+		description.animateText(text);
+		state = BATTLE_STATE.DISPLAYING_TEXT;
+	}
+	
 	
 }
