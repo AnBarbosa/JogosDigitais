@@ -106,15 +106,15 @@ public class GameScreenWithUI extends WorldGameScreen {
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_3)) {			
 			rootBattle.clear();			
-			rootBattle.add(new BattleField(getApp().getSkin())).expand().align(Align.center).pad(10f);
+			rootBattle.add(new BattleField(getApp().getSkin(), this.multiplexer)).expand().align(Align.center).pad(10f);
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
 			rootBattle.clear();
-			rootBattle.add(new BattleField(getApp().getSkin())).expand().align(Align.center).pad(10f);
+			rootBattle.add(new BattleField(getApp().getSkin(), this.multiplexer)).expand().align(Align.center).pad(10f);
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_5)) {
 			rootBattle.clear();
-			rootBattle.add(new BattleField(getApp().getSkin())).expand().align(Align.center).pad(10f);
+			rootBattle.add(new BattleField(getApp().getSkin(), this.multiplexer)).expand().align(Align.center).pad(10f);
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_6)) {
 			black.setVisible(!black.isVisible());

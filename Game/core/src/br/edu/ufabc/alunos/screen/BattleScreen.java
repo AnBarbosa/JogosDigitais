@@ -38,7 +38,7 @@ public class BattleScreen extends AbstractScreen {
 		rootBattle = new Table();
 		rootBattle.setFillParent(true);
 		battleStage.addActor(rootBattle);
-		BattleField bf = new BattleField(getApp().getSkin()); 
+		BattleField bf = new BattleField(getApp().getSkin(), this.multiplexer); 
 		rootBattle.add(bf).expand().align(Align.center).pad(10f);
 		
 		// Fade

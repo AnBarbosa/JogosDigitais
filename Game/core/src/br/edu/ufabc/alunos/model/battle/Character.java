@@ -1,7 +1,10 @@
 package br.edu.ufabc.alunos.model.battle;
 
+import br.edu.ufabc.alunos.ui.battle.CharaBox;
+
 public abstract class Character {
-		
+	
+
 	protected int hp;
 	protected int current_hp;
 	protected int str;

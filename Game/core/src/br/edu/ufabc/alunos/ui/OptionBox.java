@@ -23,6 +23,8 @@ public class OptionBox extends Table {
 	private List<Image> arrows = new ArrayList<Image>();
 	private List<Label> options = new ArrayList<Label>();
 	private Table uiContainer;
+
+	private boolean enabled;
 	
 	public OptionBox(Skin skin) {
 		super(skin);	
@@ -51,8 +53,10 @@ public class OptionBox extends Table {
 
 	public void calculateArrowsVisibility() {
 		for(int i = 0; i< arrows.size(); i++) {
+			
 			if(i == getSelected()) {
-				arrows.get(i).setVisible(true);
+				// We just set the arrow to visible, if it's enabled.
+				arrows.get(i).setVisible(this.enabled);
 			} else {
 				arrows.get(i).setVisible(false);
 			}
@@ -60,23 +64,27 @@ public class OptionBox extends Table {
 	}
 
 	public void moveDown( ) {
-		if(options.size()>0) {
-			selected++;
-			selected = selected % options.size();
-			calculateArrowsVisibility();
+		if(this.enabled) {
+			if(options.size()>0) {
+				selected++;
+				selected = selected % options.size();
+				calculateArrowsVisibility();
+			}
 		}
 	}
 	
 	public void moveUp() {
-		selected--;
-		if(selected < 0) {
-			selected += options.size();
+		if(this.enabled) {
+			selected--;
+			if(selected < 0) {
+				selected += options.size();
+			}
+			calculateArrowsVisibility();
 		}
-		calculateArrowsVisibility();
 	}
 	
 	public int getSelected() {
-		return selected;
+		return enabled? selected : -1;
 	}
 	
 	public void clearChoices() {
@@ -84,5 +92,13 @@ public class OptionBox extends Table {
 			arrows.clear();
 			options.clear();
 			selected = 0;
+	}
+	
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+		this.calculateArrowsVisibility();
+	}
+	public boolean getEnabled() {
+		return this.enabled;
 	}
 }

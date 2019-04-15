@@ -19,7 +19,7 @@ public class StatusBox extends Table {
 		return false;
 	}
 
-	public HPBar getHPBar() {
+	public HPLabel getHPBar() {
 		// TODO Auto-generated method stub
 		return null;
 	}

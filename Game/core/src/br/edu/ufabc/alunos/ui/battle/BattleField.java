@@ -3,41 +3,64 @@ package br.edu.ufabc.alunos.ui.battle;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.text.TextAction;
-
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import cm.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Align;
 
 import br.edu.ufabc.alunos.battle.actions.BattleAction;
+import br.edu.ufabc.alunos.battle.actions.DamageAction;
+import br.edu.ufabc.alunos.battle.actions.DamageAction.DAMAGE;
 import br.edu.ufabc.alunos.battle.actions.SerieOfActions;
+import br.edu.ufabc.alunos.battle.actions.TextAction;
+import br.edu.ufabc.alunos.model.battle.Character;
+import br.edu.ufabc.alunos.model.battle.DullChara;
 import br.edu.ufabc.alunos.ui.OptionBox;
 
+
 public class BattleField extends Table {
-	CharaBox player, enemy;
+	
+	private InputMultiplexer multiplexer;
+	CharaBox playerCharaBox, enemyCharaBox;
 	FixedSizeDialogue description;
 	OptionBox options;
 	
+	Character playerChar;
+	Character enemyChar;
+	
 	String[] optionLabels = { "Ataque Físico", "Ataque Místico", "Fugir"};
-	public enum BATTLE_OPTION { ATAQUE_FISICO , ATAQUE_MAGICO , FUGIR }; 
+	public enum BATTLE_OPTION { ATAQUE_FISICO , ATAQUE_MAGICO , FUGIR }; 	
 	public final int ATAQUE_FISICO = 0;
 	public final int ATAQUE_MAGICO = 1;
 	public final int FUGIR = 2;
 	
-	private BATTLE_STATE state;
-	private BATTLE_STATE nextState;
-	public enum BATTLE_STATE { CHOSE_ACTION, WAIT_ENEMY, WIN, LOSE, DISPLAYING_TEXT, ANIMATING};
+	public enum ACTION_STATE { CHOSE_ACTION, WAIT_ENEMY, ACTING};
+	public enum BATTLE_STATE { RUNNING, PLAYER_WON, PLAYER_LOSE};
+	
+	private ACTION_STATE actionState;
+	private BATTLE_STATE battleState;
+
 	public boolean playerTurn; 
 	
 	
-	private BattleAction currentAction = null;	
+	private BattleAction currentAction = null;
+	private boolean playerWon;	
 	
-	public BattleField(Skin skin) {
+	public BattleField(Skin skin, InputMultiplexer multiplexer) {
+		this.setMultiplexer(multiplexer);
 		int largura = 200;
 		int pad = 20;
-		state = BATTLE_STATE.CHOSE_ACTION;
-		player = new CharaBox(skin, true);
-		enemy  = new CharaBox(skin, false);
+		actionState = ACTION_STATE.CHOSE_ACTION;
+		battleState = BATTLE_STATE.RUNNING;
+		playerChar = new DullChara(100, 30, 20);
+		enemyChar = new DullChara(20, 5, 10);
+		playerCharaBox = new CharaBox(skin, true, playerChar);
+		enemyCharaBox  = new CharaBox(skin, false, enemyChar);
+		
+		playerCharaBox.setName("Jogador");
+		enemyCharaBox.setName("Oponente");
+		
+		
 		description = new FixedSizeDialogue(skin, largura,100);
 		options = new OptionBox(skin);
 		int i = 0;
@@ -50,11 +73,12 @@ public class BattleField extends Table {
 	
 	private void chooseFirst() {
 		double d100 = (1-Math.random())*100;
+		d100 = 20;
 		if (d100 > 50) {
-			state = BATTLE_STATE.WAIT_ENEMY;
+			actionState = ACTION_STATE.WAIT_ENEMY;
 			playerTurn = false;
 		} else {
-			state = BATTLE_STATE.CHOSE_ACTION;
+			actionState = ACTION_STATE.CHOSE_ACTION;
 			playerTurn = true;
 			
 		}
@@ -62,38 +86,75 @@ public class BattleField extends Table {
 	
 	@Override
 	public void act(float delta) {
-		switch(state) {
-			case CHOSE_ACTION:
-				break;
-			case WAIT_ENEMY:
-				if(currentAction == null) {
-					currentAction = new TextAction(this, "O Inimigo te ataca.");
-					currentAction.doAction();
-				} else {
-					if (currentAction.isFinished()) {
-						state = BATTLE_STATE.CHOSE_ACTION;
+		super.act(delta);
+		//description.act(delta);		
+		if(battleState == BATTLE_STATE.RUNNING) {
+			switch(actionState) {
+				case CHOSE_ACTION:
+					if(!options.getEnabled())
+						options.setEnabled(true);
+					break;
+				case WAIT_ENEMY:
+					if(options.getEnabled()) {
+						options.setEnabled(false);
 					}
-				}
-				break;
-			case DISPLAYING_TEXT:
-				if(description.isFinished())
-					state = nextState;
-				break;
-			case ANIMATING:
-				break;
-			case WIN:
-				break;
-			case LOSE:
-				break;
+					if(currentAction == null) {
+						currentAction =  new TextAction(this, "O Inimigo te ataca.", null);
+						currentAction.doAction();
+						actionState = ACTION_STATE.ACTING;
+					} else {
+						if (currentAction.isFinished()) {
+							actionState = ACTION_STATE.CHOSE_ACTION;
+						}
+					}
+					break;
+				case ACTING:
+					if(options.getEnabled()) {
+						options.setEnabled(false);
+					}
+					if(currentAction == null || currentAction.isFinished()) {
+						playerTurn = !playerTurn;
+						actionState = getNextState(playerTurn);
+						currentAction = null;
+					} 
+					break;
+			}
+			if(playerChar.getCurrent_hp() <= 0) {
+				battleState = BATTLE_STATE.PLAYER_LOSE;
+				actionState = ACTION_STATE.ACTING;
+				currentAction = new TextAction(this, "Você perdeu.", this.multiplexer);
+				currentAction.doAction();
+			} 
+			if (enemyChar.getCurrent_hp() <= 0) {
+				battleState = BATTLE_STATE.PLAYER_WON;
+				actionState = ACTION_STATE.ACTING;
+				currentAction = new TextAction(this, "Você venceu.", this.multiplexer);
+				currentAction.doAction();
+			}
 		}
 	}
+	private ACTION_STATE getNextState(boolean isPlayerTurn) {
+		if (battleState == BATTLE_STATE.PLAYER_WON || battleState == BATTLE_STATE.PLAYER_LOSE)
+			return ACTION_STATE.ACTING;
+		if(isPlayerTurn) {
+			return ACTION_STATE.CHOSE_ACTION; 
+		} else {
+			return ACTION_STATE.WAIT_ENEMY;
+		}
+		
+	}
+
 	private void setTableLayout(int space) {
 		Table tabela = new Table(getSkin());
-		tabela.add(player).align(Align.topLeft);
-		tabela.add(enemy).align(Align.topRight).padBottom(space);
+		tabela.add(playerCharaBox).align(Align.topLeft);
+		tabela.add(enemyCharaBox).align(Align.topRight).padBottom(space);
 		tabela.row();
 		tabela.add(options).align(Align.center).padRight(space);
 		tabela.add(description).expand();
+		tabela.addActor(description);
+		tabela.addActor(options);
+		tabela.addActor(playerCharaBox);
+		tabela.addActor(enemyCharaBox);
 		
 		this.add(tabela);
 	}
@@ -109,26 +170,44 @@ public class BattleField extends Table {
 
 
 	public void okPressed() {
+		System.out.println("OK PRESSED.");
+		if(actionState != ACTION_STATE.CHOSE_ACTION) {
+			return;
+		}
 		switch(options.getSelected()) {
-		case ATAQUE_FISICO:
-			currentAction = new TextAction(this, "Você ataca com sua espada");
-			break;
-		case ATAQUE_MAGICO:
-			currentAction = new TextAction(this, "Você ataca com magia negra");
-			break;
-		case FUGIR:
-			BattleAction tentativa = new TextAction(this, "Você tenta fugir...");
-			String runResult = canRun(0.5d)? "Você consegue." : "Você falhou.";
-			BattleAction resultado = new TextAction(this, runResult);
-			List<BattleAction> acoes = new ArrayList<BattleAction>();
-			acoes.add(tentativa);
-			acoes.add(resultado);
-			currentAction = new SerieOfActions(this, acoes);
-			break;
+			case ATAQUE_FISICO:
+				System.out.println("Você ataca com sua espada.");
+				printOnScreen("Teste");
+				BattleAction textAction = new TextAction(this, "Você ataca com sua espada", this.getMultiplexer());
+				BattleAction damageAction = new DamageAction(this, playerCharaBox, enemyCharaBox, DAMAGE.NORMAL);
+				currentAction = new SerieOfActions(this, textAction, damageAction);
+				break;
+			case ATAQUE_MAGICO:
+				System.out.println("Você ataca com magia negra.");
+				BattleAction textMagicAction = new TextAction(this, "Você ataca com magia negra", this.getMultiplexer());
+				BattleAction damageMagicAction = new DamageAction(this, playerCharaBox, enemyCharaBox, DAMAGE.MAGIC);
+				currentAction = new SerieOfActions(this, textMagicAction, damageMagicAction);
+				break;
+			case FUGIR:
+				System.out.println("Você tenta fugir.");
+				BattleAction tentativa = new TextAction(this, "Você tenta fugir...", this.getMultiplexer());
+				String runResult = canRun(0.5d)? "Você consegue." : "Você falhou.";
+				System.out.println(runResult);
+				BattleAction resultado = new TextAction(this, runResult, this.getMultiplexer());
+				List<BattleAction> acoes = new ArrayList<BattleAction>();
+				acoes.add(tentativa);
+				acoes.add(resultado);
+				currentAction = new SerieOfActions(this, acoes);
+				break;
+			default:
+				assert(options.getSelected() > 0);
+				System.out.println("Opção desconhecida: "+ options.getSelected());
+				
 		}
-		if(state==BATTLE_STATE.CHOSE_ACTION && currentAction != null) {
-			currentAction.doAction();
-		}
+		System.out.println("Do Action: " + currentAction);
+		currentAction.doAction();
+		actionState = ACTION_STATE.ACTING;
+
 		
 	}
 	
@@ -144,20 +223,27 @@ public class BattleField extends Table {
 	}
 	
 
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		if(state == BATTLE_STATE.DISPLAYING_TEXT) {
-			if(description.isFinished()) {
-				state = BATTLE_STATE.CHOSE_ACTION;
-			}
-	}
-		
-	}
 	
 	public void printOnScreen(String text) {
 		description.animateText(text);
-		state = BATTLE_STATE.DISPLAYING_TEXT;
+		actionState = ACTION_STATE.ACTING;
+	}
+
+	public void displayText(String text) {
+		this.description.animateText(text);
+		
+	}
+
+	public boolean displayFinished() {
+		return this.description.isFinished();
+	}
+
+	public InputMultiplexer getMultiplexer() {
+		return multiplexer;
+	}
+
+	public void setMultiplexer(InputMultiplexer multiplexer) {
+		this.multiplexer = multiplexer;
 	}
 	
 	

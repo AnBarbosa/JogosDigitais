@@ -1,26 +1,35 @@
 package br.edu.ufabc.alunos.battle.actions;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+
+import com.badlogic.gdx.utils.Queue;
 
 import br.edu.ufabc.alunos.ui.battle.BattleField;
 
 public class SerieOfActions extends BattleAction {
-	private Stack<BattleAction> actions;
+	private Queue<BattleAction> actions;
 	private BattleAction currentAction;
 	public SerieOfActions(BattleField bf, List<BattleAction> actions) {
 		super(bf);
-		this.actions = new Stack<BattleAction>();
+		this.actions = new Queue<BattleAction>();
 		for (BattleAction ba : actions) {
-			actions.add(ba);
+			this.actions.addLast(ba);
 		}
 		
+	}
+	
+	public SerieOfActions(BattleField bf, BattleAction...actions) {
+		super(bf);
+		this.actions = new Queue<BattleAction>();
+		for (BattleAction action: actions) {
+			this.actions.addLast(action);
+		}
 	}
 
 	@Override
 	public void doAction() {
-		currentAction = actions.pop();
+		currentAction = actions.removeFirst();
 		currentAction.doAction();
 	}
 	
