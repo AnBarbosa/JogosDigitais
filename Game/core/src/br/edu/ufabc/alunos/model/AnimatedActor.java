@@ -3,6 +3,8 @@ package br.edu.ufabc.alunos.model;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 
+import br.edu.ufabc.alunos.model.map.DIRECTION;
+import br.edu.ufabc.alunos.model.map.TileMap;
 import br.edu.ufabc.alunos.utils.AnimationSet;
 /** 
  *  This class will animate the movement of the actor based on it ANIMATION_STATE and the fields variables.
@@ -33,7 +35,7 @@ public class AnimatedActor extends Actor{
 	private float frameAnimationTimer; // Control which frame of the animation we wanna show.
 	private boolean wasMoveRequestedThisFrame;
 	
-	private AnimationSet animations;
+	protected AnimationSet animations;
 	
 	private ANIMATION_STATE animationState;
 	

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import br.edu.ufabc.alunos.model.DIRECTION;
+import br.edu.ufabc.alunos.model.map.DIRECTION;
 
 public class AnimationSet {
 	

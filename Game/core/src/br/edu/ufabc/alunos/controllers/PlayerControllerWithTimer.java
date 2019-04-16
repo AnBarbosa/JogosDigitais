@@ -9,7 +9,7 @@ import com.badlogic.gdx.InputAdapter;
 
 import br.edu.ufabc.alunos.model.Actor;
 import br.edu.ufabc.alunos.model.AnimatedActor;
-import br.edu.ufabc.alunos.model.DIRECTION;
+import br.edu.ufabc.alunos.model.map.DIRECTION;
 import br.edu.ufabc.alunos.utils.Log;
 
 public class PlayerControllerWithTimer extends InputAdapter {

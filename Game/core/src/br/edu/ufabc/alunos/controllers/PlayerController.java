@@ -7,7 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 
 import br.edu.ufabc.alunos.model.Actor;
-import br.edu.ufabc.alunos.model.DIRECTION;
+import br.edu.ufabc.alunos.model.map.DIRECTION;
 
 public class PlayerController extends InputAdapter {
 	private int dx=0;

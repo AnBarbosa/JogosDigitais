@@ -16,10 +16,11 @@ import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.model.Actor;
 import br.edu.ufabc.alunos.model.AnimatedActor;
 import br.edu.ufabc.alunos.model.Camera;
-import br.edu.ufabc.alunos.model.DIRECTION;
-import br.edu.ufabc.alunos.model.world.World;
-import br.edu.ufabc.alunos.model.world.WorldObject;
-import br.edu.ufabc.alunos.model.world.WorldRenderer;
+import br.edu.ufabc.alunos.model.PlayerActor;
+import br.edu.ufabc.alunos.model.map.DIRECTION;
+import br.edu.ufabc.alunos.model.map.world.World;
+import br.edu.ufabc.alunos.model.map.world.WorldObject;
+import br.edu.ufabc.alunos.model.map.world.WorldRenderer;
 import br.edu.ufabc.alunos.utils.AnimationSet;
 import br.edu.ufabc.alunos.utils.Log;
 
@@ -38,25 +39,9 @@ public class WorldGameScreen extends AbstractScreen {
 	public WorldGameScreen(GameApplication game) {
 		super(game);
 			batch = new SpriteBatch();
-		
-		TextureAtlas atlas = game.getAssetManager().get("tutorial/graphics_packed/tiles/tilepack.atlas");
-		
-		Animation[] anims = new Animation[DIRECTION.values().length];
-		anims[DIRECTION.NORTH.ordinal()] = new Animation(0.3f/2f, atlas.findRegions("brendan_walk_north"), PlayMode.LOOP_PINGPONG);
-		anims[DIRECTION.SOUTH.ordinal()] = new Animation(0.3f/2f, atlas.findRegions("brendan_walk_south"), PlayMode.LOOP_PINGPONG);
-		anims[DIRECTION.EAST.ordinal()] =  new Animation(0.3f/2f, atlas.findRegions("brendan_walk_east"), PlayMode.LOOP_PINGPONG);
-		anims[DIRECTION.WEST.ordinal()] =  new Animation(0.3f/2f, atlas.findRegions("brendan_walk_west"), PlayMode.LOOP_PINGPONG);
-		
-		TextureRegion[] stands = new TextureRegion[DIRECTION.values().length];
-		stands[DIRECTION.NORTH.ordinal()] = atlas.findRegion("brendan_stand_north");
-		stands[DIRECTION.SOUTH.ordinal()] = atlas.findRegion("brendan_stand_south");
-		stands[DIRECTION.EAST.ordinal()] = atlas.findRegion("brendan_stand_east");
-		stands[DIRECTION.WEST.ordinal()] = atlas.findRegion("brendan_stand_west");
-		
-		AnimationSet animations = new AnimationSet(anims, stands);
 
 		world = new World(100,100);
-		player = new AnimatedActor(world.getMap(), 50, 50, animations);
+		player = new PlayerActor(world.getMap(), 50, 50);
 		playerController = new PlayerControllerWithTimer(player);
 		super.addInputProcessor(playerController);
 		camera = new Camera();
