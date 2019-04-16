@@ -33,6 +33,8 @@ public class BasicTileMap extends TileMap {
 				tiles[x][y] = t[tileIndex].clone();
 			}
 		}
+		
+		tiles[50][45] = new Tile(TERRAIN.EMERALD);
 	}
 
 	private void populateTiles(Tile[] t) {

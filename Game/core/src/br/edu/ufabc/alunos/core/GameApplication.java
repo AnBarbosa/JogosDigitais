@@ -29,6 +29,7 @@ public class GameApplication extends Game {
 
 		assetManager.load("Tile/32x32/grass.png", Texture.class);
 		assetManager.load("Tile/32x32/grass2.png", Texture.class);
+		assetManager.load("Tile/32x32/Esmeralda.png", Texture.class);
 		assetManager.load("PlaceHolder.png", Texture.class);
 		assetManager.load("tutorial/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
 		assetManager.load("tutorial/graphics_unpacked/tiles/small_house.png", Texture.class);
