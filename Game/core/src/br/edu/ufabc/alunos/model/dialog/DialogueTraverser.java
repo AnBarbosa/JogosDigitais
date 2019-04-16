@@ -23,6 +23,9 @@ public class DialogueTraverser {
 		return currentNode.getOptions();
 	}
 	
+	public ChoiceAction getChoiceObserver(int index) {
+		return currentNode.getObserver(index);
+	}
 	public String getText() {
 		return currentNode.getText();
 	}
@@ -30,4 +33,6 @@ public class DialogueTraverser {
 	public NODE_TYPE getType() {
 		return currentNode.getType();
 	}
+	
+	
 }

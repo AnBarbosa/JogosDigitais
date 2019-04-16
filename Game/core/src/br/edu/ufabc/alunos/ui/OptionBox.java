@@ -24,7 +24,7 @@ public class OptionBox extends Table {
 	private List<Label> options = new ArrayList<Label>();
 	private Table uiContainer;
 
-	private boolean enabled;
+	private boolean enabled = true;
 	
 	public OptionBox(Skin skin) {
 		super(skin);	

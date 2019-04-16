@@ -1,8 +1,8 @@
 package br.edu.ufabc.alunos.controllers;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
+import br.edu.ufabc.alunos.model.dialog.ChoiceAction;
 import br.edu.ufabc.alunos.model.dialog.DialogueNode;
 import br.edu.ufabc.alunos.model.dialog.DialogueNode.NODE_TYPE;
 import br.edu.ufabc.alunos.model.dialog.DialogueTraverser;
@@ -98,6 +98,11 @@ public class DialogueController extends InputAdapter {
 					progress(0);
 					break;
 				case MULTIPLE_CHOICE:
+					int selected = optionBox.getSelected();
+					ChoiceAction chosenOptionAction = traverser.getChoiceObserver(selected);
+					if(chosenOptionAction != null) {
+						chosenOptionAction.doAction();
+					}
 					progress(optionBox.getSelected());
 			}
 		}

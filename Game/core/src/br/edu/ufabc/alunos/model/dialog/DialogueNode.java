@@ -6,7 +6,7 @@ import java.util.List;
 public class DialogueNode {
 	private final List<Integer> pointers = new ArrayList<>();
 	private final List<String> optionsLabels	= new ArrayList<>();
-	
+	private final List<ChoiceAction> observers = new ArrayList<>();
 	private final String text;
 	private final int id;
 	
@@ -30,6 +30,11 @@ public class DialogueNode {
 		type = NODE_TYPE.MULTIPLE_CHOICE;
 	}
 	
+
+	public void addChoice(String option, int nodeID, ChoiceAction optionObserver) {
+		observers.add(optionObserver);
+		addChoice(option, nodeID);
+	}
 	public void makeLinear(int nodeID) {
 
 	}
@@ -39,7 +44,6 @@ public class DialogueNode {
 	}
 
 	public int getID() {
-		// TODO Auto-generated method stub
 		return this.id;
 	}
 
@@ -50,9 +54,19 @@ public class DialogueNode {
 	public List<String> getOptions() {
 		return new ArrayList<>(optionsLabels);
 	}
+	
+	public List<ChoiceAction> getObservers(){
+		return new ArrayList<>(observers);
+	}
+	
+	public ChoiceAction getObserver(int choice) {
+		if(observers.size() >= choice+1) {
+			return observers.get(choice);
+		} else 
+			return null;
+	}
 
 	public String getText() {
-		// TODO Auto-generated method stub
 		return this.text;
 	}
 
@@ -72,3 +86,4 @@ public class DialogueNode {
 	
 	
 }
+
