@@ -15,6 +15,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import br.edu.ufabc.alunos.controllers.DialogueController;
 import br.edu.ufabc.alunos.core.GameApplication;
+import br.edu.ufabc.alunos.core.GameMaster;
+import br.edu.ufabc.alunos.model.battle.DullChara;
 import br.edu.ufabc.alunos.model.dialog.DialogueNode;
 import br.edu.ufabc.alunos.model.dialog.DialogueTree;
 import br.edu.ufabc.alunos.ui.DialogueBox;
@@ -46,12 +48,14 @@ public class GameScreenWithUI extends WorldGameScreen {
 	public GameScreenWithUI(GameApplication game) {
 		super(game);
 		gameViewport = new ScreenViewport();
+		GameMaster.init(game);
 		initUI();
 		initBattleUI();
 		initFadeUI();
 		setupInputProcessors();
 		
 		exampleDialog();
+		dialogueController.startDialogue(dialogue);
 	}
 	
 
@@ -84,11 +88,28 @@ public class GameScreenWithUI extends WorldGameScreen {
 		DialogueNode guerreiro = new DialogueNode("Você parece mesmo feroz.", 3);
 		
 		apresentacao.makeLinear().setNext(pergunta.getID());
-		pergunta.addChoice("Mago", mago.getID());
-		pergunta.addChoice("Guerreiro", guerreiro.getID());
+		pergunta.addChoice("Mago", mago.getID(), ()->{setPlayer(true);System.out.println("Nas artes místicas encontrei o poder.");});
+		pergunta.addChoice("Guerreiro", guerreiro.getID(), ()-> {setPlayer(false);System.out.println("Com suor e sangue conquistei meus inimigos.");});
 		
 		dialogue.addNode(apresentacao, pergunta, mago, guerreiro);
 		return dialogue;
+	}
+	
+	private void setPlayer(boolean mago) {
+		int hp, normalDamage, magicDamage;
+		String tipo;
+		if(mago) {
+			tipo = "Mago";
+			hp = 30;
+			normalDamage = 5;
+			magicDamage = 30;
+		} else {
+			tipo = "Guerreiro";
+			hp = 50;
+			normalDamage = 20;
+			magicDamage = 5;
+		}
+		GameMaster.setPlayer(new DullChara(hp, normalDamage, magicDamage, tipo));
 	}
 	
 	private void debugCommands() {

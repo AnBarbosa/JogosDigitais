@@ -15,9 +15,10 @@ import br.edu.ufabc.alunos.core.Settings;
 import br.edu.ufabc.alunos.model.Actor;
 import br.edu.ufabc.alunos.model.AnimatedActor;
 import br.edu.ufabc.alunos.model.Camera;
-import br.edu.ufabc.alunos.model.DIRECTION;
-import br.edu.ufabc.alunos.model.TERRAIN;
-import br.edu.ufabc.alunos.model.TileMap;
+import br.edu.ufabc.alunos.model.map.DIRECTION;
+import br.edu.ufabc.alunos.model.map.TERRAIN;
+import br.edu.ufabc.alunos.model.map.TileMap;
+import br.edu.ufabc.alunos.model.map.BasicTileMap;
 import br.edu.ufabc.alunos.utils.AnimationSet;
 import br.edu.ufabc.alunos.utils.Log;
 
@@ -59,7 +60,7 @@ public class GameScreen extends AbstractScreen {
 		
 		AnimationSet animations = new AnimationSet(anims, stands);
 
-		map = new TileMap(10,10);
+		map = new BasicTileMap(10,10);
 		player = new AnimatedActor(map, 0,0, animations);
 		controller = new PlayerController(player);
 		camera = new Camera();
@@ -77,7 +78,7 @@ public class GameScreen extends AbstractScreen {
 			Log.debug = !Log.debug;	
 		}
 		if(Gdx.input.isKeyJustPressed(Keys.R)){
-			map = new TileMap(10,10);
+			map = new BasicTileMap(10,10);
 			player.setMap(map);
 			player.setPosition(0,0);
 			

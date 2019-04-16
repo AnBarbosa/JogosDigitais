@@ -13,6 +13,7 @@ import br.edu.ufabc.alunos.battle.actions.DamageAction;
 import br.edu.ufabc.alunos.battle.actions.DamageAction.DAMAGE;
 import br.edu.ufabc.alunos.battle.actions.SerieOfActions;
 import br.edu.ufabc.alunos.battle.actions.TextAction;
+import br.edu.ufabc.alunos.core.GameMaster;
 import br.edu.ufabc.alunos.model.battle.Character;
 import br.edu.ufabc.alunos.model.battle.DullChara;
 import br.edu.ufabc.alunos.ui.OptionBox;
@@ -52,13 +53,13 @@ public class BattleField extends Table {
 		int pad = 20;
 		actionState = ACTION_STATE.CHOSE_ACTION;
 		battleState = BATTLE_STATE.RUNNING;
-		playerChar = new DullChara(100, 30, 20);
-		enemyChar = new DullChara(20, 5, 10);
+		playerChar = GameMaster.getPlayer();
+		enemyChar = new DullChara(35, 5, 10, "Mistic Enemy");
 		playerCharaBox = new CharaBox(skin, true, playerChar);
 		enemyCharaBox  = new CharaBox(skin, false, enemyChar);
 		
-		playerCharaBox.setName("Jogador");
-		enemyCharaBox.setName("Oponente");
+		playerCharaBox.setName(playerChar.getName());
+		enemyCharaBox.setName(enemyCharaBox.getName());
 		
 		
 		description = new FixedSizeDialogue(skin, largura,100);

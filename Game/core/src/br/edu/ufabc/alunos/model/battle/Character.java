@@ -4,7 +4,7 @@ import br.edu.ufabc.alunos.ui.battle.CharaBox;
 
 public abstract class Character {
 	
-
+	protected String name;
 	protected int hp;
 	protected int current_hp;
 	protected int str;
@@ -14,7 +14,6 @@ public abstract class Character {
 	protected int mind;
 	protected int level;
 	protected int exp;
-	
 	public abstract void reciveDamege(int damage);
 	public abstract void reciveMagicalDamege(int damage);
 	public abstract int damage();
@@ -23,6 +22,13 @@ public abstract class Character {
 	public abstract int iniciativa();
 	
 	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public int getHp() {
 		return hp;
 	}
