@@ -45,7 +45,7 @@ public class World {
 	}
 	
 	public void addInnerPortal(Vector2 from, Vector2 to) {
-		map.getTile((int)from.x, (int)from.y).addInnerPortal((int)to.x, (int)to.y);
+		map.getTile((int)from.x, (int)from.y).addInnerPortal((int) to.x, (int) to.y);
 	}
 	
 	public List<WorldObject> getWorldObjects(){

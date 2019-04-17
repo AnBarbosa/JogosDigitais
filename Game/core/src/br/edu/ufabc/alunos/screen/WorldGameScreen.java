@@ -47,6 +47,7 @@ public class WorldGameScreen extends AbstractScreen {
 		camera = new Camera();
 		worldRenderer = new WorldRenderer(getApp().getAssetManager(), world);
 		world.addActor(player);
+	
 		addHouse(50, 53);
 	}
 

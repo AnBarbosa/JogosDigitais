@@ -66,4 +66,9 @@ public class Tile implements Cloneable{
 	public void setTexture(Texture t) {
 		this.texture = t;
 	}
+
+	public void addInnerPortal(int x, int y) {
+		// TODO Auto-generated method stub
+		
+	}
 }
