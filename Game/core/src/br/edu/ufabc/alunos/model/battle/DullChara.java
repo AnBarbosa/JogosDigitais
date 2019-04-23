@@ -51,5 +51,10 @@ public class DullChara extends Character {
 		// TODO Auto-generated method stub
 		return 10;
 	}
+	@Override
+	public void evolveHp() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

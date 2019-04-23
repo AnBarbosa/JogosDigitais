@@ -3,10 +3,10 @@ package br.edu.ufabc.alunos.model.battle;
 import java.util.Random;
 
 public class CharacterCreator {
-	private Random gerador = new Random();
-	public Warrior createWarrior(String name, int level){
+	private static final Random gerador = new Random();
+	public static Warrior createWarrior(String name, int level){
 		int str = gerador.nextInt(4)+level;
-		int dex =gerador.nextInt(3);
+		int dex = gerador.nextInt(3);
 		int con = gerador.nextInt(4)+level;
 		int magic = gerador.nextInt(2);
 		int mind = gerador.nextInt(3);
@@ -15,9 +15,9 @@ public class CharacterCreator {
 		return new Warrior(str, dex, con, magic, mind, level, exp, name);
 		
 	}
-	public Wizard createWizard(String name, int level){
+	public static Wizard createWizard(String name, int level){
 		int str = gerador.nextInt(2);
-		int dex =gerador.nextInt(2);
+		int dex = gerador.nextInt(2);
 		int con = gerador.nextInt(3);
 		int magic = gerador.nextInt(5)+level;
 		int mind = gerador.nextInt(3)+level;
@@ -26,7 +26,7 @@ public class CharacterCreator {
 		return new Wizard(str, dex, con, magic, mind, level, exp, name);
 		
 	}
-	public Rogue createRogue(String name, int level){
+	public static Rogue createRogue(String name, int level){
 		int str = gerador.nextInt(3);
 		int dex =gerador.nextInt(6)+level;
 		int con = gerador.nextInt(3)+level;
@@ -37,7 +37,7 @@ public class CharacterCreator {
 		return new Rogue(str, dex, con, magic, mind, level, exp, name);
 		
 	}
-	public Dragon createDragon(String name, int level, boolean boss){
+	public static Dragon createDragon(String name, int level, boolean boss){
 		int str,dex,con,magic,mind,exp; 
 		
 		if(boss) {
@@ -60,7 +60,7 @@ public class CharacterCreator {
 		return new Dragon(str, dex, con, magic, mind, level, exp, name);
 		
 	}
-	public Minotaur createMinotaur(String name, int level, boolean boss){
+	public static Minotaur createMinotaur(String name, int level, boolean boss){
 		int str,dex,con,magic,mind,exp; 
 		
 		if(boss) {
@@ -83,7 +83,7 @@ public class CharacterCreator {
 		return new Minotaur(str, dex, con, magic, mind, level, exp, name);
 		
 	}
-	public Kobold createKobold(String name, int level, boolean boss){
+	public static Kobold createKobold(String name, int level, boolean boss){
 		int str,dex,con,magic,mind,exp; 
 		
 		if(boss) {
