@@ -4,7 +4,7 @@ public class Kobold extends Character {
 	
 	public Kobold(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {
-		int calcHp = this.gerador.nextInt(4) + con;
+		int calcHp = ((this.gerador.nextInt(4) + con)*10)*level;
 		this.setHp(calcHp);
 		this.setCurrent_hp(calcHp);
 		this.setStr(str);
@@ -57,4 +57,16 @@ public class Kobold extends Character {
 		this.current_hp += calcHp;
 		
 	}
+	@Override
+	public int run() {
+		int run = this.gerador.nextInt(21)+this.dex;
+		return run;
+	}
+
+	@Override
+	public int notRun() {
+		int run = this.gerador.nextInt(21)+this.str+(level/3);
+		return run;
+	}
+	
 }
