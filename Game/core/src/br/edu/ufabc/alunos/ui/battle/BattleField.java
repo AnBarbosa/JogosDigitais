@@ -15,6 +15,7 @@ import br.edu.ufabc.alunos.battle.actions.SerieOfActions;
 import br.edu.ufabc.alunos.battle.actions.TextAction;
 import br.edu.ufabc.alunos.core.GameMaster;
 import br.edu.ufabc.alunos.model.battle.Character;
+import br.edu.ufabc.alunos.model.battle.CharacterCreator;
 import br.edu.ufabc.alunos.model.battle.DullChara;
 import br.edu.ufabc.alunos.ui.OptionBox;
 
@@ -54,7 +55,7 @@ public class BattleField extends Table {
 		actionState = ACTION_STATE.CHOSE_ACTION;
 		battleState = BATTLE_STATE.RUNNING;
 		playerChar = GameMaster.getPlayer();
-		enemyChar = new DullChara(35, 5, 10, "Mistic Enemy");
+		enemyChar = CharacterCreator.getEnemy(CharacterCreator.Enemy.RANDOM, "Um Inimigo", 1, false);
 		playerCharaBox = new CharaBox(skin, true, playerChar);
 		enemyCharaBox  = new CharaBox(skin, false, enemyChar);
 		
@@ -64,7 +65,7 @@ public class BattleField extends Table {
 		
 		description = new FixedSizeDialogue(skin, largura,100);
 		options = new OptionBox(skin);
-		int i = 0;
+		
 		for (String option : optionLabels) {
 			options.addOption(option);
 		}
@@ -100,7 +101,10 @@ public class BattleField extends Table {
 						options.setEnabled(false);
 					}
 					if(currentAction == null) {
-						currentAction =  new TextAction(this, "O Inimigo te ataca.", null);
+						
+						BattleAction textAction = new TextAction(this, "O inimigo te ataca.", this.getMultiplexer());
+						BattleAction damageAction = new DamageAction(this, enemyCharaBox, playerCharaBox, DAMAGE.NORMAL);
+						currentAction = new SerieOfActions(this, textAction, damageAction);
 						currentAction.doAction();
 						actionState = ACTION_STATE.ACTING;
 					} else {

@@ -28,7 +28,7 @@ public abstract class Character {
 	public void evolve(int exp) {
 		this.exp += exp;
 		// só sobe um nivel por vez mesmo qua ganhe muito xp
-		if(this.exp >=((this.level+1)*(10+this.level/2))) {
+		if(this.exp >=((this.level+1)*((10 + this.level)/2))) {
 			this.level ++; 
 			this.evolveHp();
 		}

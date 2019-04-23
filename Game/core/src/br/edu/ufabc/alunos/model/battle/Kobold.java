@@ -35,7 +35,7 @@ public class Kobold extends Character {
 	public int damage() {
 		int damage;
 		damage = (int) ((this.gerador.nextInt(3)+this.str)*(0.5 + (this.level/10)));
-		return damage;
+		return Math.max(damage, 0);
 	}
 
 	@Override

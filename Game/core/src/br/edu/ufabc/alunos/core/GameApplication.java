@@ -34,6 +34,7 @@ public class GameApplication extends Game {
 		assetManager.load("tutorial/graphics_unpacked/tiles/small_house.png", Texture.class);
 		assetManager.load("tutorial/graphics_packed/ui/uipack.atlas", TextureAtlas.class);
 		assetManager.load("tutorial/font/small_letters_font.fnt", BitmapFont.class);
+		//assetManager.load("Screens/", Texture.class);
 		
 		while(!assetManager.isFinished()) {
 			assetManager.update();

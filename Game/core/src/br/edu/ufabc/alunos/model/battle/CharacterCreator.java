@@ -4,6 +4,52 @@ import java.util.Random;
 
 public class CharacterCreator {
 	private static final Random gerador = new Random();
+	public enum Player {
+		WARRIOR, WIZARD, ROGUE;
+	}
+	
+	public enum Enemy{
+		 DRAGON, MINOTAUR, KOBOLD, RANDOM;
+	}
+	
+	public static Character getPlayer(Player player, String name, int level) {
+		assert(player != null);
+		assert(name != null && name.length() > 0);
+		assert(level >= 0);
+		
+		switch (player) {
+			case WARRIOR:
+				return createWarrior(name, level);
+			case WIZARD:
+				return createWizard(name, level);
+			case ROGUE:
+				return createRogue(name, level);
+			default:
+				return null;
+		}
+	}
+	
+	public static Character getEnemy(Enemy enemy, String name, int level, boolean boss) {
+		assert(enemy != null);
+		assert(name != null && name.length() > 0);
+		assert(level >= 0);
+		if(enemy==Enemy.RANDOM) {
+			int index = gerador.nextInt(3);
+			enemy = Enemy.values()[index];
+		}
+		
+		switch (enemy) {
+			case DRAGON:
+				return createDragon(name, level, boss);
+			case MINOTAUR:
+				return createMinotaur(name, level, boss);
+			case KOBOLD:
+				return createKobold(name, level, boss);
+			default:
+				return null;
+		}
+		
+	}
 	public static Warrior createWarrior(String name, int level){
 		int str = gerador.nextInt(4)+level;
 		int dex = gerador.nextInt(3);

@@ -24,6 +24,16 @@ public class Controls {
 		controles.put(Keys.Z,  COMANDO.OK);
 		controles.put(Keys.X,  COMANDO.CANCEL);
 		controles.put(Keys.Q,  COMANDO.QUIT);
+		
+		// Usar os Keys.BUTTON para aceitar um controle além do teclado.
+		controles.put(Keys.W,  COMANDO.UP);
+		controles.put(Keys.S,  COMANDO.DOWN);
+		controles.put(Keys.A,  COMANDO.LEFT);
+		controles.put(Keys.D,  COMANDO.RIGHT);
+		controles.put(Keys.Z,  COMANDO.OK);
+		controles.put(Keys.X,  COMANDO.CANCEL);
+		controles.put(Keys.Q,  COMANDO.QUIT);
+		
 	}
 	
 	public static COMANDO getComando(int keycode) {

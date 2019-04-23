@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import br.edu.ufabc.alunos.controllers.DialogueController;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.core.GameMaster;
+import br.edu.ufabc.alunos.model.battle.CharacterCreator;
 import br.edu.ufabc.alunos.model.battle.DullChara;
 import br.edu.ufabc.alunos.model.dialog.DialogueNode;
 import br.edu.ufabc.alunos.model.dialog.DialogueTree;
@@ -83,33 +84,32 @@ public class GameScreenWithUI extends WorldGameScreen {
 	private DialogueTree exampleDialog() {
 		dialogue = new DialogueTree();
 		DialogueNode apresentacao = new DialogueNode("Olá! \n Legal te conhecer.", 0);
-		DialogueNode pergunta = new DialogueNode("Você é um Mago ou Guerreiro?", 1);
+		DialogueNode pergunta = new DialogueNode("Que tipo de aventureiro você é?", 1);
 		DialogueNode mago = new DialogueNode("Eu senti mesmo uma aura mística.", 2);
 		DialogueNode guerreiro = new DialogueNode("Você parece mesmo feroz.", 3);
+		DialogueNode gatuno = new DialogueNode("Melhor eu checar meus bolsos.", 4);
 		
 		apresentacao.makeLinear().setNext(pergunta.getID());
-		pergunta.addChoice("Mago", mago.getID(), ()->{setPlayer(true);System.out.println("Nas artes místicas encontrei o poder.");});
-		pergunta.addChoice("Guerreiro", guerreiro.getID(), ()-> {setPlayer(false);System.out.println("Com suor e sangue conquistei meus inimigos.");});
+		pergunta.addChoice("Mago", mago.getID(), ()->{
+			setPlayer(CharacterCreator.Player.WIZARD);
+			System.out.println("Nas artes místicas encontrei o poder.");
+		});
+		pergunta.addChoice("Guerreiro", guerreiro.getID(), ()-> {
+			setPlayer(CharacterCreator.Player.WARRIOR);
+			System.out.println("Com suor e sangue conquistarei meus inimigos.");
+		});
+		pergunta.addChoice("Gatuno", gatuno.getID(), ()-> {
+			setPlayer(CharacterCreator.Player.ROGUE);
+			System.out.println("Mãos mais rápidas que o olho enchem meus bolsos.");
+		});
 		
-		dialogue.addNode(apresentacao, pergunta, mago, guerreiro);
+		dialogue.addNode(apresentacao, pergunta, mago, guerreiro, gatuno);
 		return dialogue;
 	}
 	
-	private void setPlayer(boolean mago) {
-		int hp, normalDamage, magicDamage;
-		String tipo;
-		if(mago) {
-			tipo = "Mago";
-			hp = 30;
-			normalDamage = 5;
-			magicDamage = 30;
-		} else {
-			tipo = "Guerreiro";
-			hp = 50;
-			normalDamage = 20;
-			magicDamage = 5;
-		}
-		GameMaster.setPlayer(new DullChara(hp, normalDamage, magicDamage, tipo));
+	private void setPlayer(CharacterCreator.Player p) {
+		br.edu.ufabc.alunos.model.battle.Character player = CharacterCreator.getPlayer(p, p.toString(), 1);
+		GameMaster.setPlayer(player);
 	}
 	
 	private void debugCommands() {
