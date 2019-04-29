@@ -69,6 +69,9 @@ public class CharaBox extends Table {
 	}
 	
 	public void updateHP() {
+		if(maxHP == 0) {
+			return;
+		}
 		float fracao = currHP/maxHP;
 		hpLabel.setText("HP: "+currHP+"/"+maxHP);
 	}

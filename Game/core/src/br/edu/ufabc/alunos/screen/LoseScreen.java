@@ -1,48 +1,27 @@
 package br.edu.ufabc.alunos.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
-import br.edu.ufabc.alunos.controllers.DialogueController;
+import br.edu.ufabc.alunos.controllers.Controls;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.core.GameMaster;
-import br.edu.ufabc.alunos.model.battle.CharacterCreator;
-import br.edu.ufabc.alunos.model.battle.DullChara;
-import br.edu.ufabc.alunos.model.dialog.DialogueNode;
-import br.edu.ufabc.alunos.model.dialog.DialogueTree;
-import br.edu.ufabc.alunos.ui.DialogueBox;
-import br.edu.ufabc.alunos.ui.OptionBox;
-import br.edu.ufabc.alunos.ui.battle.BattleField;
-import br.edu.ufabc.alunos.ui.battle.FixedSizeDialogue;
+import br.edu.ufabc.alunos.ui.battle.BattleField.BATTLE_STATE;
 
-public class LoseScreen extends AbstractScreen {
+public class LoseScreen extends AbstractScreen implements InputProcessor{
 	
 	private SpriteBatch spriteBatch;
-	private Texture loseMessage;
+	private Texture loseImage;
 
 	public LoseScreen(GameApplication game) {
 		super(game);
 		spriteBatch = new SpriteBatch();
-		
-
+		loseImage = GameApplication.getAssetManager().get("Screens/LoseScreen.png");
+		this.addInputProcessor(this);
 	}
-
-
-	
-	
-
-	
 	
 	private void debugCommands() {
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
@@ -54,61 +33,107 @@ public class LoseScreen extends AbstractScreen {
 		}
 	}
 
-
-
 	@Override
 	public void render(float delta) {
 		debugCommands();
 		spriteBatch.begin();
-		spriteBatch.draw(loseMessage, 0, 0, loseMessage.getWidth(), loseMessage.getHeight());
+		spriteBatch.draw(loseImage, 0, 0, loseImage.getWidth(), loseImage.getHeight());
 		spriteBatch.end();
 
 	}
-
 	@Override
 	public void resize(int width, int height) {
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0,0, width, height);
 	
 	}
-
-
-
-
-
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
-
-
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
 		
-	}
-
-
-
-
-
+	} 
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
 		
+	} 
+	@Override
+	public void dispose() {
+		spriteBatch.dispose();
+		
 	}
 
 
 
 
 
+
+
+
 	@Override
-	public void dispose() {
-		spriteBatch.dispose();
-		
+	public boolean keyDown(int keycode) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		switch(Controls.getComando(keycode)) {
+			case OK:
+				System.out.println("Ok pressed");
+				game.startTransition(this, new GameScreenWithUI(game), 
+						GameMaster.getFadeOut(), 
+						GameMaster.getFadeIn(), 
+						null);
+				//game.setScreen(new GameScreenWithUI(game));
+				return true;
+			case CANCEL:
+				System.out.println("Cancel pressed");
+				Gdx.app.exit();
+				System.exit(0);
+				return true;
+			default:
+				return false;
+		}
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

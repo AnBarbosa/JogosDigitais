@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import br.edu.ufabc.alunos.controllers.BattleController;
 import br.edu.ufabc.alunos.core.GameApplication;
+import br.edu.ufabc.alunos.core.GameMaster;
 import br.edu.ufabc.alunos.ui.battle.BattleField;
 
 
@@ -23,9 +24,6 @@ public class BattleScreen extends AbstractScreen {
 	private Stage battleStage;
 	private Table rootBattle;
 
-	private Stage fadeStage;
-	private Image black;
-	
 	protected SpriteBatch batch;
 	
 
@@ -41,18 +39,7 @@ public class BattleScreen extends AbstractScreen {
 		BattleField bf = new BattleField(getApp().getSkin(), this.multiplexer); 
 		rootBattle.add(bf).expand().align(Align.center).pad(10f);
 		
-		// Fade
-		fadeStage = new Stage(new ScreenViewport());
-		fadeStage.getViewport().update(Gdx.graphics.getWidth()/uiScale, Gdx.graphics.getHeight()/uiScale);
-		black = new Image(new Texture(Gdx.files.internal("tutorial/graphics/transitions/black.png")));
-		black.setVisible(false);
-		Table fade = new Table();
-		fade.setFillParent(true);
-		fade.add(black);
-		fadeStage.addActor(fade);
-		
-		
-		controller = new BattleController(bf);
+		controller = new BattleController(bf, this);
 		
 		addInputProcessor(controller);
 	}
@@ -61,14 +48,12 @@ public class BattleScreen extends AbstractScreen {
 	public void render(float delta) {
 		
 		debugCommands();
-		battleStage.act(delta);
-		fadeStage.act(delta);
-		
+		battleStage.act(delta);	
+	
+		controller.update(delta);
 	
 		
 		battleStage.draw();
-		fadeStage.draw();
-
 	}
 
 	private void debugCommands() {
@@ -84,7 +69,7 @@ public class BattleScreen extends AbstractScreen {
 
 	@Override
 	public void resize(int width, int height) {
-		fadeStage.getViewport().update(width/uiScale,  height/uiScale, true);
+	
 		battleStage.getViewport().update(width/uiScale,  height/uiScale, true);
 		
 	}
@@ -113,6 +98,18 @@ public class BattleScreen extends AbstractScreen {
 	public void dispose() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public void win() {
+		game.startTransition(this, new GameScreenWithUI(game), 
+				GameMaster.getFadeOut(), GameMaster.getFadeIn(),
+				null);
+	}
+	
+	public void lose() {
+		game.startTransition(this, new LoseScreen(game), 
+				GameMaster.getFadeOut(), GameMaster.getFadeIn(),
+				null);
 	}
 
 }

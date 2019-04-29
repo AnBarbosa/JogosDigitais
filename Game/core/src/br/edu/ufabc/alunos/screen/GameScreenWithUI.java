@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -16,14 +17,12 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import br.edu.ufabc.alunos.controllers.DialogueController;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.core.GameMaster;
+import br.edu.ufabc.alunos.model.Action;
 import br.edu.ufabc.alunos.model.battle.CharacterCreator;
-import br.edu.ufabc.alunos.model.battle.DullChara;
 import br.edu.ufabc.alunos.model.dialog.DialogueNode;
 import br.edu.ufabc.alunos.model.dialog.DialogueTree;
 import br.edu.ufabc.alunos.ui.DialogueBox;
 import br.edu.ufabc.alunos.ui.OptionBox;
-import br.edu.ufabc.alunos.ui.battle.BattleField;
-import br.edu.ufabc.alunos.ui.battle.FixedSizeDialogue;
 
 public class GameScreenWithUI extends WorldGameScreen {
 
@@ -119,27 +118,37 @@ public class GameScreenWithUI extends WorldGameScreen {
 		}
 
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
-			System.out.println("Testando Fixed Line numbers(3)");
-			DialogueBox d = new FixedSizeDialogue(getApp().getSkin());
-			rootUI.add(d);
-			d.setVisible(true);
-			d.animateText("I had this issue for years and accidentally solved it by setting the width and packing the label twice. Note that multiline labels were never intended to figure out their own width, so you have to set them externally, preferably from it's parent.");
+			game.setScreen(new LoseScreen(game));
+		}		
+		if(Gdx.input.isKeyJustPressed(Keys.NUM_3)) {
+			System.out.println("Starting transition...");
+			Color color = Color.BLACK;
+			game.startTransition(this, this,
+					new FadeOutTransition(0.8f, color, game.getAssetManager()),
+					new FadeInTransition(0.8f, color, game.getAssetManager()),
+					() -> System.out.println("Fading...")
+					);
+			System.out.println("Transition finished...");		
+			
 		}
-		if(Gdx.input.isKeyJustPressed(Keys.NUM_3)) {			
-			rootBattle.clear();			
-			rootBattle.add(new BattleField(getApp().getSkin(), this.multiplexer)).expand().align(Align.center).pad(10f);
-		}
+		
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
-			rootBattle.clear();
-			rootBattle.add(new BattleField(getApp().getSkin(), this.multiplexer)).expand().align(Align.center).pad(10f);
+			System.out.println("Starting transition...");
+			Color color = Color.BLACK;
+			game.startTransition(this, new LoseScreen(game),
+					new FadeOutTransition(0.8f, color, game.getAssetManager()),
+					new FadeInTransition(0.8f, color, game.getAssetManager()),
+					() -> System.out.println("Fading...")
+					);
+			System.out.println("Transition finished...");		
+			
 		}
-		if(Gdx.input.isKeyJustPressed(Keys.NUM_5)) {
-			rootBattle.clear();
-			rootBattle.add(new BattleField(getApp().getSkin(), this.multiplexer)).expand().align(Align.center).pad(10f);
-		}
+		
+		
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_6)) {
 			black.setVisible(!black.isVisible());
 		}
+		
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_7)) {
 			game.setScreen(new BattleScreen(game));
 			System.out.println("Changed Screen.");

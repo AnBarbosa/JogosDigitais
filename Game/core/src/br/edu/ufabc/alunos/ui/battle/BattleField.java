@@ -251,5 +251,7 @@ public class BattleField extends Table {
 		this.multiplexer = multiplexer;
 	}
 	
-	
+	public BATTLE_STATE getBattleState() {
+		return battleState;
+	}
 }
