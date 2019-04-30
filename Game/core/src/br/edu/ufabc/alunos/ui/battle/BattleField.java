@@ -60,7 +60,7 @@ public class BattleField extends Table {
 		enemyCharaBox  = new CharaBox(skin, false, enemyChar);
 		
 		playerCharaBox.setName(playerChar.getName());
-		enemyCharaBox.setName(enemyCharaBox.getName());
+		enemyCharaBox.setName(enemyChar.getName());
 		
 		
 		description = new FixedSizeDialogue(skin, largura,100);

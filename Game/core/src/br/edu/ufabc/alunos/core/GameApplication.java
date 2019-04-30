@@ -44,6 +44,9 @@ public class GameApplication extends Game {
 		assetManager.load("Screens/LoseScreen.png", Texture.class);
 		assetManager.load("tutorial/graphics/statuseffect/white.png", Texture.class);
 		
+		assetManager.load("Charas/mage_male.png", Texture.class);
+		assetManager.load("Charas/rogue_male.png", Texture.class);
+		assetManager.load("Charas/warrior_male.png", Texture.class);
 		
 		while(!assetManager.isFinished()) {
 			assetManager.update();

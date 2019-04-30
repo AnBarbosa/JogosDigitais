@@ -58,7 +58,9 @@ public class CharacterCreator {
 		int mind = gerador.nextInt(3);
 		int exp =((level)*(10+level/2));
 		
-		return new Warrior(str, dex, con, magic, mind, level, exp, name);
+		Warrior w = new Warrior(str, dex, con, magic, mind, level, exp, name);
+		w.setTexturePath("Charas/warrior_male.png");
+		return w; 
 		
 	}
 	public static Wizard createWizard(String name, int level){
@@ -69,7 +71,9 @@ public class CharacterCreator {
 		int mind = gerador.nextInt(3)+level;
 		int exp =((level)*(10+level/2));
 		
-		return new Wizard(str, dex, con, magic, mind, level, exp, name);
+		Wizard w = new Wizard(str, dex, con, magic, mind, level, exp, name);
+		w.setTexturePath("Charas/mage_male.png");
+		return w;
 		
 	}
 	public static Rogue createRogue(String name, int level){
@@ -80,7 +84,9 @@ public class CharacterCreator {
 		int mind = gerador.nextInt(3)+level;
 		int exp =((level)*(10+level/2));
 		
-		return new Rogue(str, dex, con, magic, mind, level, exp, name);
+		Rogue r = new Rogue(str, dex, con, magic, mind, level, exp, name);
+		r.setTexturePath("Charas/rogue_male.png");
+		return r;
 		
 	}
 	public static Dragon createDragon(String name, int level, boolean boss){

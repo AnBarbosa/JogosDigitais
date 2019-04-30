@@ -8,19 +8,19 @@ public class DamageAction extends BattleAction {
 	public enum DAMAGE { NORMAL, MAGIC };
 	private DAMAGE type;
 	private CharaBox target;
-	private CharaBox damager;
+	private CharaBox attacker;
 	private TextAction action;
 	
 	public DamageAction(BattleField bf, CharaBox damager, CharaBox target, DAMAGE type) {
 		super(bf);
-		this.damager = damager;
+		this.attacker = damager;
 		this.target = target;
 		this.type = type;
 	}
 
 	@Override
 	public void doAction() {
-		Character hitter = damager.getCharacter();
+		Character hitter = attacker.getCharacter();
 		Character hitted = target.getCharacter();
 		int prevHP = hitted.getCurrent_hp();
 		if (type == DAMAGE.NORMAL){
@@ -30,7 +30,7 @@ public class DamageAction extends BattleAction {
 		}
 		int afterHP = hitted.getCurrent_hp();
 		target.sync();
-		String text = String.format("%s causou %d de dano à %s.", damager.getName(), prevHP-afterHP, target.getName());
+		String text = String.format("%s causou %d de dano à %s.", attacker.getName(), prevHP-afterHP, target.getName());
 		action = new TextAction(bf, text, bf.getMultiplexer());
 		action.doAction();
 	}

@@ -4,11 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
+
+import br.edu.ufabc.alunos.core.GameMaster;
 import br.edu.ufabc.alunos.model.battle.Character;
 import br.edu.ufabc.alunos.ui.HPLabel;
 
@@ -36,11 +42,44 @@ public class CharaBox extends Table {
 		Sprite sprite = new Sprite(new Texture(Gdx.files.internal("tutorial/graphics/pokemon/bulbasaur.png")));
 		sprite.flip(horizontalFlip, false);
 		fighter = new Image(sprite);
+		
 		uiContainer.addActor(hpLabel);
 		uiContainer.addActor(fighter);
 		this.updateHP();
 	}
 	
+	public void setFighterImage(String texturePath, boolean flip) {
+		if(GameMaster.getAssetManager().contains(texturePath)) {			
+			Texture texture = GameMaster.getAssetManager().get(texturePath);
+			assert(texture != null);
+			Sprite sprite = new Sprite(texture);
+			sprite.flip(horizontalFlip, flip);
+			
+			// Preserve actions and events on this Image.
+			Array<Action> actions = fighter.getActions();
+			DelayedRemovalArray<EventListener> listeners = fighter.getListeners();
+			
+			// Remove old actor
+			uiContainer.removeActor(fighter);
+			
+			// Add new actor
+			fighter = new Image(sprite);
+
+			uiContainer.addActor(fighter);
+			// Re add actions and listeners.
+			for(Action a : actions) {
+				fighter.addAction(a);
+			}
+			for(EventListener el : listeners) {
+				fighter.addListener(el);
+			}
+			
+			
+		} else {
+			System.out.println("Não foi possível encontrar a imagem: "+texturePath);
+		}
+
+	}
 	public CharaBox(Skin skin, boolean horizontalFlip, Character character) {
 		this(skin, horizontalFlip);
 		this.chara = character;
@@ -50,6 +89,10 @@ public class CharaBox extends Table {
 		this.hpLabel.setCurrHP(this.currHP);
 		this.hpLabel.setDisplayedHP(this.currHP);
 		this.updateHP();
+		
+		if(this.chara.getTexturePath() != "") {
+			this.setFighterImage(this.chara.getTexturePath(), false);
+		}
 	}
 
 	public CharaBox maxHP(int value) {

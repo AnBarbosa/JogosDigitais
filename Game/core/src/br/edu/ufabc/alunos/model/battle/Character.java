@@ -6,6 +6,7 @@ import br.edu.ufabc.alunos.ui.battle.CharaBox;
 
 public abstract class Character {
 	
+	protected String texturePath = "";
 	protected String name;
 	protected int hp;
 	protected int current_hp;
@@ -35,6 +36,7 @@ public abstract class Character {
 	}
 	
 	public String getName() {
+		System.out.println("Character: Get Name "+name);
 		return name;
 	}
 	public void setName(String name) {
@@ -93,6 +95,14 @@ public abstract class Character {
 	}
 	public void setExp(int exp) {
 		this.exp = exp;
+	}
+	public String getTexturePath() {
+		System.out.println("Character: Get Texture Path. Returning "+texturePath );
+		return texturePath;
+	}
+	public void setTexturePath(String texturePath) {
+		System.out.println("Character: Set Texture Path: "+texturePath );
+		this.texturePath = texturePath;
 	}
 	
 	
