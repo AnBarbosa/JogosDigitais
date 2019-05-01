@@ -1,6 +1,6 @@
 package br.edu.ufabc.alunos.model.battle;
 
-public class DullChara extends Character {
+public class DullChara extends BattleCharacter {
 
 	int damage, magicDamage;
 	

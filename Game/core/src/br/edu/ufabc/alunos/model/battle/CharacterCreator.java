@@ -12,7 +12,7 @@ public class CharacterCreator {
 		 DRAGON, MINOTAUR, KOBOLD, RANDOM;
 	}
 	
-	public static Character getPlayer(Player player, String name, int level) {
+	public static BattleCharacter getPlayer(Player player, String name, int level) {
 		assert(player != null);
 		assert(name != null && name.length() > 0);
 		assert(level >= 0);
@@ -29,7 +29,7 @@ public class CharacterCreator {
 		}
 	}
 	
-	public static Character getEnemy(Enemy enemy, String name, int level, boolean boss) {
+	public static BattleCharacter getEnemy(Enemy enemy, String name, int level, boolean boss) {
 		assert(enemy != null);
 		assert(name != null && name.length() > 0);
 		assert(level >= 0);

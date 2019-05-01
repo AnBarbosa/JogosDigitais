@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Array;
 
 import br.edu.ufabc.alunos.model.Action;
-import br.edu.ufabc.alunos.model.battle.Character;
+import br.edu.ufabc.alunos.model.battle.BattleCharacter;
 import br.edu.ufabc.alunos.model.battle.CharacterCreator;
 import br.edu.ufabc.alunos.model.battle.CharacterCreator.Player;
 import br.edu.ufabc.alunos.screen.FadeInTransition;
@@ -16,14 +16,14 @@ public enum GameMaster {
 	
 	INSTANCE;
 	
-	private static br.edu.ufabc.alunos.model.battle.Character player;
+	private static br.edu.ufabc.alunos.model.battle.BattleCharacter player;
 	private static GameApplication game;
 	
-	public static void setPlayer(Character thePlayer){
+	public static void setPlayer(BattleCharacter thePlayer){
 		player = thePlayer;
 	}
 	
-	public static br.edu.ufabc.alunos.model.battle.Character getPlayer(){
+	public static br.edu.ufabc.alunos.model.battle.BattleCharacter getPlayer(){
 		if(player != null) {
 			return player;
 		}

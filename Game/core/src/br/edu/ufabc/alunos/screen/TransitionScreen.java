@@ -1,5 +1,7 @@
 package br.edu.ufabc.alunos.screen;
 
+import java.util.Map;
+
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -18,10 +20,19 @@ public class TransitionScreen extends AbstractScreen implements InputProcessor  
 	private TRANSITION_STATE state;
 	private SpriteBatch batch;
 	public enum TRANSITION_STATE { IN, OUT;}
+	
 	public TransitionScreen(GameApplication game) {
 		super(game);
 		viewport = new ScreenViewport();
 		batch = new SpriteBatch();
+		//updateScreen(0);
+	}
+	
+
+	@Override
+	public void arrangeScreen(Map<String, Object> settings) {
+		// Nothing to do.
+		
 	}
 	
 	public void startTransition(AbstractScreen from, AbstractScreen to,
@@ -39,7 +50,7 @@ public class TransitionScreen extends AbstractScreen implements InputProcessor  
 	}
 									
 
-	public void update(float delta) {
+	public void updateScreen(float delta) {
 		System.out.println("TransitionScreen: Update...");
 		if(state == TRANSITION_STATE.OUT) {
 			outTransition.update(delta);
@@ -55,30 +66,34 @@ public class TransitionScreen extends AbstractScreen implements InputProcessor  
 			if(inTransition.isFinished()) {
 				removeInputProcessor(this);
 				getApp().setScreen(to);
+				to.updateScreen(delta);
 			}
 		}
 	}
+	
+
 	@Override
-	public void render(float delta) {
+	public void drawScreen(float delta) {
 		switch(state) {
 			case OUT:
-				from.render(delta);
+				from.drawScreen(delta);
 				viewport.apply();
 				outTransition.render(delta, batch);
 				break;
 			case IN:
-				to.render(delta);
+				to.drawScreen(delta);
 				viewport.apply();
 				inTransition.render(delta, batch);
-		} 
-
+				break;
+		}
+		
 	}
-
+	
 	@Override
 	public void resize(int width, int height) {
-		viewport.update(width, height);
 		to.resize(width, height);
 		from.resize(width, height);
+		viewport.update(width, height);
 	}
 
 	@Override
@@ -152,5 +167,6 @@ public class TransitionScreen extends AbstractScreen implements InputProcessor  
 		// TODO Auto-generated method stub
 		return true;
 	}
+
 
 }

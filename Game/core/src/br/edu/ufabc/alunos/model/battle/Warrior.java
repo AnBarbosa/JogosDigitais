@@ -1,7 +1,7 @@
 package br.edu.ufabc.alunos.model.battle;
 
 
-public class Warrior extends Character {
+public class Warrior extends BattleCharacter {
 
 	public Warrior(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {

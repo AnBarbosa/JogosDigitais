@@ -14,7 +14,7 @@ import br.edu.ufabc.alunos.battle.actions.DamageAction.DAMAGE;
 import br.edu.ufabc.alunos.battle.actions.SerieOfActions;
 import br.edu.ufabc.alunos.battle.actions.TextAction;
 import br.edu.ufabc.alunos.core.GameMaster;
-import br.edu.ufabc.alunos.model.battle.Character;
+import br.edu.ufabc.alunos.model.battle.BattleCharacter;
 import br.edu.ufabc.alunos.model.battle.CharacterCreator;
 import br.edu.ufabc.alunos.model.battle.DullChara;
 import br.edu.ufabc.alunos.ui.OptionBox;
@@ -27,8 +27,8 @@ public class BattleField extends Table {
 	FixedSizeDialogue description;
 	OptionBox options;
 	
-	Character playerChar;
-	Character enemyChar;
+	BattleCharacter playerChar;
+	BattleCharacter enemyChar;
 	
 	String[] optionLabels = { "Ataque Físico", "Ataque Místico", "Fugir"};
 	public enum BATTLE_OPTION { ATAQUE_FISICO , ATAQUE_MAGICO , FUGIR }; 	
@@ -46,7 +46,32 @@ public class BattleField extends Table {
 	
 	
 	private BattleAction currentAction = null;
-	private boolean playerWon;	
+	private boolean battleFinished = false;	
+	
+	public BattleField(Skin skin, InputMultiplexer multiplexer, BattleCharacter player, BattleCharacter enemy) {
+		this.setMultiplexer(multiplexer);
+		int largura = 200;
+		int pad = 20;
+		actionState = ACTION_STATE.CHOSE_ACTION;
+		battleState = BATTLE_STATE.RUNNING;
+		playerChar = player;
+		enemyChar = enemy;
+		playerCharaBox = new CharaBox(skin, true, playerChar);
+		enemyCharaBox  = new CharaBox(skin, false, enemyChar);
+		
+		playerCharaBox.setName(playerChar.getName());
+		enemyCharaBox.setName(enemyChar.getName());
+		
+		
+		description = new FixedSizeDialogue(skin, largura,100);
+		options = new OptionBox(skin);
+		
+		for (String option : optionLabels) {
+			options.addOption(option);
+		}
+		setTableLayout(pad);
+		chooseFirst();
+	}
 	
 	public BattleField(Skin skin, InputMultiplexer multiplexer) {
 		this.setMultiplexer(multiplexer);
@@ -73,6 +98,8 @@ public class BattleField extends Table {
 		chooseFirst();
 	}
 	
+	
+	
 	private void chooseFirst() {
 		double d100 = (1-Math.random())*100;
 		d100 = 20;
@@ -90,52 +117,73 @@ public class BattleField extends Table {
 	public void act(float delta) {
 		super.act(delta);
 		//description.act(delta);		
-		if(battleState == BATTLE_STATE.RUNNING) {
-			switch(actionState) {
-				case CHOSE_ACTION:
-					if(!options.getEnabled())
-						options.setEnabled(true);
-					break;
-				case WAIT_ENEMY:
-					if(options.getEnabled()) {
-						options.setEnabled(false);
-					}
-					if(currentAction == null) {
-						
-						BattleAction textAction = new TextAction(this, "O inimigo te ataca.", this.getMultiplexer());
-						BattleAction damageAction = new DamageAction(this, enemyCharaBox, playerCharaBox, DAMAGE.NORMAL);
-						currentAction = new SerieOfActions(this, textAction, damageAction);
-						currentAction.doAction();
-						actionState = ACTION_STATE.ACTING;
-					} else {
-						if (currentAction.isFinished()) {
-							actionState = ACTION_STATE.CHOSE_ACTION;
+		switch(battleState){
+			case RUNNING:
+				switch(actionState) {
+					case CHOSE_ACTION:
+						if(!options.getEnabled())
+							options.setEnabled(true);
+						break;
+					case WAIT_ENEMY:
+						if(options.getEnabled()) {
+							options.setEnabled(false);
 						}
-					}
-					break;
-				case ACTING:
-					if(options.getEnabled()) {
-						options.setEnabled(false);
-					}
-					if(currentAction == null || currentAction.isFinished()) {
-						playerTurn = !playerTurn;
-						actionState = getNextState(playerTurn);
-						currentAction = null;
-					} 
-					break;
-			}
-			if(playerChar.getCurrent_hp() <= 0) {
-				battleState = BATTLE_STATE.PLAYER_LOSE;
-				actionState = ACTION_STATE.ACTING;
-				currentAction = new TextAction(this, "Você perdeu.", this.multiplexer);
-				currentAction.doAction();
-			} 
-			if (enemyChar.getCurrent_hp() <= 0) {
-				battleState = BATTLE_STATE.PLAYER_WON;
-				actionState = ACTION_STATE.ACTING;
-				currentAction = new TextAction(this, "Você venceu.", this.multiplexer);
-				currentAction.doAction();
-			}
+						if(currentAction == null) {
+							
+							DAMAGE typeOfAttack = Math.random()<0.5? DAMAGE.NORMAL: DAMAGE.MAGIC;
+							String text = "O inimigo te ataca";
+							if(typeOfAttack == DAMAGE.NORMAL) {
+								text += " fisicamente.";
+							} else {
+								text += " com um ataque místico.";
+							}
+							BattleAction textAction = new TextAction(this, text, this.getMultiplexer());
+							BattleAction damageAction = new DamageAction(this, enemyCharaBox, playerCharaBox, typeOfAttack);
+							currentAction = new SerieOfActions(this, textAction, damageAction);
+							currentAction.doAction();
+							actionState = ACTION_STATE.ACTING;
+						} else {
+							if (currentAction.isFinished()) {
+								actionState = ACTION_STATE.CHOSE_ACTION;
+							}
+						}
+						break;
+					case ACTING:
+						if(options.getEnabled()) {
+							options.setEnabled(false);
+						}
+						if(currentAction == null || currentAction.isFinished()) {
+							playerTurn = !playerTurn;
+							actionState = getNextState(playerTurn);
+							currentAction = null;
+						} 
+						break;
+				}
+				
+				if(playerChar.getCurrent_hp() <= 0) {
+					battleState = BATTLE_STATE.PLAYER_LOSE;
+					actionState = ACTION_STATE.ACTING;
+					currentAction = new TextAction(this, "Você perdeu.", this.multiplexer);
+					currentAction.doAction();
+	
+				} 
+				if (enemyChar.getCurrent_hp() <= 0) {
+					battleState = BATTLE_STATE.PLAYER_WON;
+					actionState = ACTION_STATE.ACTING;
+					currentAction = new TextAction(this, "Você venceu.", this.multiplexer);
+					currentAction.doAction();
+				}
+				break;
+			case PLAYER_LOSE:
+			case PLAYER_WON:
+				if(currentAction.isFinished()) {
+					battleFinished = true;
+				}
+				break;
+
+			default:
+				break;
+			
 		}
 	}
 	private ACTION_STATE getNextState(boolean isPlayerTurn) {
@@ -253,5 +301,9 @@ public class BattleField extends Table {
 	
 	public BATTLE_STATE getBattleState() {
 		return battleState;
+	}
+	
+	public boolean isBattleFinished() {
+		return battleFinished;
 	}
 }

@@ -2,7 +2,7 @@ package br.edu.ufabc.alunos.battle.actions;
 
 import br.edu.ufabc.alunos.ui.battle.BattleField;
 import br.edu.ufabc.alunos.ui.battle.CharaBox;
-import br.edu.ufabc.alunos.model.battle.Character;
+import br.edu.ufabc.alunos.model.battle.BattleCharacter;
 
 public class DamageAction extends BattleAction {
 	public enum DAMAGE { NORMAL, MAGIC };
@@ -20,8 +20,8 @@ public class DamageAction extends BattleAction {
 
 	@Override
 	public void doAction() {
-		Character hitter = attacker.getCharacter();
-		Character hitted = target.getCharacter();
+		BattleCharacter hitter = attacker.getCharacter();
+		BattleCharacter hitted = target.getCharacter();
 		int prevHP = hitted.getCurrent_hp();
 		if (type == DAMAGE.NORMAL){
 			hitted.reciveDamege(hitter.damage());

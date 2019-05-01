@@ -1,5 +1,8 @@
 package br.edu.ufabc.alunos.screen;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -34,8 +37,17 @@ public abstract class AbstractScreen implements Screen {
 	}
 	
 	@Override
-	public abstract void render(float delta);
-
+	public void render(float delta) {
+		this.updateScreen(delta);
+		this.drawScreen(delta);
+	}
+	
+	
+	public abstract void arrangeScreen(Map<String, Object> settings);
+	
+	public abstract void updateScreen(float delta);
+	
+	public abstract void drawScreen(float delta);
 	@Override
 	public abstract void resize(int width, int height) ;
 

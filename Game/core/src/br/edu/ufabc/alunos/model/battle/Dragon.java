@@ -1,6 +1,6 @@
 package br.edu.ufabc.alunos.model.battle;
 
-public class Dragon extends Character {
+public class Dragon extends BattleCharacter {
 	
 	public Dragon(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {

@@ -4,7 +4,7 @@ import java.util.Random;
 
 import br.edu.ufabc.alunos.ui.battle.CharaBox;
 
-public abstract class Character {
+public abstract class BattleCharacter {
 	
 	protected String texturePath = "";
 	protected String name;

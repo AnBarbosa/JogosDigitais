@@ -1,5 +1,7 @@
 package br.edu.ufabc.alunos.screen;
 
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -17,7 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import br.edu.ufabc.alunos.controllers.DialogueController;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.core.GameMaster;
-import br.edu.ufabc.alunos.model.Action;
+import br.edu.ufabc.alunos.model.battle.BattleCharacter;
 import br.edu.ufabc.alunos.model.battle.CharacterCreator;
 import br.edu.ufabc.alunos.model.dialog.DialogueNode;
 import br.edu.ufabc.alunos.model.dialog.DialogueTree;
@@ -56,6 +58,7 @@ public class GameScreenWithUI extends WorldGameScreen {
 		
 		exampleDialog();
 		dialogueController.startDialogue(dialogue);
+		this.updateScreen(0);
 	}
 	
 
@@ -107,8 +110,19 @@ public class GameScreenWithUI extends WorldGameScreen {
 	}
 	
 	private void setPlayer(CharacterCreator.Player p) {
-		br.edu.ufabc.alunos.model.battle.Character player = CharacterCreator.getPlayer(p, p.toString(), 1);
+		br.edu.ufabc.alunos.model.battle.BattleCharacter player = CharacterCreator.getPlayer(p, p.toString(), 1);
 		GameMaster.setPlayer(player);
+	}
+	
+	private void startBattle(BattleCharacter enemy) {
+		Color color = Color.BLACK;
+		Map<String, Object> arrange = BattleScreen.getDefaultArrange();
+		arrange.put("Enemy", enemy);
+		BattleScreen bs = new BattleScreen(game, arrange);
+		game.startTransition(this, bs, 
+				new FadeOutTransition(0.8f, color),
+				new FadeInTransition(0.8f, color),
+				null);
 	}
 	
 	private void debugCommands() {
@@ -124,8 +138,8 @@ public class GameScreenWithUI extends WorldGameScreen {
 			System.out.println("Starting transition...");
 			Color color = Color.BLACK;
 			game.startTransition(this, this,
-					new FadeOutTransition(0.8f, color, game.getAssetManager()),
-					new FadeInTransition(0.8f, color, game.getAssetManager()),
+					new FadeOutTransition(0.8f, color), 
+					new FadeInTransition(0.8f, color),
 					() -> System.out.println("Fading...")
 					);
 			System.out.println("Transition finished...");		
@@ -144,14 +158,29 @@ public class GameScreenWithUI extends WorldGameScreen {
 			
 		}
 		
-		
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_6)) {
-			black.setVisible(!black.isVisible());
+			BattleCharacter enemy = CharacterCreator.getEnemy(CharacterCreator.Enemy.RANDOM, "Um Inimigo", 1, false);
+			this.startBattle(enemy);
 		}
 		
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_7)) {
-			game.setScreen(new BattleScreen(game));
-			System.out.println("Changed Screen.");
+			BattleCharacter enemy = CharacterCreator.getEnemy(CharacterCreator.Enemy.RANDOM, "Um Inimigo", 1, false);
+			Map<String, Object> arrange = BattleScreen.getDefaultArrange();
+			arrange.put("Enemy", enemy);
+			BattleScreen bs = new BattleScreen(game, arrange);
+			game.setScreen(bs);
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Keys.NUM_8)) {
+			Color color = Color.BLACK;
+			Map<String, Object> arrange = BattleScreen.getDefaultArrange();
+			BattleCharacter enemy = CharacterCreator.getEnemy(CharacterCreator.Enemy.RANDOM, "Um Inimigo", 1, false);
+			arrange.put("Enemy", enemy);
+			BattleScreen bs = new BattleScreen(game, arrange);
+			game.startTransition(this, bs, 
+					new FadeOutTransition(0.8f, color),
+					new FadeInTransition(0.8f, color),
+					null);
 		}
 	}
 	
@@ -200,19 +229,24 @@ public class GameScreenWithUI extends WorldGameScreen {
 	}
 
 	@Override
-	public void render(float delta) {
+	public void updateScreen(float delta) {
+		super.updateScreen(delta);
 		debugCommands();
 		dialogueController.update(delta);
-		gameViewport.apply();
 		uiStage.act(delta);
 		battleStage.act(delta);
 		fadeStage.act(delta);
-		super.render(delta);
+	}
+	
+	@Override
+	public void drawScreen(float delta) {
+		super.drawScreen(delta);
+		gameViewport.apply();
 		fadeStage.draw();
 		uiStage.draw();
 		battleStage.draw();
-
 	}
+	
 
 	@Override
 	public void resize(int width, int height) {

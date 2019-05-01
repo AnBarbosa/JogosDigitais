@@ -1,27 +1,24 @@
 package br.edu.ufabc.alunos.screen;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
 
 import br.edu.ufabc.alunos.controllers.PlayerControllerWithTimer;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.model.Actor;
-import br.edu.ufabc.alunos.model.AnimatedActor;
 import br.edu.ufabc.alunos.model.Camera;
 import br.edu.ufabc.alunos.model.PlayerActor;
-import br.edu.ufabc.alunos.model.map.DIRECTION;
 import br.edu.ufabc.alunos.model.map.world.World;
 import br.edu.ufabc.alunos.model.map.world.WorldObject;
 import br.edu.ufabc.alunos.model.map.world.WorldRenderer;
-import br.edu.ufabc.alunos.utils.AnimationSet;
 import br.edu.ufabc.alunos.utils.Log;
 
 public class WorldGameScreen extends AbstractScreen {
@@ -38,17 +35,61 @@ public class WorldGameScreen extends AbstractScreen {
 	
 	public WorldGameScreen(GameApplication game) {
 		super(game);
-			batch = new SpriteBatch();
+		arrangeScreen(getDefaultArrange());
+	}
+	public WorldGameScreen(GameApplication game, Map<String, Object> arrange) {
+		super(game);
+		arrangeScreen(arrange);
+	}
+	
+	
 
-		world = new World(100,100);
-		player = new PlayerActor(world.getMap(), 50, 50);
+	@Override
+	public void arrangeScreen(Map<String, Object> settings) {
+		// Loading settings
+		assert(settings.get("World") instanceof World);
+		assert(settings.get("Player_X") instanceof Integer);
+		assert(settings.get("Player_Y") instanceof Integer);
+		assert(settings.get("Houses") instanceof Vector2[]);
+		
+		this.world = (World) settings.get("World");
+		int playerX = (int) settings.get("Player_X");
+		int playerY = (int) settings.get("Player_Y");
+		
+		Vector2 houses[] = (Vector2[]) settings.get("Houses");
+
+		// Creating the world	
+		batch = new SpriteBatch();
+
+		player = new PlayerActor(world.getMap(), playerX, playerY);
+		world.addActor(player);
 		playerController = new PlayerControllerWithTimer(player);
 		super.addInputProcessor(playerController);
+		
 		camera = new Camera();
-		worldRenderer = new WorldRenderer(getApp().getAssetManager(), world);
-		world.addActor(player);
-		addHouse(50, 53);
+		
+		worldRenderer = new WorldRenderer(getApp().getAssetManager(), 
+										  world);
+		
+		for (Vector2 housePos : houses) {
+			addHouse((int)housePos.x, (int)housePos.y);
+		}
 	}
+
+
+	public static Map<String, Object> getDefaultArrange() {
+		Map<String, Object> arrange = new HashMap<>();
+		arrange.put("World", new World(100,100));
+		arrange.put("Player_X", 50);
+		arrange.put("Player_Y", 50);
+		
+		Vector2 houses[] = {new Vector2(20,53)};
+		arrange.put("Houses", houses);
+		return arrange;
+	}
+
+	
+	
 
 	private void addHouse(int i, int j) {
 		Texture tex = (Texture) getApp().getAssetManager().get("tutorial/graphics_unpacked/tiles/small_house.png");
@@ -66,19 +107,25 @@ public class WorldGameScreen extends AbstractScreen {
 		this.world.addObject(house);
 		
 	}
+	
 
 	@Override
-	public void render(float delta) {
+	public void updateScreen(float delta) {
 		getDebugInputs();
 		playerController.update(delta);
 		camera.update(player.getWorldX(), player.getWorldY());
 		world.update(delta);
 		
+		
+	}
+
+	@Override
+	public void drawScreen(float delta) {
 		batch.begin();
 		worldRenderer.render(batch, camera);
-		
 		batch.end();
 	}
+
 	
 	private void getDebugInputs() {
 		if(Gdx.input.isKeyJustPressed(Keys.Q)){
@@ -168,6 +215,7 @@ public class WorldGameScreen extends AbstractScreen {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 
 }

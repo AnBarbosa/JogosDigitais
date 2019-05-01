@@ -1,6 +1,6 @@
 package br.edu.ufabc.alunos.model.battle;
 
-public class Minotaur extends Character {
+public class Minotaur extends BattleCharacter {
 	
 	public Minotaur(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {

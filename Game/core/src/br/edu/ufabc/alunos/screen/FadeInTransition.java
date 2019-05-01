@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import br.edu.ufabc.alunos.core.GameApplication;
+
 public class FadeInTransition extends Transition {
 	private Color color;
 	private Texture white;
@@ -15,7 +17,11 @@ public class FadeInTransition extends Transition {
 		this.color = color;
 		white = am.get("tutorial/graphics/statuseffect/white.png");
 	}
-
+	
+	public FadeInTransition(float duration, Color color) {
+		this(duration, color, GameApplication.getAssetManager());
+	}
+	
 	@Override
 	public void render(float delta, SpriteBatch batch) {
 		batch.begin();
@@ -23,5 +29,6 @@ public class FadeInTransition extends Transition {
 		batch.draw(white,  0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		batch.end();
 	}
+	
 
 }

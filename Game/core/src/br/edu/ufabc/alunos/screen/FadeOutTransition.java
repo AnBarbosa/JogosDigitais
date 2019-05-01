@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import br.edu.ufabc.alunos.core.GameApplication;
+
 public class FadeOutTransition extends Transition {
 	private Color color;
 	private Texture white;
@@ -14,6 +16,10 @@ public class FadeOutTransition extends Transition {
 		super(duration, am);
 		this.color = color;
 		white = am.get("tutorial/graphics/statuseffect/white.png");
+	}
+
+	public FadeOutTransition(float duration, Color color) {
+		this(duration, color, GameApplication.getAssetManager());
 	}
 
 	@Override

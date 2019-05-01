@@ -1,5 +1,7 @@
 package br.edu.ufabc.alunos.screen;
 
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
@@ -23,6 +25,14 @@ public class LoseScreen extends AbstractScreen implements InputProcessor{
 		this.addInputProcessor(this);
 	}
 	
+
+	@Override
+	public void arrangeScreen(Map<String, Object> settings) {
+		// Nothing to do.
+		
+	}
+	
+	
 	private void debugCommands() {
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
 			game.setScreen(new GameScreenWithUI(this.game));
@@ -32,15 +42,21 @@ public class LoseScreen extends AbstractScreen implements InputProcessor{
 			game.setScreen(new BattleScreen(this.game));
 		}
 	}
+	
 
 	@Override
-	public void render(float delta) {
+	public void updateScreen(float delta) {
 		debugCommands();
+		
+	}
+
+	@Override
+	public void drawScreen(float delta) {
 		spriteBatch.begin();
 		spriteBatch.draw(loseImage, 0, 0, loseImage.getWidth(), loseImage.getHeight());
 		spriteBatch.end();
-
 	}
+
 	@Override
 	public void resize(int width, int height) {
 		spriteBatch.getProjectionMatrix().setToOrtho2D(0,0, width, height);
@@ -135,5 +151,6 @@ public class LoseScreen extends AbstractScreen implements InputProcessor{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 
 }

@@ -1,6 +1,6 @@
 package br.edu.ufabc.alunos.model.battle;
 
-public class Kobold extends Character {
+public class Kobold extends BattleCharacter {
 	
 	public Kobold(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {

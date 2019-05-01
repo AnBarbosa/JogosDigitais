@@ -1,6 +1,6 @@
 package br.edu.ufabc.alunos.model.battle;
 
-public class Wizard extends Character {
+public class Wizard extends BattleCharacter {
 	
 	public Wizard(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {

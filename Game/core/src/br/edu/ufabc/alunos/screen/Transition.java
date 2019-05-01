@@ -10,6 +10,7 @@ public abstract class Transition {
 	private float duration;
 	private float timer = 0f;
 	private boolean finished = false;
+	
 	public Transition(float duration, AssetManager am) {
 		this.assetManager = am;
 		this.duration = duration;

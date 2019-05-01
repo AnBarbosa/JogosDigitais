@@ -15,13 +15,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 
 import br.edu.ufabc.alunos.core.GameMaster;
-import br.edu.ufabc.alunos.model.battle.Character;
+import br.edu.ufabc.alunos.model.battle.BattleCharacter;
 import br.edu.ufabc.alunos.ui.HPLabel;
 
 
 public class CharaBox extends Table {
 
-	private Character chara;
+	private BattleCharacter chara;
 	private HPLabel hpLabel;
 	private Image fighter;
 	private VerticalGroup uiContainer;
@@ -80,7 +80,7 @@ public class CharaBox extends Table {
 		}
 
 	}
-	public CharaBox(Skin skin, boolean horizontalFlip, Character character) {
+	public CharaBox(Skin skin, boolean horizontalFlip, BattleCharacter character) {
 		this(skin, horizontalFlip);
 		this.chara = character;
 		this.maxHP = character.getHp();
@@ -119,7 +119,7 @@ public class CharaBox extends Table {
 		hpLabel.setText("HP: "+currHP+"/"+maxHP);
 	}
 
-	public Character getCharacter() {
+	public BattleCharacter getCharacter() {
 		return this.chara;
 	}
 	

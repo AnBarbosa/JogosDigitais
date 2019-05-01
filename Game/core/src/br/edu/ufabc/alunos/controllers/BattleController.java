@@ -11,7 +11,7 @@ public class BattleController extends InputAdapter {
 	private BattleScreen bs;
 
 	
-	private float screenChangeCountDown = 3f; // Seconds
+	private float screenChangeCountDown = 0.4f; // Seconds
 	private boolean update = true;
 	
 	
@@ -48,6 +48,7 @@ public class BattleController extends InputAdapter {
 	
 	public void update(float delta) {
 		if(update) {
+			if(battle.isBattleFinished())
 			if(battle.getBattleState()==BATTLE_STATE.PLAYER_WON) {
 				screenChangeCountDown -=delta;
 				if (screenChangeCountDown <0) {
