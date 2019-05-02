@@ -62,7 +62,10 @@ public class GameApplication extends Game {
 		assetManager.load("tutorial/graphics_unpacked/tiles/small_house.png", Texture.class);
 		assetManager.load("tutorial/graphics_packed/ui/uipack.atlas", TextureAtlas.class);
 		assetManager.load("tutorial/font/small_letters_font.fnt", BitmapFont.class);
+		
 		assetManager.load("Screens/LoseScreen.png", Texture.class);
+		assetManager.load("Screens/WinScreen.png", Texture.class);
+		
 		assetManager.load("tutorial/graphics/statuseffect/white.png", Texture.class);
 		
 		assetManager.load("Charas/mage_male.png", Texture.class);

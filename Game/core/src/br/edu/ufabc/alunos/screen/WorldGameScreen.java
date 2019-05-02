@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import br.edu.ufabc.alunos.controllers.PlayerControllerAdvanced;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.model.Actor;
+import br.edu.ufabc.alunos.model.AnimatedActor;
 import br.edu.ufabc.alunos.model.Camera;
 import br.edu.ufabc.alunos.model.PlayerActor;
 import br.edu.ufabc.alunos.model.map.world.World;
@@ -27,7 +28,7 @@ public class WorldGameScreen extends AbstractScreen {
 	protected PlayerControllerAdvanced playerController;
 	
 	private World world;
-	private Actor player;
+	protected AnimatedActor player;
 	private Camera camera;
 	
 	protected SpriteBatch batch;

@@ -47,6 +47,26 @@ public class BattleController extends InputAdapter {
 	}
 	
 	public void update(float delta) {
+		if(update && battle.isBattleFinished()) {
+			screenChangeCountDown -= delta;
+			if(screenChangeCountDown < 0) {
+				update = false;
+				switch(battle.getBattleState()) {
+				case PLAYER_WON:
+					bs.win();
+					break;
+				case PLAYER_LOSE:
+					bs.lose();
+					break;
+				case PLAYER_RUN:
+					bs.run();
+					break;
+				}
+				
+			}
+		}
+	}
+	public void updateOld(float delta) {
 		if(update) {
 			if(battle.isBattleFinished())
 			if(battle.getBattleState()==BATTLE_STATE.PLAYER_WON) {

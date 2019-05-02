@@ -17,12 +17,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import br.edu.ufabc.alunos.controllers.DialogueController;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.core.GameMaster;
+import br.edu.ufabc.alunos.model.AnimatedActor;
 import br.edu.ufabc.alunos.model.battle.BattleCharacter;
 import br.edu.ufabc.alunos.model.battle.CharacterCreator;
 import br.edu.ufabc.alunos.model.battle.enums.Enemy;
 import br.edu.ufabc.alunos.model.dialog.ClassDialogue;
-import br.edu.ufabc.alunos.model.dialog.DialogueNode;
 import br.edu.ufabc.alunos.model.dialog.DialogueTree;
+import br.edu.ufabc.alunos.model.map.DIRECTION;
 import br.edu.ufabc.alunos.ui.DialogueBox;
 import br.edu.ufabc.alunos.ui.OptionBox;
 
@@ -45,9 +46,9 @@ public class StartScreen extends WorldGameScreen {
 		gameViewport = new ScreenViewport();
 		GameMaster.init(game);
 		initUI();
-
-		setupInputProcessors();
 		
+		setupInputProcessors();
+		player.reface(DIRECTION.SOUTH);
 		ClassDialogue classDialogue = exampleDialog();
 
 		classDialogue.start();

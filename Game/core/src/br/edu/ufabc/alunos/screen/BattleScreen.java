@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -30,6 +29,7 @@ public class BattleScreen extends AbstractScreen {
 	private Table rootBattle;
 
 	protected SpriteBatch batch;
+	private boolean fightingBoss = false;
 	
 
 	public BattleScreen(GameApplication game) {
@@ -53,6 +53,7 @@ public class BattleScreen extends AbstractScreen {
 		assert(GameMaster.getPlayer().getCurrent_hp() >0);
 		mapSettings.put("Player", player);
 		mapSettings.put("Enemy", enemy);
+		mapSettings.put("Boss", false);
 		return mapSettings;
 	}
 
@@ -71,8 +72,11 @@ public class BattleScreen extends AbstractScreen {
 		
 		assert(settings.get("Player") instanceof BattleCharacter);
 		assert(settings.get("Enemy") instanceof BattleCharacter);
+		assert(settings.get("Boss") instanceof Boolean);
+		
 		BattleCharacter player = (BattleCharacter)settings.get("Player");
         BattleCharacter enemy = (BattleCharacter)settings.get("Enemy");
+        this.fightingBoss = (boolean) settings.get("Boss");
 		BattleField bf = new BattleField(getApp().getSkin(), this.multiplexer, player, enemy); 
 		rootBattle.add(bf).expand().align(Align.center).pad(10f);
 		
@@ -142,17 +146,36 @@ public class BattleScreen extends AbstractScreen {
 	}
 	
 	public void win() {
-		AbstractScreen screen = GameMaster.getPlayerStat("Last_Screen");
-		assert(screen != null);
-		game.startTransition(this, screen, 
-				GameMaster.getFadeOut(), GameMaster.getFadeIn(),
-				()->screen.onTransitionIn());
+		if(fightingBoss) {
+			AbstractScreen victory = new WinScreen(game);
+			game.startTransition(this, victory, 
+					GameMaster.getFadeOut(), GameMaster.getFadeIn(),
+					null//()->victory.onTransitionIn()
+					);
+		} else {
+			AbstractScreen screen = GameMaster.getPlayerStat("Last_Screen");
+			assert(screen != null);
+			game.startTransition(this, screen, 
+					GameMaster.getFadeOut(), GameMaster.getFadeIn(),
+					()->screen.onTransitionIn());
+		}
+		
+		
 	}
 	
 	public void lose() {
 		game.startTransition(this, new LoseScreen(game), 
 				GameMaster.getFadeOut(), GameMaster.getFadeIn(),
 				null);
+	}
+
+	public void run() {
+		AbstractScreen screen = GameMaster.getPlayerStat("Last_Screen");
+		assert(screen != null);
+		game.startTransition(this, screen, 
+				GameMaster.getFadeOut(), GameMaster.getFadeIn(),
+				()->screen.onTransitionIn());
+		
 	}
 
 	

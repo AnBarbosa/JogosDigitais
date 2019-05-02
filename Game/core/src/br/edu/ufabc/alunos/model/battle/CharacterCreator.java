@@ -32,8 +32,21 @@ public class CharacterCreator {
 		assert(name != null && name.length() > 0);
 		assert(level >= 0);
 		if(enemy==Enemy.RANDOM) {
-			int index = gerador.nextInt(3);
-			enemy = Enemy.values()[index];
+			Enemy[] table = {
+					Enemy.DRAGON,
+					Enemy.MINOTAUR,
+					Enemy.MINOTAUR,
+					Enemy.MINOTAUR,
+					Enemy.KOBOLD,
+					Enemy.KOBOLD,
+					Enemy.KOBOLD,
+					Enemy.KOBOLD,
+					Enemy.KOBOLD,
+					Enemy.KOBOLD};
+					
+			
+			int index = gerador.nextInt(table.length);
+			enemy = table[index];
 		}
 		
 		switch (enemy) {

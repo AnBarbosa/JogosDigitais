@@ -5,7 +5,7 @@ import java.util.Map;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 
-import br.edu.ufabc.alunos.model.Action;
+import br.edu.ufabc.alunos.battle.actions.BattleAction;
 import br.edu.ufabc.alunos.model.battle.BattleCharacter;
 import br.edu.ufabc.alunos.model.battle.CharacterCreator;
 import br.edu.ufabc.alunos.model.battle.CharacterCreator.Player;
@@ -53,12 +53,15 @@ public enum GameMaster {
 		return transition;
 	}
 
-	public static Action getNullAction() {
-		final Action action = new Action() {
+	public static BattleAction getNullAction() {
+		final BattleAction action = new BattleAction(null) {
 			@Override
 			public void startAction() {
 				return;
 			}
+			
+			@Override
+			public boolean isFinished() { return true;}
 		};
 		return action;
 	}

@@ -148,15 +148,21 @@ public class PlayerControllerAdvanced extends InputAdapter {
 	private void resetTimer(DIRECTION dir) {
 		resetButtonTimer(dir);
 	}
-	private void considerMove(DIRECTION dir) {
+	
+	protected void considerMove(DIRECTION dir) {
 		System.out.println(buttonTimer[commandDirection(COMANDO.RIGHT).ordinal()]);
 		if(getButtonTimer(dir) > WALK_REFACE_THRESHOLD) {
 			player.move(dir);
 		}
 	}
+	
 	private void considerReface(DIRECTION dir) {
 		if(getButtonTimer(dir) < WALK_REFACE_THRESHOLD) {
 			player.reface(dir);
 		}
+	}
+	
+	public void releaseAllCommands() {
+		comandos.replaceAll((k,v)-> false);
 	}
 }

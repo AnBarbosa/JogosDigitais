@@ -34,6 +34,19 @@ public class Controls {
 		controles.put(Keys.X,  COMANDO.CANCEL);
 		controles.put(Keys.Q,  COMANDO.QUIT);
 		
+		///
+		controles.put(Keys.DPAD_UP,  COMANDO.UP);
+		controles.put(Keys.DPAD_DOWN,  COMANDO.DOWN);
+		controles.put(Keys.DPAD_LEFT,  COMANDO.LEFT);
+		controles.put(Keys.DPAD_RIGHT,  COMANDO.RIGHT);
+		controles.put(Keys.BUTTON_A,  COMANDO.OK);
+		controles.put(Keys.BUTTON_B,  COMANDO.CANCEL);
+		controles.put(Keys.BUTTON_START,  COMANDO.QUIT);
+		
+		controles.put(Keys.BUTTON_X, COMANDO.OK);
+		controles.put(Keys.BUTTON_Y, COMANDO.CANCEL);
+		
+		
 	}
 	
 	public static COMANDO getComando(int keycode) {

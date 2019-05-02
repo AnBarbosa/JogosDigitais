@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import br.edu.ufabc.alunos.controllers.AgressivePlayerController;
 import br.edu.ufabc.alunos.controllers.DialogueController;
 import br.edu.ufabc.alunos.controllers.PlayerControllerAdvanced;
 import br.edu.ufabc.alunos.core.GameApplication;
@@ -39,7 +40,7 @@ import br.edu.ufabc.alunos.utils.Log;
 public class DungeonScreen extends AbstractScreen {
 
 	// Controller
-	private PlayerControllerAdvanced playerController;
+	private AgressivePlayerController playerController;
 	private DialogueController dialogueController;
 	
 	// Models
@@ -121,7 +122,8 @@ public class DungeonScreen extends AbstractScreen {
 		assert(dialogueBox != null);
 		assert(optionBox != null);
 		
-		playerController = new PlayerControllerAdvanced(playerActor);
+		//playerController = new PlayerControllerAdvanced(playerActor);
+		playerController = new AgressivePlayerController(playerActor, this);
 		dialogueController = new DialogueController(dialogueBox, optionBox);
 		super.addInputProcessor(dialogueController);
 		super.addInputProcessor(playerController);
@@ -279,8 +281,10 @@ public class DungeonScreen extends AbstractScreen {
 			if(checkForAchievementsDelay > 0) {
 				checkForAchievementsDelay -=delta;
 			} else {
+				playerController.setSearchingEnemies(true);
 				checkForAchievementsDelay = CHECK_DELAY;
 				checkForAchievements = false;
+				
 				if(AchievementManager.hasMessages()) {
 					this.dialogueTree = AchievementManager.getMessages();
 					assert(dialogueTree != null);
@@ -320,11 +324,12 @@ public class DungeonScreen extends AbstractScreen {
 	}
 	
 	// ------------------------------------  OTHERS ------------------------------------ 
-	
-	private void startBattle(BattleCharacter enemy) {
+	public void startBattle(BattleCharacter enemy, boolean boss) {
+		playerController.releaseAllCommands();
 		Color color = Color.BLACK;
 		Map<String, Object> arrange = BattleScreen.getDefaultArrange();
 		arrange.put("Enemy", enemy);
+		arrange.put("Boss", boss);
 		BattleScreen bs = new BattleScreen(game, arrange);
 		GameMaster.setPlayerStat("Last_Screen", this);
 		game.startTransition(this, bs, 
@@ -332,8 +337,12 @@ public class DungeonScreen extends AbstractScreen {
 				new FadeInTransition(0.8f, color),
 				null);
 	}
+	public void startBattle(BattleCharacter enemy) {
+		this.startBattle(enemy, false);
+	}
 	
 	public void onTransitionIn() {
+		playerController.setSearchingEnemies(false);
 		checkForAchievements = true;
 	}
 	
@@ -345,7 +354,8 @@ public class DungeonScreen extends AbstractScreen {
 			@Override
 			public void startAction() {
 				BattleCharacter enemy = CharacterCreator.getEnemy(Enemy.DRAGON, 5, true);
-				startBattle(enemy);
+				//BattleCharacter enemy = CharacterCreator.getEnemy(Enemy.KOBOLD, 1, false);
+				startBattle(enemy, true);
 			}
 		};
 		boss.setOnTouchAction(fightBoss);

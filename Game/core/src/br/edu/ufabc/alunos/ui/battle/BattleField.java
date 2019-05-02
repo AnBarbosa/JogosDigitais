@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Align;
 
 import br.edu.ufabc.alunos.battle.actions.BattleAction;
 import br.edu.ufabc.alunos.battle.actions.DamageAction;
+import br.edu.ufabc.alunos.battle.actions.RunAction;
 import br.edu.ufabc.alunos.battle.actions.SerieOfActions;
 import br.edu.ufabc.alunos.battle.actions.TextAction;
 import br.edu.ufabc.alunos.core.GameMaster;
@@ -23,13 +24,12 @@ import br.edu.ufabc.alunos.ui.OptionBox;
 
 public class BattleField extends Table {
 	public enum ACTION_STATE { CHOSE_ACTION, WAIT_ENEMY, ACTING};
-	public enum BATTLE_STATE { RUNNING, PLAYER_WON, PLAYER_LOSE};
+	public enum BATTLE_STATE { RUNNING, PLAYER_WON, PLAYER_LOSE, PLAYER_RUN};
 
 	// State
 	private boolean battleFinished = false;	
 	private ACTION_STATE actionState;
 	private BATTLE_STATE battleState;
-
 	
 	// Acoes
 	public final int ATAQUE_FISICO = 0;
@@ -206,6 +206,7 @@ public class BattleField extends Table {
 				
 			case PLAYER_LOSE:
 			case PLAYER_WON:
+			case PLAYER_RUN:
 				if(currentAction.isFinished()) {
 					battleFinished = true;
 				} 
@@ -262,12 +263,17 @@ public class BattleField extends Table {
 			case FUGIR:
 				System.out.println("Você tenta fugir.");
 				BattleAction tentativa = new TextAction(this, "Você tenta fugir...", this.getMultiplexer());
-				String runResult = canRun(0.5d)? "Você consegue." : "Você falhou.";
-				System.out.println(runResult);
+				boolean result = canRun(0.5d);
+				String runResult = result ? "Você consegue." : "Você falhou.";
+				BattleAction run = GameMaster.getNullAction();
+				if(result) {
+					run = new RunAction(this);
+				}
 				BattleAction resultado = new TextAction(this, runResult, this.getMultiplexer());
 				List<BattleAction> acoes = new ArrayList<BattleAction>();
 				acoes.add(tentativa);
 				acoes.add(resultado);
+				acoes.add(run);
 				currentAction = new SerieOfActions(this, acoes);
 				break;
 				
@@ -324,5 +330,13 @@ public class BattleField extends Table {
 	
 	public boolean isBattleFinished() {
 		return battleFinished;
+	}
+	
+	public void setBattleFinished(boolean v) {
+		this.battleFinished = v;
+	}
+	
+	public void setBattleState(BATTLE_STATE state) {
+		this.battleState = state;
 	}
 }
