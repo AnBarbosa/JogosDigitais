@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 
-import br.edu.ufabc.alunos.controllers.PlayerControllerWithTimer;
+import br.edu.ufabc.alunos.controllers.PlayerControllerAdvanced;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.model.Actor;
 import br.edu.ufabc.alunos.model.Camera;
@@ -24,7 +24,7 @@ import br.edu.ufabc.alunos.utils.Log;
 public class WorldGameScreen extends AbstractScreen {
 
 	
-	protected PlayerControllerWithTimer playerController;
+	protected PlayerControllerAdvanced playerController;
 	
 	private World world;
 	private Actor player;
@@ -63,7 +63,7 @@ public class WorldGameScreen extends AbstractScreen {
 
 		player = new PlayerActor(world.getMap(), playerX, playerY);
 		world.addActor(player);
-		playerController = new PlayerControllerWithTimer(player);
+		playerController = new PlayerControllerAdvanced(player);
 		super.addInputProcessor(playerController);
 		
 		camera = new Camera();
@@ -83,7 +83,7 @@ public class WorldGameScreen extends AbstractScreen {
 		arrange.put("Player_X", 50);
 		arrange.put("Player_Y", 50);
 		
-		Vector2 houses[] = {new Vector2(20,53)};
+		Vector2 houses[] = {new Vector2(50,53)};
 		arrange.put("Houses", houses);
 		return arrange;
 	}

@@ -5,6 +5,7 @@ public class Wizard extends BattleCharacter {
 	public Wizard(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {
 		int calcHp = this.gerador.nextInt(5) + con;
+		calcHp = Math.max(calcHp, 1);
 		this.setHp(calcHp);
 		this.setCurrent_hp(calcHp);
 		this.setStr(str);
@@ -57,6 +58,45 @@ public class Wizard extends BattleCharacter {
 		this.hp += calcHp;
 		this.current_hp += calcHp;
 		
+	}
+
+
+	@Override
+	public String getNormalAttackText() {
+		String formato = "%s ataca com %s";
+		String criaturas[] = {
+				"Você"
+		};
+		String armas[] = {
+			"seu cajado.", "um golpe de seu cajado!", "uma cajadada."
+		};
+		int indexArmas = (int) Math.random()*armas.length;
+		int indexCriatura = (int) Math.random()*criaturas.length;
+		
+		return String.format(formato,  criaturas[indexCriatura], armas[indexArmas]);
+
+	}
+
+	@Override
+	public String getMagicAttackText() {			
+		String formato = "%s utiliza %s";
+		String criaturas[] = {
+				"Você"
+		};
+		String armas[] = {
+			"uma bola de fogo!",
+			"um ritual antigo!!",
+			"magia negra.",
+			"mísseis mágicos.",
+			"uma rajada de vento cortante.",
+			"energias místicas."
+			
+		};
+		int indexArmas = (int) Math.random()*armas.length;
+		int indexCriatura = (int) Math.random()*criaturas.length;
+		
+		return String.format(formato,  criaturas[indexCriatura], armas[indexArmas]);
+
 	}
 
 }

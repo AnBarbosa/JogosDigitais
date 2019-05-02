@@ -1,10 +1,13 @@
 package br.edu.ufabc.alunos.model.battle;
 
+import br.edu.ufabc.alunos.model.battle.enums.Enemy;
+
 public class Minotaur extends BattleCharacter {
 	
 	public Minotaur(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {
 		int calcHp = this.gerador.nextInt(13) + con;
+		calcHp = Math.max(calcHp, 1);
 		this.setHp(calcHp);
 		this.setCurrent_hp(calcHp);
 		this.setStr(str);
@@ -12,10 +15,10 @@ public class Minotaur extends BattleCharacter {
 		this.setCon(con);
 		this.setMagic(magic);
 		this.setMind(mind);
-		this.setLevel(1);
-		this.setExp(1);
+		this.setLevel(level);
+		this.setExp(exp);
 		this.setName(name);
-	 
+		this.type = Enemy.MINOTAUR;
 	}
 
 	@Override
@@ -57,4 +60,40 @@ public class Minotaur extends BattleCharacter {
 		this.current_hp += calcHp;
 		
 	}
+
+
+	@Override
+	public String getNormalAttackText() {
+		String formato = "%s ataca com %s";
+		String criaturas[] = {
+				"O minotauro", "O meio-touro", "A cria de Minos"
+		};
+		String armas[] = {
+			"seus chifres.",
+			"uma investida!",
+			"um coice."
+		};
+		int indexArmas = (int) Math.random()*armas.length;
+		int indexCriatura = (int) Math.random()*criaturas.length;
+		
+		return String.format(formato,  criaturas[indexCriatura], armas[indexArmas]);
+	}
+
+
+	@Override
+	public String getMagicAttackText() {
+		String formato = "%s ataca com %s";
+		String criaturas[] = {
+				"O minotauro", "O meio-touro", "A cria de Minos"
+		};
+		String armas[] = {
+			"um berro aterrorizante.",
+			"um tremor de terra!!!"
+		};
+		int indexArmas = (int) Math.random()*armas.length;
+		int indexCriatura = (int) Math.random()*criaturas.length;
+		
+		return String.format(formato,  criaturas[indexCriatura], armas[indexArmas]);
+	}
+	
 }

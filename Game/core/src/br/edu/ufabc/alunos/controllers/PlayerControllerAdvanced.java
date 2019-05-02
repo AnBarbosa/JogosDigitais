@@ -12,7 +12,10 @@ import br.edu.ufabc.alunos.model.AnimatedActor;
 import br.edu.ufabc.alunos.model.map.DIRECTION;
 import br.edu.ufabc.alunos.utils.Log;
 
-public class PlayerControllerWithTimer extends InputAdapter {
+/* This player controller also have a timer and permits the player to
+ * reface without moving.
+ */
+public class PlayerControllerAdvanced extends InputAdapter {
 	
 	private static final float WALK_REFACE_THRESHOLD = 0.1f;
 
@@ -21,7 +24,7 @@ public class PlayerControllerWithTimer extends InputAdapter {
 	private AnimatedActor player;
 	private Map<COMANDO, Boolean> comandos;
 		
-	public PlayerControllerWithTimer(Actor player) {
+	public PlayerControllerAdvanced(Actor player) {
 		super();
 		this.player = (AnimatedActor) player;
 		this.comandos = new HashMap<>();

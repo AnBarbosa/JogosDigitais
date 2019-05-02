@@ -56,5 +56,15 @@ public class DullChara extends BattleCharacter {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public String getNormalAttackText() {
+		// TODO Auto-generated method stub
+		return "Você usa um ataque normal.";
+	}
+	@Override
+	public String getMagicAttackText() {
+		// TODO Auto-generated method stub
+		return "Você usa um ataque mágico.";
+	}
 
 }

@@ -2,14 +2,12 @@ package br.edu.ufabc.alunos.model.battle;
 
 import java.util.Random;
 
+import br.edu.ufabc.alunos.model.battle.enums.Enemy;
+
 public class CharacterCreator {
 	private static final Random gerador = new Random();
 	public enum Player {
 		WARRIOR, WIZARD, ROGUE;
-	}
-	
-	public enum Enemy{
-		 DRAGON, MINOTAUR, KOBOLD, RANDOM;
 	}
 	
 	public static BattleCharacter getPlayer(Player player, String name, int level) {
@@ -50,6 +48,18 @@ public class CharacterCreator {
 		}
 		
 	}
+	
+
+	public static BattleCharacter getEnemy(Enemy enemy,int level, boolean boss) {
+		assert(enemy != null);
+		String name = enemy.getName();
+		if(boss) {
+			name = "Grande e Poderoso **"+name+"**";
+		}
+		return getEnemy(enemy, name, level, boss);
+		
+	}
+	
 	public static Warrior createWarrior(String name, int level){
 		int str = gerador.nextInt(4)+level;
 		int dex = gerador.nextInt(3);
@@ -108,8 +118,9 @@ public class CharacterCreator {
 			mind = gerador.nextInt(4);
 			exp =((level)*(10+level/2));
 		}
-		
-		return new Dragon(str, dex, con, magic, mind, level, exp, name);
+		Dragon d =new Dragon(str, dex, con, magic, mind, level, exp, name);
+		d.setTexturePath("Monsters/dragon.png");
+		return d;
 		
 	}
 	public static Minotaur createMinotaur(String name, int level, boolean boss){
@@ -132,7 +143,9 @@ public class CharacterCreator {
 			exp =((level)*(10+level/2));
 		}
 		
-		return new Minotaur(str, dex, con, magic, mind, level, exp, name);
+		Minotaur m = new Minotaur(str, dex, con, magic, mind, level, exp, name);
+		m.setTexturePath("Monsters/minotaur.png");
+		return m;
 		
 	}
 	public static Kobold createKobold(String name, int level, boolean boss){
@@ -155,7 +168,9 @@ public class CharacterCreator {
 			exp =((level)*(10+level/2));
 		}
 		
-		return new Kobold(str, dex, con, magic, mind, level, exp, name);
+		Kobold k = new Kobold(str, dex, con, magic, mind, level, exp, name);
+		k.setTexturePath("Monsters/kobold.png");
+		return k;
 		
 	}
 

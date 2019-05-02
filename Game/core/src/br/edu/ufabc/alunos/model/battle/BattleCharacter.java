@@ -2,7 +2,8 @@ package br.edu.ufabc.alunos.model.battle;
 
 import java.util.Random;
 
-import br.edu.ufabc.alunos.ui.battle.CharaBox;
+import br.edu.ufabc.alunos.model.battle.enums.DAMAGE;
+import br.edu.ufabc.alunos.model.battle.enums.Enemy;
 
 public abstract class BattleCharacter {
 	
@@ -17,6 +18,30 @@ public abstract class BattleCharacter {
 	protected int mind;
 	protected int level;
 	protected int exp;
+	
+	protected Enemy type;
+	protected boolean boss = false;
+	
+	
+	public DAMAGE getNextAttack() {
+		return Math.random()<0.5? DAMAGE.NORMAL: DAMAGE.MAGIC;
+	}
+	
+	public String getAttackText(DAMAGE type) {
+		assert(type != null);
+		switch(type) {
+		case NORMAL:
+			return getNormalAttackText();
+		case MAGIC:
+			return getMagicAttackText();
+		default:
+			return "Ataque Não Especificado";
+		}
+	}
+	
+	public abstract String getNormalAttackText();
+	public abstract String getMagicAttackText();
+	 
 	public abstract void reciveDamege(int damage);
 	public abstract void reciveMagicalDamege(int damage);
 	public abstract int damage();
@@ -103,6 +128,22 @@ public abstract class BattleCharacter {
 	public void setTexturePath(String texturePath) {
 		System.out.println("Character: Set Texture Path: "+texturePath );
 		this.texturePath = texturePath;
+	}
+
+	public Enemy getType() {
+		return type;
+	}
+
+	public void setType(Enemy type) {
+		this.type = type;
+	}
+
+	public boolean isBoss() {
+		return boss;
+	}
+
+	public void setBoss(boolean boss) {
+		this.boss = boss;
 	}
 	
 	

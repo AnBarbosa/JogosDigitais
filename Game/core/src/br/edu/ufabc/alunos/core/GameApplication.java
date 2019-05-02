@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import br.edu.ufabc.alunos.controllers.Controls;
 import br.edu.ufabc.alunos.model.Action;
 import br.edu.ufabc.alunos.screen.AbstractScreen;
-import br.edu.ufabc.alunos.screen.GameScreenWithUI;
+import br.edu.ufabc.alunos.screen.StartScreen;
 import br.edu.ufabc.alunos.screen.Transition;
 import br.edu.ufabc.alunos.screen.TransitionScreen;
 import br.edu.ufabc.alunos.utils.SkinGenerator;
@@ -31,11 +31,32 @@ public class GameApplication extends Game {
 	@Override
 	public void create() {
 		Controls.defaultInit();
+		GameMaster.init(this);
+		
 		transitionScreen = new TransitionScreen(this);
+		
 		this.assetManager = new AssetManager();
+		
+		loadAssets();
 
+		while(!assetManager.isFinished()) {
+			assetManager.update();
+		}
+		skin = SkinGenerator.generateSkin(assetManager);
+		screen = new StartScreen(this);
+		this.setScreen(screen);
+		
+		
+	}
+	
+	private void loadAssets() {
+		assert(assetManager != null) : "Assert Manager cannot be null.";
 		assetManager.load("Tile/32x32/grass.png", Texture.class);
 		assetManager.load("Tile/32x32/grass2.png", Texture.class);
+		assetManager.load("Tile/32x32/wall.png", Texture.class);
+		assetManager.load("Tile/32x32/stone.png", Texture.class);
+		
+		assetManager.load("Tile/boss.png", Texture.class);
 		assetManager.load("PlaceHolder.png", Texture.class);
 		assetManager.load("tutorial/graphics_packed/tiles/tilepack.atlas", TextureAtlas.class);
 		assetManager.load("tutorial/graphics_unpacked/tiles/small_house.png", Texture.class);
@@ -48,14 +69,12 @@ public class GameApplication extends Game {
 		assetManager.load("Charas/rogue_male.png", Texture.class);
 		assetManager.load("Charas/warrior_male.png", Texture.class);
 		
-		while(!assetManager.isFinished()) {
-			assetManager.update();
-		}
-		skin = SkinGenerator.generateSkin(assetManager);
-		screen = new GameScreenWithUI(this);
-		this.setScreen(screen);
+		assetManager.load("Monsters/kobold.png", Texture.class);
+		assetManager.load("Monsters/dragon.png", Texture.class);
+		assetManager.load("Monsters/minotaur.png", Texture.class);
+		
 	}
-	
+
 	@Override
 	public void render() {
 		Gdx.gl.glClearColor(0,0,0,1f);
@@ -67,14 +86,17 @@ public class GameApplication extends Game {
 	}
 
 	public static AssetManager getAssetManager() {
+		assert(assetManager != null) : "Cannot retrieve null AssetManager.";
 		return assetManager;
 	}
 
 	public Skin getSkin() {
+		assert(skin != null) : "Cannot retrieve null skin.";
 		return skin;
 	}
 	
 	public void startTransition(AbstractScreen from, AbstractScreen to, Transition out, Transition in, Action action) {
+		assert(transitionScreen != null): "GameApplication: transitionScreen cannot be null.";
 		assert(from != null);
 		assert(to != null);
 		assert(out != null);
@@ -82,7 +104,8 @@ public class GameApplication extends Game {
 		if(action==null) {
 			action = ()-> System.out.println("NULL ACTION.");
 		}
-		assert(transitionScreen != null);
+
+		GameMaster.setPlayerStat("Last_Screen", from);
 		transitionScreen.startTransition(from, to, out, in, action);
 	}
 	

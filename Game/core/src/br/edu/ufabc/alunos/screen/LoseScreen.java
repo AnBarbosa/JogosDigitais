@@ -35,7 +35,7 @@ public class LoseScreen extends AbstractScreen implements InputProcessor{
 	
 	private void debugCommands() {
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-			game.setScreen(new GameScreenWithUI(this.game));
+			game.setScreen(new StartScreen(this.game));
 		}
 
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
@@ -101,7 +101,7 @@ public class LoseScreen extends AbstractScreen implements InputProcessor{
 		switch(Controls.getComando(keycode)) {
 			case OK:
 				System.out.println("Ok pressed");
-				game.startTransition(this, new GameScreenWithUI(game), 
+				game.startTransition(this, new StartScreen(game), 
 						GameMaster.getFadeOut(), 
 						GameMaster.getFadeIn(), 
 						null);

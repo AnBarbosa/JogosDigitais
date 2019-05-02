@@ -19,11 +19,11 @@ public abstract class Transition {
 	
 	
 	public void update(float delta) {
-		System.out.println("Updating transition.");
+		//System.out.println("Updating transition.");
 		timer += delta;
 		if(timer>duration) {
 			finished = true;
-			System.out.println("Transition finished.");
+			//System.out.println("Transition finished.");
 		}
 	}
 	

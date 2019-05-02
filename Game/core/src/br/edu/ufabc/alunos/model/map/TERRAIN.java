@@ -6,7 +6,8 @@ public enum TERRAIN {
 
 	GRASS_1("Tile/32x32/grass.png", true),
 	GRASS_2("Tile/32x32/grass2.png", true), 
-	STONE("Tile/32x32/stone.png", false);
+	STONE("Tile/32x32/stone.png", true), 
+	WALL("Tile/32x32/wall.png", false);
 	
 	
 	

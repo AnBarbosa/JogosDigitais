@@ -17,6 +17,7 @@ import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.core.GameMaster;
 import br.edu.ufabc.alunos.model.battle.BattleCharacter;
 import br.edu.ufabc.alunos.model.battle.CharacterCreator;
+import br.edu.ufabc.alunos.model.battle.enums.Enemy;
 import br.edu.ufabc.alunos.ui.battle.BattleField;
 
 
@@ -45,9 +46,13 @@ public class BattleScreen extends AbstractScreen {
 
 	public static Map<String,Object> getDefaultArrange(){
 		Map<String, Object> mapSettings = new HashMap<>();
-		
-		mapSettings.put("Player", GameMaster.getPlayer());
-		mapSettings.put("Enemy", CharacterCreator.getEnemy(CharacterCreator.Enemy.RANDOM, "Um Inimigo", 1, false));
+		BattleCharacter player, enemy;
+		player = GameMaster.getPlayer();
+		enemy = CharacterCreator.getEnemy(Enemy.RANDOM, "Um Inimigo", 1, false);
+		assert(GameMaster.getPlayer().getCurrent_hp() >0);
+		assert(GameMaster.getPlayer().getCurrent_hp() >0);
+		mapSettings.put("Player", player);
+		mapSettings.put("Enemy", enemy);
 		return mapSettings;
 	}
 
@@ -92,9 +97,11 @@ public class BattleScreen extends AbstractScreen {
 
 	private void debugCommands() {
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-			game.startTransition(this, new GameScreenWithUI(game),
-					new FadeOutTransition(0.4f, Color.BLACK),
-					new FadeInTransition(0.4f, Color.BLACK), null);
+			AbstractScreen screen = GameMaster.getPlayerStat("Last_Screen");
+			assert(screen != null);
+			game.startTransition(this, screen, 
+					GameMaster.getFadeOut(), GameMaster.getFadeIn(),
+					null);
 		}
 
 	}
@@ -135,9 +142,11 @@ public class BattleScreen extends AbstractScreen {
 	}
 	
 	public void win() {
-		game.startTransition(this, new GameScreenWithUI(game), 
+		AbstractScreen screen = GameMaster.getPlayerStat("Last_Screen");
+		assert(screen != null);
+		game.startTransition(this, screen, 
 				GameMaster.getFadeOut(), GameMaster.getFadeIn(),
-				null);
+				()->screen.onTransitionIn());
 	}
 	
 	public void lose() {
@@ -146,7 +155,7 @@ public class BattleScreen extends AbstractScreen {
 				null);
 	}
 
-
+	
 
 
 }

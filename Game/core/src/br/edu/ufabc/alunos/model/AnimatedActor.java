@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 
 import br.edu.ufabc.alunos.model.map.DIRECTION;
+import br.edu.ufabc.alunos.model.map.Tile;
 import br.edu.ufabc.alunos.model.map.TileMap;
+import br.edu.ufabc.alunos.model.map.world.Boss;
 import br.edu.ufabc.alunos.utils.AnimationSet;
 /** 
  *  This class will animate the movement of the actor based on it ANIMATION_STATE and the fields variables.
@@ -136,14 +138,27 @@ public class AnimatedActor extends Actor{
 		
 		int nextX = this.getX() + directionTo.getX();
 		int nextY = this.getY() + directionTo.getY();
-		if(map.isPassable(nextX, nextY)) {
+		Tile nextTile = map.getTile(nextX, nextY);
+		
+		if(nextTile.isPassable()) {
 			this.initializeMoveAnimation(directionTo);
 			this.setPosition(nextX,  nextY);
 			return true;
 		} else {
+			if(nextTile.getObject() instanceof Boss) {
+				Boss boss = (Boss) nextTile.getObject();
+				boss.onTouch();
+			}
+		}
+		
+		// Removing auto reface to oposite direction
+		/*
+		else {
 			reface(DIRECTION.getOpposite(directionTo));
 			return false;			
 		}
+		*/
+		return false;
 	}
 	
 	@Override

@@ -1,8 +1,9 @@
 package br.edu.ufabc.alunos.core;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.utils.Array;
 
 import br.edu.ufabc.alunos.model.Action;
 import br.edu.ufabc.alunos.model.battle.BattleCharacter;
@@ -19,6 +20,8 @@ public enum GameMaster {
 	private static br.edu.ufabc.alunos.model.battle.BattleCharacter player;
 	private static GameApplication game;
 	
+	private static Map<String, Object> playerStats;
+	
 	public static void setPlayer(BattleCharacter thePlayer){
 		player = thePlayer;
 	}
@@ -32,6 +35,7 @@ public enum GameMaster {
 
 	public static void init(GameApplication game) {
 		GameMaster.game = game;
+		playerStats = new HashMap<>();
 		
 	}
 
@@ -52,11 +56,33 @@ public enum GameMaster {
 	public static Action getNullAction() {
 		final Action action = new Action() {
 			@Override
-			public void doAction() {
+			public void startAction() {
 				return;
 			}
 		};
 		return action;
 	}
+
+	public static GameApplication getGameApplication() {
+		assert(game != null);
+		return game;
+	}
+
+	public static void setPlayerStat(String stat, Object value) {
+		assert(playerStats != null);
+		playerStats.put(stat, value);
+		
+	}
+	
+	public static <T> T getPlayerStat(String stat){
+		assert(playerStats != null);
+		Object value = playerStats.getOrDefault(stat, null);
+		return (T) value;
+			
+	}
+	
+	
+	
+	
 
 }

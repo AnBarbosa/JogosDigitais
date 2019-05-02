@@ -28,9 +28,9 @@ public class SerieOfActions extends BattleAction {
 	}
 
 	@Override
-	public void doAction() {
+	public void startAction() {
 		currentAction = actions.removeFirst();
-		currentAction.doAction();
+		currentAction.startAction();
 	}
 	
 	@Override
@@ -44,10 +44,10 @@ public class SerieOfActions extends BattleAction {
 		} else {
 			if(currentAction == null) {
 				// There is no action. Lets start the first
-				doAction();
+				startAction();
 			} else if (currentAction.isFinished()) {
 				// The current action finished, lets start the next.
-				doAction();
+				startAction();
 			}
 			return false;
 		}

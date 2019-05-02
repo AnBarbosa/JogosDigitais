@@ -3,9 +3,9 @@ package br.edu.ufabc.alunos.battle.actions;
 import br.edu.ufabc.alunos.ui.battle.BattleField;
 import br.edu.ufabc.alunos.ui.battle.CharaBox;
 import br.edu.ufabc.alunos.model.battle.BattleCharacter;
+import br.edu.ufabc.alunos.model.battle.enums.DAMAGE;
 
 public class DamageAction extends BattleAction {
-	public enum DAMAGE { NORMAL, MAGIC };
 	private DAMAGE type;
 	private CharaBox target;
 	private CharaBox attacker;
@@ -19,7 +19,7 @@ public class DamageAction extends BattleAction {
 	}
 
 	@Override
-	public void doAction() {
+	public void startAction() {
 		BattleCharacter hitter = attacker.getCharacter();
 		BattleCharacter hitted = target.getCharacter();
 		int prevHP = hitted.getCurrent_hp();
@@ -32,7 +32,7 @@ public class DamageAction extends BattleAction {
 		target.sync();
 		String text = String.format("%s causou %d de dano à %s.", attacker.getName(), prevHP-afterHP, target.getName());
 		action = new TextAction(bf, text, bf.getMultiplexer());
-		action.doAction();
+		action.startAction();
 	}
 
 	@Override

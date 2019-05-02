@@ -6,6 +6,7 @@ public class Warrior extends BattleCharacter {
 	public Warrior(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {
 		int calcHp = (this.gerador.nextInt(11) + con)*level;
+		calcHp = Math.max(calcHp, 1);
 		this.setHp(calcHp);
 		this.setCurrent_hp(calcHp);
 		this.setStr(str);
@@ -65,6 +66,40 @@ public class Warrior extends BattleCharacter {
 		
 	}
 	
-	
+	@Override
+	public String getNormalAttackText() {
+		String formato = "%s ataca com %s";
+		String criaturas[] = {
+				"Você"
+		};
+		String armas[] = {
+			"golpes ágeis.",
+			"sua espada.",
+			"força incomum."
+		};
+		int indexArmas = (int) (Math.random()*armas.length);
+		int indexCriatura = (int) (Math.random()*criaturas.length);
+		
+		return String.format(formato,  criaturas[indexCriatura], armas[indexArmas]);
+
+	}
+
+	@Override
+	public String getMagicAttackText() {			
+		String formato = "%s utiliza %s";
+		String criaturas[] = {
+				"Você"
+		};
+		String armas[] = {
+			"uma magia simples.","uma magia simples.","uma magia simples.",
+			"uma pequena bola de fogo.", "pequenas chamas.", "um ritual comum.",
+			"um pergaminho mágico.",
+		};
+		int indexArmas = (int) Math.random()*armas.length;
+		int indexCriatura = (int) Math.random()*criaturas.length;
+		
+		return String.format(formato,  criaturas[indexCriatura], armas[indexArmas]);
+
+	}
 
 }

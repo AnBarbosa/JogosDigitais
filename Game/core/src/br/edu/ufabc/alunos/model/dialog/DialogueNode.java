@@ -35,9 +35,7 @@ public class DialogueNode {
 		observers.add(optionObserver);
 		addChoice(option, nodeID);
 	}
-	public void makeLinear(int nodeID) {
 
-	}
 	
 	public NODE_TYPE getType() {
 		return type;

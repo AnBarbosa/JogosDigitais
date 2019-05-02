@@ -23,6 +23,11 @@ public class World {
 		this.objects= new ArrayList<WorldObject>();
 	}
 	
+	public World(TileMap map) {
+		this.map = map;
+		this.actors = new ArrayList<Actor>();
+		this.objects= new ArrayList<WorldObject>();
+	}
 	
 	public void update(float delta) {
 		for (Actor a : actors) {

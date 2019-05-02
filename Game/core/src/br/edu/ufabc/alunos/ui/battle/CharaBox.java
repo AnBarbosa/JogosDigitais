@@ -34,7 +34,7 @@ public class CharaBox extends Table {
 		super(skin);
 		this.setBackground("optionbox");
 		uiContainer = new VerticalGroup();
-		this.add(uiContainer).pad(5f);
+		this.add(uiContainer).pad(10f);
 		
 		uiContainer.debugAll();
 		hpLabel = new HPLabel(100, this.getSkin());

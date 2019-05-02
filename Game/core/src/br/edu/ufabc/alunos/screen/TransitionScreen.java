@@ -45,18 +45,18 @@ public class TransitionScreen extends AbstractScreen implements InputProcessor  
 		this.action = action;
 		this.state = TRANSITION_STATE.OUT;
 		getApp().setScreen(this);
-		System.out.println("TransitionScreen: Starting...");
+		//System.out.println("TransitionScreen: Starting...");
 		addInputProcessor(this);
 	}
 									
 
 	public void updateScreen(float delta) {
-		System.out.println("TransitionScreen: Update...");
+		//System.out.println("TransitionScreen: Update...");
 		if(state == TRANSITION_STATE.OUT) {
 			outTransition.update(delta);
 			if(outTransition.isFinished()) {
 				if(action != null) {
-					action.doAction();
+					action.startAction();
 				}
 				state = TRANSITION_STATE.IN;
 				return;

@@ -9,11 +9,13 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 
 import br.edu.ufabc.alunos.core.GameApplication;
+import br.edu.ufabc.alunos.model.dialog.DialogueTree;
 
 public abstract class AbstractScreen implements Screen {
 	
 	protected GameApplication game;
 	protected InputMultiplexer multiplexer;
+	protected boolean gamePaused = false;
 	
 	public AbstractScreen(GameApplication game) {
 		this.game = game;
@@ -42,6 +44,9 @@ public abstract class AbstractScreen implements Screen {
 		this.drawScreen(delta);
 	}
 	
+	public GameApplication getApp() {
+		return game;
+	}
 	
 	public abstract void arrangeScreen(Map<String, Object> settings);
 	
@@ -50,21 +55,20 @@ public abstract class AbstractScreen implements Screen {
 	public abstract void drawScreen(float delta);
 	@Override
 	public abstract void resize(int width, int height) ;
-
-	@Override
-	public abstract void pause();
-
-	@Override
-	public abstract void resume() ;
-
-	@Override
-	public abstract void hide();
-
+	
 	@Override
 	public abstract void dispose();
+
+	@Override
+	public void pause() {gamePaused = true;}
+
+	@Override
+	public void resume() { gamePaused = false;}
 	
-	public GameApplication getApp() {
-		return game;
-	}
+	@Override
+	public void hide() {}
+
+	public void onTransitionIn() {}
+	
 
 }

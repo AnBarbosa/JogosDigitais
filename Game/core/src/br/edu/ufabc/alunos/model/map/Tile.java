@@ -31,15 +31,16 @@ public class Tile implements Cloneable{
 	}
 	
 	public boolean isPassable() {
-		if (actor == null) {
-			if(object == null) {
-				return true; 
-			} else {
-				return object.isPassable();
-			}
-		} else {
+		if(!terrain.isPassable()) {
 			return false;
 		}
+		if(actor != null) {
+			return false;
+		}
+		if(object != null) {
+			return object.isPassable();
+		}
+		return true;
 	}
 
 	public Actor getActor() {

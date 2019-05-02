@@ -1,8 +1,13 @@
 package br.edu.ufabc.alunos.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.InputAdapter;
 
+import br.edu.ufabc.alunos.model.Action;
 import br.edu.ufabc.alunos.model.dialog.ChoiceAction;
+import br.edu.ufabc.alunos.model.dialog.ClassDialogue;
 import br.edu.ufabc.alunos.model.dialog.DialogueNode;
 import br.edu.ufabc.alunos.model.dialog.DialogueNode.NODE_TYPE;
 import br.edu.ufabc.alunos.model.dialog.DialogueTraverser;
@@ -16,14 +21,25 @@ public class DialogueController extends InputAdapter {
 	private DialogueTraverser traverser;
 	private DialogueBox dialogueBox;
 	private OptionBox optionBox;
-	
+	private List<Action> endDialogAction;
 
 	public DialogueController(DialogueBox dialogueBox, OptionBox optionBox) {
 		super();
 		this.dialogueBox = dialogueBox;
 		this.optionBox = optionBox;
+		endDialogAction = new ArrayList<>();
 	}
 	
+	public void addEndAction(Action a) {
+		endDialogAction.add(a);
+	}
+	
+	public void executeEndActions() {
+		for (Action a: endDialogAction) {
+			a.startAction();
+		}
+		endDialogAction.clear();
+	}
 	
 	public void startDialogue(DialogueTree dialogue) {
 		traverser = new DialogueTraverser(dialogue);
@@ -91,8 +107,10 @@ public class DialogueController extends InputAdapter {
 				&& dialogueBox.isFinished()) {
 			switch(traverser.getType()) {
 				case FINAL:
+					System.out.println("Dialogue Complete.");
 					traverser = null;
 					dialogueBox.setVisible(false);
+					executeEndActions();
 					break;
 				case LINEAR:
 					progress(0);
@@ -111,6 +129,12 @@ public class DialogueController extends InputAdapter {
 			return true;
 		}
 		return false;
+	}
+
+	public void startDialogue(ClassDialogue classDialogue, Action endAction) {
+		this.addEndAction(endAction);
+		this.startDialogue(classDialogue);
+		
 	}
 
 	

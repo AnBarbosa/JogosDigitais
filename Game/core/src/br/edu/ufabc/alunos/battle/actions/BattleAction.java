@@ -12,7 +12,7 @@ public abstract class BattleAction {
 	}
 	
 	
-	public abstract void doAction();
+	public abstract void startAction();
 	public abstract boolean isFinished();
 	
 	

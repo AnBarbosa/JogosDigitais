@@ -20,7 +20,7 @@ public class WorldObject implements YSortable {
 	
 	public WorldObject(int x, int y, float sizeX, float sizeY, 
 						boolean walkable, boolean passable, boolean visible,
-						TextureRegion texture, GridPoint2[] tiles) {
+						TextureRegion texture, GridPoint2[] grid) {
 		this.x = x;
 		this.y = y;
 		this.sizeX = sizeX;
@@ -30,14 +30,23 @@ public class WorldObject implements YSortable {
 		this.passable = passable;
 		this.visible = visible;
 		this.tiles = new ArrayList<GridPoint2>();
-		
-		for (GridPoint2 p : tiles) {
-			this.tiles.add(p);
+		if(grid != null) {
+			for (GridPoint2 p : grid) {
+				this.tiles.add(p);
+			}
 		}
 	}
 	
 	public List<GridPoint2> getTiles() {
 		return new ArrayList(tiles);
+	}
+	
+	public void setTiles(GridPoint2[] grid) {
+		this.tiles = new ArrayList<GridPoint2>();
+		
+		for (GridPoint2 p : grid) {
+			this.tiles.add(p);
+		}
 	}
 
 	public int getX() {

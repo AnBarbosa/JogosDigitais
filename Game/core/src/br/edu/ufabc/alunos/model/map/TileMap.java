@@ -28,12 +28,13 @@ public class TileMap {
 	}
 
 	public boolean isPassable(int x, int y) {
+		Log.debug = true;
 		Log.printf("Is Passable %d, %d?\n", x,y);
-		if(x < 0 || x >= this.width) {
+		if(x < 0 || x >= getWidth()) {
 			Log.println("Not Passable. X out of bounds.");
 			return false;
 		}
-		if(y < 0 || y >= this.height) {
+		if(y < 0 || y >= getHeight()) {
 			Log.println("Not Passable. Y out of bounds.");
 			return false;
 		}

@@ -18,7 +18,7 @@ public class TextAction extends BattleAction implements InputProcessor{
 	}
 
 	@Override
-	public void doAction() {
+	public void startAction() {
 		System.out.println("DO ACTION > "+text);
 		if(multiplexer != null) {
 			multiplexer.addProcessor(0, this);
