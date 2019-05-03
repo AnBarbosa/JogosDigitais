@@ -56,5 +56,15 @@ public class DullChara extends Character {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public int run() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int notRun() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 }

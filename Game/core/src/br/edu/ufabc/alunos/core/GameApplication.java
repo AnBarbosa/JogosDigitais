@@ -1,9 +1,13 @@
 package br.edu.ufabc.alunos.core;
 
+import java.util.Random;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -19,6 +23,15 @@ public class GameApplication extends Game {
 	
 	private Screen screen;
 	private Skin skin;
+	private Music initialScreen = Gdx.audio.newMusic(Gdx.files.internal("music/LordOfTheRingsTheShire-MusicAmbience.mp3"));
+	private Music mazeScreen = Gdx.audio.newMusic(Gdx.files.internal("music/Skyrim-Ambience-Dungeons.mp3"));
+	private Music batleScreen = Gdx.audio.newMusic(Gdx.files.internal("music/TwoStepsFromHell-25TracksBestofAllTimeMostPowerfulEpicMusicMix.mp3"));
+	private Sound atkSound = Gdx.audio.newSound(Gdx.files.internal("sound/147287__smokebomb99__sword-slash-2.wav"));
+	private Sound atkSound2 = Gdx.audio.newSound(Gdx.files.internal("sound/147288__smokebomb99__sword-slash-1 .wav"));
+	private Sound atkSound3 = Gdx.audio.newSound(Gdx.files.internal("sound/147289__smokebomb99__axe-slash-2.wav"));
+	private Sound atkSound4 = Gdx.audio.newSound(Gdx.files.internal("sound/147290__smokebomb99__axe-slash-1.wav"));
+	private Sound magicAtkSound = Gdx.audio.newSound(Gdx.files.internal("sound/249817__spookymodem__magic-missiles.wav"));
+	private Sound magicAtkSound2 = Gdx.audio.newSound(Gdx.files.internal("sound/406063__aleks41__magic-strike.wav"));
 	
 	private static AssetManager assetManager;
 	
@@ -59,7 +72,91 @@ public class GameApplication extends Game {
 	public Skin getSkin() {
 		return skin;
 	}
-	
+	public void playMusic(String screen) { 
+		   
+		 switch (screen) {  
+		 case "initial":  
+			 if(initialScreen.isPlaying()) {
+				 break;				 
+			 }else if(mazeScreen.isPlaying()){
+				 mazeScreen.stop();
+			 }else if(batleScreen.isPlaying()){
+				 batleScreen.stop();
+			 }
+			 initialScreen.play();
+		   break;  
+		case "maze":  
+			 if(mazeScreen.isPlaying()) {
+				 break;				 
+			 }else if(initialScreen.isPlaying()){
+				 initialScreen.stop();
+			 }else if(batleScreen.isPlaying()){
+				 batleScreen.stop();
+			 }
+			 mazeScreen.play();
+		   break;  
+		case "batle":  
+			 if(mazeScreen.isPlaying()) {
+				 break;				 
+			 }else if(initialScreen.isPlaying()){
+				 initialScreen.stop();
+			 }else if(mazeScreen.isPlaying()){
+				 mazeScreen.stop();
+			 }
+			 batleScreen.play();
+			   break;    
+		 }  
+		
+	}
+	public void stopMusic(String screen) {
+			switch (screen) {  
+			 case "initial":  
+				 initialScreen.stop();
+			   break;  
+			case "maze":  
+				 mazeScreen.stop();
+			   break;  
+			case "batle":  
+				 batleScreen.stop();
+				   break;    
+			 }  
+	}
+	public void playSound(String sound) { 
+		Random random = new Random();
+		int atk = 1+random.nextInt(3);
+		int magic= 1+random.nextInt(1);
+		   
+		 switch (sound) {  
+		 case "atk":  
+			 switch (atk) {  
+			 case 1:  
+				 atkSound.play();
+			   break;
+			 case 2:  
+				 atkSound2.play();
+			   break; 
+			 case 3:  
+				 atkSound3.play();
+			   break; 
+			 case 4:  
+				 atkSound4.play();
+			   break; 
+			 }  
+			 
+		   break;  
+		case "magicatk": 
+			 switch (magic) {  
+			 case 1:  
+				 magicAtkSound.play();
+			   break;
+			 case 2:  
+				 magicAtkSound2.play();
+			   break; 
+			 }  
+		   break;  
+		 }  
+		
+	}
 	
 
 }
