@@ -95,6 +95,7 @@ public class BattleScreen extends AbstractScreen {
 
 	@Override
 	public void drawScreen(float delta) {	
+		game.playMusic("batle");
 		battleStage.draw();
 	}
 

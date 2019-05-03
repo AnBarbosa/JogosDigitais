@@ -95,8 +95,7 @@ public class StartScreen extends WorldGameScreen {
 	
 	private void debugCommands() {
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-			System.out.println("Starting dialogue.");
-			dialogueController.startDialogue(dialogue);
+			game.stopMusic();
 		}
 
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
@@ -176,6 +175,7 @@ public class StartScreen extends WorldGameScreen {
 	
 	@Override
 	public void drawScreen(float delta) {
+		game.playMusic("initial");
 		super.drawScreen(delta);
 //		gameViewport.apply();
 //		fadeStage.draw();

@@ -22,28 +22,38 @@ public class Rogue extends BattleCharacter {
 			@Override
 			public void reciveDamege(int damage) {
 				damage = (int) ((damage-((this.con+this.dex)/10)) * (1 -(this.dex/100)));
-				this.current_hp -= damage;
+				this.current_hp -= Math.max(damage, 0);
 						
 			}
 
 			@Override
 			public void reciveMagicalDamege(int damage) {
 				damage = (int) ((damage -((this.mind+this.dex)/10))*(1-(this.dex/100)));
-				this.current_hp -= damage;		
+				this.current_hp -= Math.max(damage, 0);		
 			}
 
 			@Override
 			public int damage() {
-				int damage;
+				int damage, mult;
+				if(this.gerador.nextInt(1)==1) {
+				 mult = 10;
+				}else {
+					mult = 1;
+				}
 				damage = (int) ((this.gerador.nextInt(5)+this.str)*(0.8 + (this.level/10)));
-				return damage;
+				return damage* mult;
 			}
 
 			@Override
 			public int magicalDamage() {
-				int damage;
+				int damage,mult;
+				if(this.gerador.nextInt(1)==1) {
+					 mult = 10;
+					}else {
+						mult = 1;
+					}
 				damage = (int) ((this.gerador.nextInt(13)+this.magic)*(0.8 + (this.level/10)));
-				return damage;
+				return damage* mult;
 			}
 
 			@Override
@@ -60,7 +70,7 @@ public class Rogue extends BattleCharacter {
 			}
 			@Override
 			public int run() {
-				if(Math.random()==1) {
+				if(this.gerador.nextInt(1)==1) {
 					int run = 1000000000;
 					return run;
 				}else {

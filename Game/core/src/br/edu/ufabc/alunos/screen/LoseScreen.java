@@ -52,6 +52,7 @@ public class LoseScreen extends AbstractScreen implements InputProcessor{
 
 	@Override
 	public void drawScreen(float delta) {
+		game.playMusic("lose");
 		spriteBatch.begin();
 		spriteBatch.draw(loseImage, 0, 0, loseImage.getWidth(), loseImage.getHeight());
 		spriteBatch.end();

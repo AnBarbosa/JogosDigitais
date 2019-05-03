@@ -1,6 +1,6 @@
 package br.edu.ufabc.alunos.model.battle;
 
-import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
+//import com.badlogic.gdx.graphics.g3d.particles.influencers.ColorInfluencer.Random;
 
 import br.edu.ufabc.alunos.model.battle.enums.Enemy;
 
@@ -27,27 +27,27 @@ public class Dragon extends BattleCharacter {
 	@Override
 	public void reciveDamege(int damage) {
 		damage = (int) ((damage-this.con) * (1 -(this.con/100)));
-		this.current_hp -= damage;
+		this.current_hp -= Math.max(damage, 0);
 				
 	}
 
 	@Override
 	public void reciveMagicalDamege(int damage) {
 		damage = (int) ((damage - this.mind)*(1-(this.con/100)));
-		this.current_hp -= damage;		
+		this.current_hp -= Math.max(damage, 0);		
 	}
 
 	@Override
 	public int damage() {
 		int damage;
-		damage = (int) ((this.gerador.nextInt(15)+this.str)*(1 + (this.level/10)));
+		damage = (int) ((Math.max(7, this.gerador.nextInt(15))+this.str)*(1 + (this.level)));
 		return damage;
 	}
 
 	@Override
 	public int magicalDamage() {
 		int damage;
-		damage = (int) ((this.gerador.nextInt(15)+this.magic)*(1 + (this.level/10)));
+		damage = (int) ((Math.max(7, this.gerador.nextInt(20))+this.magic)*(1 + (this.level)));
 		return damage;
 	}
 

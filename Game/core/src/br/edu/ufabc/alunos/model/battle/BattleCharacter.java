@@ -52,6 +52,15 @@ public abstract class BattleCharacter {
 	public abstract int notRun();
 	protected Random gerador = new Random();
 	
+	public String getSound(DAMAGE d) {
+		String sound;
+		if(d== DAMAGE.NORMAL) {
+			sound="atk";
+		}else {
+			sound="magicatk";
+		}
+		return sound;
+	}
 	public void evolve(int exp) {
 		this.exp += exp;
 		// só sobe um nivel por vez mesmo qua ganhe muito xp

@@ -297,6 +297,7 @@ public class DungeonScreen extends AbstractScreen {
 
 	@Override
 	public void drawScreen(float delta) {
+		game.playMusic("maze");
 		worldViewport.apply();
 		batch.begin();
 		worldRenderer.render(batch, worldCamera);

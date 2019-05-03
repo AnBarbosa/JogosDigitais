@@ -1,5 +1,7 @@
 package br.edu.ufabc.alunos.core;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import com.badlogic.gdx.Game;
@@ -8,7 +10,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -33,12 +34,15 @@ public class GameApplication extends Game {
 	private Music initialScreen ;
 	private Music mazeScreen ;
 	private Music batleScreen;
+	private Music victoryScreen;
+	private Music loseScreen;
 	private Sound atkSound ;
 	private Sound atkSound2;
 	private Sound atkSound3 ;
 	private Sound atkSound4;
 	private Sound magicAtkSound;
-	private Sound magicAtkSound2;
+	private Sound mino;
+//	private Sound magicAtkSound2;
 	
 	private static AssetManager assetManager;
 	
@@ -93,20 +97,17 @@ public class GameApplication extends Game {
 		  initialScreen = Gdx.audio.newMusic(Gdx.files.internal("music/LordOfTheRingsTheShire-MusicAmbience.mp3"));
 		  mazeScreen = Gdx.audio.newMusic(Gdx.files.internal("music/Skyrim-Ambience-Dungeons.mp3"));
 		  batleScreen = Gdx.audio.newMusic(Gdx.files.internal("music/TwoStepsFromHell-25TracksBestofAllTimeMostPowerfulEpicMusicMix.mp3"));
+		  victoryScreen = Gdx.audio.newMusic(Gdx.files.internal("music/FinalFantasyVII-VictoryFanfare.mp3"));
+		  loseScreen = Gdx.audio.newMusic(Gdx.files.internal("music/SadnessandSorrow.mp3"));
 		  atkSound = Gdx.audio.newSound(Gdx.files.internal("sound/147287__smokebomb99__sword-slash-2.wav"));
 		  atkSound2 = Gdx.audio.newSound(Gdx.files.internal("sound/147288__smokebomb99__sword-slash-1.wav"));
 		  atkSound3 = Gdx.audio.newSound(Gdx.files.internal("sound/147289__smokebomb99__axe-slash-2.wav"));
 		  atkSound4 = Gdx.audio.newSound(Gdx.files.internal("sound/147290__smokebomb99__axe-slash-1.wav"));
+		  mino = Gdx.audio.newSound(Gdx.files.internal("sound/195568__jacobalcook__creature-roar-1.wav"));
 		  magicAtkSound = Gdx.audio.newSound(Gdx.files.internal("sound/249817__spookymodem__magic-missiles.wav"));
 //		  magicAtkSound2 = Gdx.audio.newSound(Gdx.files.internal("sound/406063__aleks41__magic-strike.wav"));
 		
 		
-		while(!assetManager.isFinished()) {
-			assetManager.update();
-		}
-		skin = SkinGenerator.generateSkin(assetManager);
-		screen = new GameScreenWithUI(this);
-		this.setScreen(screen);
 	}
 
 	@Override
@@ -141,58 +142,73 @@ public class GameApplication extends Game {
 
 		GameMaster.setPlayerStat("Last_Screen", from);
 		transitionScreen.startTransition(from, to, out, in, action);
+	}
 	public void playMusic(String screen) { 
 		   
 		 switch (screen) {  
 		 case "initial":  
 			 if(initialScreen.isPlaying()) {
 				 break;				 
-			 }
-			 if(mazeScreen.isPlaying()){
+			 }else{
 				 mazeScreen.stop();
-			 }
-			 if(batleScreen.isPlaying()){
 				 batleScreen.stop();
+				 victoryScreen.stop();
+				 loseScreen.stop();
 			 }
 			 initialScreen.play();
 		   break;  
 		case "maze":  
 			 if(mazeScreen.isPlaying()) {
 				 break;				 
-			 }
-			 if(initialScreen.isPlaying()){
+			 }else{
 				 initialScreen.stop();
-			 }
-			 if(batleScreen.isPlaying()){
 				 batleScreen.stop();
+				 victoryScreen.stop();
+				 loseScreen.stop();
 			 }
 			 mazeScreen.play();
 		   break;  
 		case "batle":  
-			 if(mazeScreen.isPlaying()) {
+			 if(batleScreen.isPlaying()) {
 				 break;				 
-			 }else if(initialScreen.isPlaying()){
+			 }else{
 				 initialScreen.stop();
-			 }else if(mazeScreen.isPlaying()){
 				 mazeScreen.stop();
+				 victoryScreen.stop();
+				 loseScreen.stop();
 			 }
 			 batleScreen.play();
-			   break;    
+			   break;
+		case "victory":  
+			 if(victoryScreen.isPlaying()) {
+				 break;				 
+			 }else{
+				 initialScreen.stop();
+				 mazeScreen.stop();
+				 batleScreen.stop();
+				 loseScreen.stop();
+			 }
+			 victoryScreen.play();
+			   break; 
+		case "lose":  
+			 if(loseScreen.isPlaying()) {
+				 break;				 
+			 }else{
+				 initialScreen.stop();
+				 mazeScreen.stop();
+				 batleScreen.stop();
+				 victoryScreen.stop();
+			 }
+			 loseScreen.play();
+			   break; 
 		 }  
 		
 	}
-	public void stopMusic(String screen) {
-			switch (screen) {  
-			 case "initial":  
-				 initialScreen.stop();
-			   break;  
-			case "maze":  
+	public void stopMusic() {  
+				 initialScreen.stop();  
 				 mazeScreen.stop();
-			   break;  
-			case "batle":  
 				 batleScreen.stop();
-				   break;    
-			 }  
+
 	}
 	public void playSound(String sound) { 
 		Random random = new Random();
@@ -226,7 +242,10 @@ public class GameApplication extends Game {
 				 magicAtkSound.play();
 			   break; 
 			 }  
-		   break;  
+		   break;
+		case "uro":
+			 mino.play();
+			   break; 
 		 }  
 		
 	}

@@ -1,5 +1,6 @@
 package br.edu.ufabc.alunos.model.battle;
 
+import br.edu.ufabc.alunos.model.battle.enums.DAMAGE;
 import br.edu.ufabc.alunos.model.battle.enums.Enemy;
 
 public class Minotaur extends BattleCharacter {
@@ -24,20 +25,20 @@ public class Minotaur extends BattleCharacter {
 	@Override
 	public void reciveDamege(int damage) {
 		damage = (int) ((damage-this.con) * (1 -(this.con/100)));
-		this.current_hp -= damage;
+		this.current_hp -= Math.max(damage, 0);
 				
 	}
 
 	@Override
 	public void reciveMagicalDamege(int damage) {
 		damage = (int) ((damage)*(1-(this.con/100)));
-		this.current_hp -= damage;		
+		this.current_hp -= Math.max(damage, 0);		
 	}
 
 	@Override
 	public int damage() {
 		int damage;
-		damage = (int) ((this.gerador.nextInt(13)+this.str)*(1 + (this.level/10)));
+		damage = (int) ((this.gerador.nextInt(13)+this.str)*(1 + (this.level)));
 		return damage;
 	}
 
@@ -93,7 +94,9 @@ public class Minotaur extends BattleCharacter {
 		int indexCriatura = (int) Math.random()*criaturas.length;
 		
 		return String.format(formato,  criaturas[indexCriatura], armas[indexArmas]);
+	}
 	@Override
+	public int run() {
 		int run = this.gerador.nextInt(21)+this.dex;
 		return run;
 	}
@@ -103,4 +106,21 @@ public class Minotaur extends BattleCharacter {
 		int run = this.gerador.nextInt(21)+this.str+(level/3);
 		return run;
 	}
+	@Override
+	public DAMAGE getNextAttack() {
+		return DAMAGE.NORMAL;
+	}
+
+	@Override
+	public String getSound(DAMAGE d) {
+		String sound;
+		if(d== DAMAGE.NORMAL) {
+			sound="atk";
+		}else {
+			sound="uro";
+		}
+		return sound;
+	}
+	
+}
 	

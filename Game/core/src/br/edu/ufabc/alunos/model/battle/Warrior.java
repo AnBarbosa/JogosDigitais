@@ -25,7 +25,7 @@ public class Warrior extends BattleCharacter {
 		
 		damage = (int) ((damage - this.con) * (1 -(this.dex/100)));
 		
-		this.current_hp -= damage;
+		this.current_hp -= Math.max(damage, 0);
 		
 	}
 
@@ -33,13 +33,13 @@ public class Warrior extends BattleCharacter {
 	public void reciveMagicalDamege(int damage) {
 		
 		damage = (int) ((damage -this.con)*(1.5-(this.mind/100)));
-		this.current_hp -= damage;
+		this.current_hp -= Math.max(damage, 0);
 	}
 
 	@Override
 	public int damage() {
 		int damage;
-		damage = (int) ((this.gerador.nextInt(9)+this.str)*(0.8 + (this.level/10)));
+		damage = (int) ((this.gerador.nextInt(9)+this.str)*(0.8 + (this.level)));
 		
 		return damage;
 	}

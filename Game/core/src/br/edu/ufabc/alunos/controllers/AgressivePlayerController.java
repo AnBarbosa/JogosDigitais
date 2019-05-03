@@ -12,7 +12,7 @@ public class AgressivePlayerController extends PlayerControllerAdvanced{
 	public final float ENEMY_CHANCE = 0.25f;
 	public final float START_BOOST = -3.0f;
 	public final float BOOST_RATE = 0; //.0075f;
-	public final float MIN_INTERVAL = 0.75f;
+	public final float MIN_INTERVAL = 4f;
 	DungeonScreen ds;
 	
 	float boost_encounter_chances = 0;

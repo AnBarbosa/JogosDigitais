@@ -59,12 +59,13 @@ public class ClassDialogue extends DialogueTree {
 	}
 	
 	private void goToDungeon() {
+		int map[][] =LoadedTileMap.basicMap();
 		System.out.println("Going to dungeon.");
 		GameApplication ga = GameMaster.getGameApplication();
 		Map<String, Object> arranges = DungeonScreen.getDefaultArrange();
-		World mundo = LoadedTileMap.getWorldFrom(LoadedTileMap.basicMap());
-		Vector2 playerPos = LoadedTileMap.getPlayerPosition(LoadedTileMap.basicMap());
-		Vector2 bossPos =  LoadedTileMap.getBossPosition(LoadedTileMap.basicMap());
+		World mundo = LoadedTileMap.getWorldFrom(map);
+		Vector2 playerPos = LoadedTileMap.getPlayerPosition(map);
+		Vector2 bossPos =  LoadedTileMap.getBossPosition(map);
 		
 		arranges.put("World", mundo);
 		arranges.put("Player_X", (int) playerPos.x);

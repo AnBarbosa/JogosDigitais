@@ -1,15 +1,15 @@
 package br.edu.ufabc.alunos.model.battle;
 
+import br.edu.ufabc.alunos.model.battle.enums.DAMAGE;
+
 public class Wizard extends BattleCharacter {
 	
 	public Wizard(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {
-<<<<<<< HEAD
-		int calcHp = this.gerador.nextInt(5) + con;
-		calcHp = Math.max(calcHp, 1);
-=======
+
 		int calcHp = ((this.gerador.nextInt(5) + con)*10)*level;
->>>>>>> develop
+		calcHp = Math.max(calcHp, 1);
+
 		this.setHp(calcHp);
 		this.setCurrent_hp(calcHp);
 		this.setStr(str);
@@ -26,14 +26,14 @@ public class Wizard extends BattleCharacter {
 	@Override
 	public void reciveDamege(int damage) {
 		damage = (int) ((damage) * (1 -(this.dex/100)));
-		this.current_hp -= damage;
+		this.current_hp -= Math.max(damage, 0);
 				
 	}
 
 	@Override
 	public void reciveMagicalDamege(int damage) {
 		damage = (int) ((damage -this.mind)*(1.5-(this.mind/100)));
-		this.current_hp -= damage;		
+		this.current_hp -= Math.max(damage, 0);		
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class Wizard extends BattleCharacter {
 	@Override
 	public int magicalDamage() {
 		int damage;
-		damage = (int) ((this.gerador.nextInt(13)+this.magic)*(1 + (this.level/10)));
+		damage = (int) ((this.gerador.nextInt(13)+this.magic)*(1 + this.level));
 		return damage;
 	}
 
@@ -113,5 +113,6 @@ public class Wizard extends BattleCharacter {
 		return String.format(formato,  criaturas[indexCriatura], armas[indexArmas]);
 
 	}
+
 
 }

@@ -24,27 +24,27 @@ public class Kobold extends BattleCharacter {
 	@Override
 	public void reciveDamege(int damage) {
 		damage = (int) ((damage) * (1 -(this.con/100)));
-		this.current_hp -= damage;
+		this.current_hp -= Math.max(damage, 0);
 				
 	}
 
 	@Override
 	public void reciveMagicalDamege(int damage) {
 		damage = (int) ((damage)*(1-(this.con/100)));
-		this.current_hp -= damage;		
+		this.current_hp -= Math.max(damage, 0);		
 	}
 
 	@Override
 	public int damage() {
 		int damage;
-		damage = (int) ((this.gerador.nextInt(3)+this.str)*(0.5 + (this.level/10)));
+		damage = (int) ((this.gerador.nextInt(3)+this.gerador.nextInt(3)+this.str)*(0.5 + (this.level/10)));
 		return Math.max(damage, 0);
 	}
 
 	@Override
 	public int magicalDamage() {
 		int damage;
-		damage = (int) ((this.gerador.nextInt(7)+this.magic)*(1 + (this.level/10)));
+		damage = (int) ((this.gerador.nextInt(7)+this.gerador.nextInt(7)+this.magic)*(1 + (this.level/10)));
 		return damage;
 	}
 

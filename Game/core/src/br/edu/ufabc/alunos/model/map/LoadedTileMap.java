@@ -12,6 +12,7 @@ public class LoadedTileMap extends TileMap{
 	public static final int PAREDE = 1;
 	public static final int JOGADOR = 9;
 	public static final int BOSS = 8;
+	private static GenerateMap map = new GenerateMap();
 	
 	public LoadedTileMap(int[][] mapa) {
 		int linhas = mapa.length;
@@ -38,19 +39,8 @@ public class LoadedTileMap extends TileMap{
 	}
 	
 	public static int[][] basicMap() {
-		int mapa[][] = 
-			{ {1,1,1,1,1,1,1,1,1,1,1},
-			  {1,0,0,1,1,8,0,0,0,9,1},
-			  {1,0,0,1,1,0,0,0,0,0,1},
-			  {1,0,0,1,0,1,0,0,1,0,1},
-			  {1,0,0,1,0,1,0,0,1,0,1},
-			  {1,0,1,1,1,1,1,1,1,0,1},
-			  {1,0,0,0,1,0,0,0,0,0,1},			  
-			  {1,0,0,0,1,0,0,1,1,0,1},
-			  {1,0,0,0,0,0,0,1,1,1,1},
-			  {1,1,1,1,1,1,1,1,1,1,1}
-			};
-		return mapa;
+		return  map.retornaMapa() ;
+		
 	}
 	
 	public static Tile intToTile(int i) {

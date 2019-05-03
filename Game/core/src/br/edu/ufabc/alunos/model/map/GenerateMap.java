@@ -149,33 +149,33 @@ public class GenerateMap {
 	public int[][] retornaMapa() {
 		int map[][]= new int[42][42];
 		
+		int m[][] = this.retornaMatiz();
 		 for (int i = 0; i < 21; i++){
 			 for (int j = 0; j < 21; j++){
-	             int m[][] = this.retornaMatiz();
 	             map[i][j]=m[i][j];
 		     }
      }
+	 m = this.retornaMatiz();
 		 for (int i = 0; i < 21; i++){
 			 for (int j = 0; j < 21; j++){
-	             int m[][] = this.retornaMatiz();
 	             map[i+21][j]=m[i][j];
 		     }
      }
+		 m = this.retornaMatiz();
 		 for (int i = 0; i <21; i++){
 			 for (int j = 0; j < 21; j++){
-	             int m[][] = this.retornaMatiz();
 	             map[i][j+21]=m[i][j];
 		     }
      }
+		 m = this.retornaMatiz();
 		 for (int i = 0; i < 21; i++){
 			 for (int j = 0; j < 21; j++){
-	             int m[][] = this.retornaMatiz();
 	             map[i+21][j+21]=m[i][j];
 		     }
      }
 		
 	boolean player = true;
-	boolean boss = false;
+	boolean boss = true;
 	int n1,n2 ;
 	
 	while(player) {
