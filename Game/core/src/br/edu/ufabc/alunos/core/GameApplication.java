@@ -8,6 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -23,22 +24,22 @@ public class GameApplication extends Game {
 	
 	private Screen screen;
 	private Skin skin;
-	private Music initialScreen = Gdx.audio.newMusic(Gdx.files.internal("music/LordOfTheRingsTheShire-MusicAmbience.mp3"));
-	private Music mazeScreen = Gdx.audio.newMusic(Gdx.files.internal("music/Skyrim-Ambience-Dungeons.mp3"));
-	private Music batleScreen = Gdx.audio.newMusic(Gdx.files.internal("music/TwoStepsFromHell-25TracksBestofAllTimeMostPowerfulEpicMusicMix.mp3"));
-	private Sound atkSound = Gdx.audio.newSound(Gdx.files.internal("sound/147287__smokebomb99__sword-slash-2.wav"));
-	private Sound atkSound2 = Gdx.audio.newSound(Gdx.files.internal("sound/147288__smokebomb99__sword-slash-1 .wav"));
-	private Sound atkSound3 = Gdx.audio.newSound(Gdx.files.internal("sound/147289__smokebomb99__axe-slash-2.wav"));
-	private Sound atkSound4 = Gdx.audio.newSound(Gdx.files.internal("sound/147290__smokebomb99__axe-slash-1.wav"));
-	private Sound magicAtkSound = Gdx.audio.newSound(Gdx.files.internal("sound/249817__spookymodem__magic-missiles.wav"));
-	private Sound magicAtkSound2 = Gdx.audio.newSound(Gdx.files.internal("sound/406063__aleks41__magic-strike.wav"));
+	private Music initialScreen ;
+	private Music mazeScreen ;
+	private Music batleScreen;
+	private Sound atkSound ;
+	private Sound atkSound2;
+	private Sound atkSound3 ;
+	private Sound atkSound4;
+	private Sound magicAtkSound;
+	private Sound magicAtkSound2;
 	
 	private static AssetManager assetManager;
 	
 	@Override
 	public void create() {
 		Controls.defaultInit();
-		this.assetManager = new AssetManager();
+		GameApplication.assetManager = new AssetManager();
 
 		assetManager.load("Tile/32x32/grass.png", Texture.class);
 		assetManager.load("Tile/32x32/grass2.png", Texture.class);
@@ -47,6 +48,17 @@ public class GameApplication extends Game {
 		assetManager.load("tutorial/graphics_unpacked/tiles/small_house.png", Texture.class);
 		assetManager.load("tutorial/graphics_packed/ui/uipack.atlas", TextureAtlas.class);
 		assetManager.load("tutorial/font/small_letters_font.fnt", BitmapFont.class);
+		
+		  initialScreen = Gdx.audio.newMusic(Gdx.files.internal("music/LordOfTheRingsTheShire-MusicAmbience.mp3"));
+		  mazeScreen = Gdx.audio.newMusic(Gdx.files.internal("music/Skyrim-Ambience-Dungeons.mp3"));
+		  batleScreen = Gdx.audio.newMusic(Gdx.files.internal("music/TwoStepsFromHell-25TracksBestofAllTimeMostPowerfulEpicMusicMix.mp3"));
+		  atkSound = Gdx.audio.newSound(Gdx.files.internal("sound/147287__smokebomb99__sword-slash-2.wav"));
+		  atkSound2 = Gdx.audio.newSound(Gdx.files.internal("sound/147288__smokebomb99__sword-slash-1.wav"));
+		  atkSound3 = Gdx.audio.newSound(Gdx.files.internal("sound/147289__smokebomb99__axe-slash-2.wav"));
+		  atkSound4 = Gdx.audio.newSound(Gdx.files.internal("sound/147290__smokebomb99__axe-slash-1.wav"));
+		  magicAtkSound = Gdx.audio.newSound(Gdx.files.internal("sound/249817__spookymodem__magic-missiles.wav"));
+//		  magicAtkSound2 = Gdx.audio.newSound(Gdx.files.internal("sound/406063__aleks41__magic-strike.wav"));
+		
 		
 		while(!assetManager.isFinished()) {
 			assetManager.update();
@@ -78,9 +90,11 @@ public class GameApplication extends Game {
 		 case "initial":  
 			 if(initialScreen.isPlaying()) {
 				 break;				 
-			 }else if(mazeScreen.isPlaying()){
+			 }
+			 if(mazeScreen.isPlaying()){
 				 mazeScreen.stop();
-			 }else if(batleScreen.isPlaying()){
+			 }
+			 if(batleScreen.isPlaying()){
 				 batleScreen.stop();
 			 }
 			 initialScreen.play();
@@ -88,9 +102,11 @@ public class GameApplication extends Game {
 		case "maze":  
 			 if(mazeScreen.isPlaying()) {
 				 break;				 
-			 }else if(initialScreen.isPlaying()){
+			 }
+			 if(initialScreen.isPlaying()){
 				 initialScreen.stop();
-			 }else if(batleScreen.isPlaying()){
+			 }
+			 if(batleScreen.isPlaying()){
 				 batleScreen.stop();
 			 }
 			 mazeScreen.play();
@@ -150,7 +166,7 @@ public class GameApplication extends Game {
 				 magicAtkSound.play();
 			   break;
 			 case 2:  
-				 magicAtkSound2.play();
+				 magicAtkSound.play();
 			   break; 
 			 }  
 		   break;  

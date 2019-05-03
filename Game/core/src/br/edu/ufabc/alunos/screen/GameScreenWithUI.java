@@ -114,37 +114,12 @@ public class GameScreenWithUI extends WorldGameScreen {
 	
 	private void debugCommands() {
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-			System.out.println("Starting dialogue.");
-			dialogueController.startDialogue(dialogue);
+			game.stopMusic("initial");
 		}
-
 		if(Gdx.input.isKeyJustPressed(Keys.NUM_2)) {
-			System.out.println("Testando Fixed Line numbers(3)");
-			DialogueBox d = new FixedSizeDialogue(getApp().getSkin());
-			rootUI.add(d);
-			d.setVisible(true);
-			d.animateText("I had this issue for years and accidentally solved it by setting the width and packing the label twice. Note that multiline labels were never intended to figure out their own width, so you have to set them externally, preferably from it's parent.");
+			game.playMusic("initial");
 		}
-		if(Gdx.input.isKeyJustPressed(Keys.NUM_3)) {			
-			rootBattle.clear();			
-			rootBattle.add(new BattleField(getApp().getSkin(), this.multiplexer)).expand().align(Align.center).pad(10f);
 		}
-		if(Gdx.input.isKeyJustPressed(Keys.NUM_4)) {
-			rootBattle.clear();
-			rootBattle.add(new BattleField(getApp().getSkin(), this.multiplexer)).expand().align(Align.center).pad(10f);
-		}
-		if(Gdx.input.isKeyJustPressed(Keys.NUM_5)) {
-			rootBattle.clear();
-			rootBattle.add(new BattleField(getApp().getSkin(), this.multiplexer)).expand().align(Align.center).pad(10f);
-		}
-		if(Gdx.input.isKeyJustPressed(Keys.NUM_6)) {
-			black.setVisible(!black.isVisible());
-		}
-		if(Gdx.input.isKeyJustPressed(Keys.NUM_7)) {
-			game.setScreen(new BattleScreen(game));
-			System.out.println("Changed Screen.");
-		}
-	}
 	
 	private void initUI() {
 		uiStage = new Stage(new ScreenViewport());
@@ -192,6 +167,7 @@ public class GameScreenWithUI extends WorldGameScreen {
 
 	@Override
 	public void render(float delta) {
+		game.playMusic("initial");
 		debugCommands();
 		dialogueController.update(delta);
 		gameViewport.apply();
