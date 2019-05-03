@@ -5,7 +5,7 @@ public class Warrior extends BattleCharacter {
 
 	public Warrior(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {
-		int calcHp = (this.gerador.nextInt(11) + con)*level;
+		int calcHp = ((this.gerador.nextInt(11) + con)*10)*level;
 		calcHp = Math.max(calcHp, 1);
 		this.setHp(calcHp);
 		this.setCurrent_hp(calcHp);
@@ -64,6 +64,18 @@ public class Warrior extends BattleCharacter {
 		this.hp += calcHp;
 		this.current_hp += calcHp;
 		
+	}
+
+	@Override
+	public int run() {
+		int run = this.gerador.nextInt(21)+this.dex;
+		return run;
+	}
+
+	@Override
+	public int notRun() {
+		int run = this.gerador.nextInt(21)+this.str+(level/3);
+		return run;
 	}
 	
 	@Override

@@ -65,6 +65,14 @@ public class DullChara extends BattleCharacter {
 	public String getMagicAttackText() {
 		// TODO Auto-generated method stub
 		return "Você usa um ataque mágico.";
+	public int run() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public int notRun() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -4,8 +4,12 @@ public class Wizard extends BattleCharacter {
 	
 	public Wizard(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {
+<<<<<<< HEAD
 		int calcHp = this.gerador.nextInt(5) + con;
 		calcHp = Math.max(calcHp, 1);
+=======
+		int calcHp = ((this.gerador.nextInt(5) + con)*10)*level;
+>>>>>>> develop
 		this.setHp(calcHp);
 		this.setCurrent_hp(calcHp);
 		this.setStr(str);
@@ -58,6 +62,17 @@ public class Wizard extends BattleCharacter {
 		this.hp += calcHp;
 		this.current_hp += calcHp;
 		
+	}
+	@Override
+	public int run() {
+		int run = this.gerador.nextInt(21)+this.dex;
+		return run;
+	}
+
+	@Override
+	public int notRun() {
+		int run = this.gerador.nextInt(21)+this.magic+(level/3);
+		return run;
 	}
 
 

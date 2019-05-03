@@ -79,7 +79,7 @@ public class CharacterCreator {
 		int con = gerador.nextInt(4)+level;
 		int magic = gerador.nextInt(2);
 		int mind = gerador.nextInt(3);
-		int exp =((level)*(10+level/2));
+		int exp =((level)*((10+level)/2));
 		
 		Warrior w = new Warrior(str, dex, con, magic, mind, level, exp, name);
 		w.setTexturePath("Charas/warrior_male.png");
@@ -92,7 +92,7 @@ public class CharacterCreator {
 		int con = gerador.nextInt(3);
 		int magic = gerador.nextInt(5)+level;
 		int mind = gerador.nextInt(3)+level;
-		int exp =((level)*(10+level/2));
+		int exp =((level)*((10+level)/2));
 		
 		Wizard w = new Wizard(str, dex, con, magic, mind, level, exp, name);
 		w.setTexturePath("Charas/mage_male.png");
@@ -105,7 +105,7 @@ public class CharacterCreator {
 		int con = gerador.nextInt(3)+level;
 		int magic = gerador.nextInt(3);
 		int mind = gerador.nextInt(3)+level;
-		int exp =((level)*(10+level/2));
+		int exp =((level)*((10+level)/2));
 		
 		Rogue r = new Rogue(str, dex, con, magic, mind, level, exp, name);
 		r.setTexturePath("Charas/rogue_male.png");
@@ -121,7 +121,7 @@ public class CharacterCreator {
 			con = gerador.nextInt(10)+level;
 			magic = gerador.nextInt(15)+level;
 			mind = gerador.nextInt(10)+level;
-			exp =((level)*(10+level/2));
+			exp =((level)*((10+level)/2));
 				
 		}else {
 			str = gerador.nextInt(6)+level;
@@ -129,7 +129,7 @@ public class CharacterCreator {
 			con = gerador.nextInt(6)+level;
 			magic = gerador.nextInt(4)+level;
 			mind = gerador.nextInt(4);
-			exp =((level)*(10+level/2));
+			exp =((level)*((10+level)/2));
 		}
 		Dragon d =new Dragon(str, dex, con, magic, mind, level, exp, name);
 		d.setTexturePath("Monsters/dragon.png");
@@ -145,7 +145,7 @@ public class CharacterCreator {
 			con = gerador.nextInt(15)+level;
 			magic = gerador.nextInt(3)+level;
 			mind = gerador.nextInt(3)+level;
-			exp =((level)*(10+level/2));
+			exp =((level)*((10+level)/2));
 				
 		}else {
 			str = gerador.nextInt(6)+level;
@@ -153,7 +153,7 @@ public class CharacterCreator {
 			con = gerador.nextInt(6)+level;
 			magic = gerador.nextInt(1);
 			mind = gerador.nextInt(1);
-			exp =((level)*(10+level/2));
+			exp =((level)*((10+level)/2));
 		}
 		
 		Minotaur m = new Minotaur(str, dex, con, magic, mind, level, exp, name);
@@ -170,7 +170,7 @@ public class CharacterCreator {
 			con = gerador.nextInt(6)+level;
 			magic = gerador.nextInt(15)+level;
 			mind = gerador.nextInt(10)+level;
-			exp =((level)*(10+level/2));
+			exp =((level)*((10+level)/2));
 				
 		}else {
 			str = gerador.nextInt(2);
@@ -178,7 +178,7 @@ public class CharacterCreator {
 			con = gerador.nextInt(2);
 			magic = gerador.nextInt(5)+level;
 			mind = gerador.nextInt(4)+level;
-			exp =((level)*(10+level/2));
+			exp =((level)*((10+level)/2));
 		}
 		
 		Kobold k = new Kobold(str, dex, con, magic, mind, level, exp, name);

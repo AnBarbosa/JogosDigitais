@@ -6,7 +6,7 @@ public class Minotaur extends BattleCharacter {
 	
 	public Minotaur(int str,int dex,int con,int magic,
 			int mind,int level,int exp,String name) {
-		int calcHp = this.gerador.nextInt(13) + con;
+		int calcHp = ((this.gerador.nextInt(13) + con)*10);
 		calcHp = Math.max(calcHp, 1);
 		this.setHp(calcHp);
 		this.setCurrent_hp(calcHp);
@@ -61,7 +61,6 @@ public class Minotaur extends BattleCharacter {
 		
 	}
 
-
 	@Override
 	public String getNormalAttackText() {
 		String formato = "%s ataca com %s";
@@ -94,6 +93,14 @@ public class Minotaur extends BattleCharacter {
 		int indexCriatura = (int) Math.random()*criaturas.length;
 		
 		return String.format(formato,  criaturas[indexCriatura], armas[indexArmas]);
+	@Override
+		int run = this.gerador.nextInt(21)+this.dex;
+		return run;
+	}
+
+	@Override
+	public int notRun() {
+		int run = this.gerador.nextInt(21)+this.str+(level/3);
+		return run;
 	}
 	
-}

@@ -4,7 +4,7 @@ public class Rogue extends BattleCharacter {
 	
 			public Rogue(int str,int dex,int con,int magic,
 					int mind,int level,int exp,String name) {
-				int calcHp = this.gerador.nextInt(7) + con;
+				int calcHp = ((this.gerador.nextInt(7) + con)*10)*level;
 				calcHp = Math.max(calcHp, 1);
 				this.setHp(calcHp);
 				this.setCurrent_hp(calcHp);
@@ -58,6 +58,23 @@ public class Rogue extends BattleCharacter {
 				this.current_hp += calcHp;
 				
 			}
+			@Override
+			public int run() {
+				if(Math.random()==1) {
+					int run = 1000000000;
+					return run;
+				}else {
+					int run = this.gerador.nextInt(21)+this.dex+level;
+					return run;
+				}				
+			}
+
+			@Override
+			public int notRun() {
+				int run = this.gerador.nextInt(21)+this.dex+(level/2);
+				return run;
+			}
+			
 
 			@Override
 			public String getNormalAttackText() {

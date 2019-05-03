@@ -22,15 +22,20 @@ public class BattleController extends InputAdapter {
 
 	@Override
 	public boolean keyUp(int keycode) {
+		boolean bool = false;
+		
 		switch(Controls.getComando(keycode)) {
 			case UNKNOWN:
-				return false;
+				bool = false;
+				break;
 			case UP:
 				battle.optionUp();
+				bool = true;
 				break;
 			case DOWN:
 				battle.optionDown();
-				return true;
+				bool = true;
+				break;
 			case OK:
 				BATTLE_STATE bs = battle.getBattleState();
 				if(bs==BATTLE_STATE.PLAYER_WON || bs==BATTLE_STATE.PLAYER_LOSE) {
@@ -38,12 +43,18 @@ public class BattleController extends InputAdapter {
 					System.out.printf("Acelerating end: %f", screenChangeCountDown);
 				}
 				battle.okPressed();
-				return true;
+				bool = true;
+				break;
 			case CANCEL:
 				battle.cancelPressed();
-				return true;
+				bool = true;
+				break;
+			default:
+				bool = false;
+				break;
 		}
-		return false;
+		return bool;
+		
 	}
 	
 	public void update(float delta) {

@@ -46,9 +46,10 @@ public abstract class BattleCharacter {
 	public abstract void reciveMagicalDamege(int damage);
 	public abstract int damage();
 	public abstract int magicalDamage();
-//	public abstract void evolve(int exp);
 	public abstract void evolveHp();
 	public abstract int iniciativa();
+	public abstract int run();
+	public abstract int notRun();
 	protected Random gerador = new Random();
 	
 	public void evolve(int exp) {
