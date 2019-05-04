@@ -263,7 +263,7 @@ public class BattleField extends Table {
 			case FUGIR:
 				System.out.println("Você tenta fugir.");
 				BattleAction tentativa = new TextAction(this, "Você tenta fugir...", this.getMultiplexer());
-				boolean result = canRun(0.5d);
+				boolean result = playerChar.run() >= enemyChar.notRun();
 				String runResult = result ? "Você consegue." : "Você falhou.";
 				BattleAction run = GameMaster.getNullAction();
 				if(result) {
