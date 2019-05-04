@@ -48,7 +48,8 @@ public class BattleScreen extends AbstractScreen {
 		Map<String, Object> mapSettings = new HashMap<>();
 		BattleCharacter player, enemy;
 		player = GameMaster.getPlayer();
-		enemy = CharacterCreator.getEnemy(Enemy.RANDOM, "Um Inimigo", 1, false);
+		
+		enemy = CharacterCreator.getEnemy(Enemy.RANDOM, "Inimigo", 1, false);
 		assert(GameMaster.getPlayer().getCurrent_hp() >0);
 		assert(GameMaster.getPlayer().getCurrent_hp() >0);
 		mapSettings.put("Player", player);

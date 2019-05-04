@@ -103,6 +103,10 @@ public class StartScreen extends WorldGameScreen {
 			game.setScreen(new DungeonScreen(game));;
 		}
 
+		if(Gdx.input.isKeyJustPressed(Keys.F5)) {
+			System.out.println("Starting dialogue.");
+			game.startTransition(this, new WinScreen(game), GameMaster.getFadeOut(), GameMaster.getFadeIn(), null);
+		}
 		if(Gdx.input.isKeyJustPressed(Keys.F1)) {
 			BattleCharacter player = CharacterCreator.getPlayer(CharacterCreator.Player.WARRIOR, "Guerreiro", 5);
 			BattleCharacter enemy = CharacterCreator.getEnemy(Enemy.DRAGON, 1, false);
