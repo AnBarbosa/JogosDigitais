@@ -1,7 +1,7 @@
 package br.edu.ufabc.alunos.battle.actions;
 
 import br.edu.ufabc.alunos.model.Action;
-import br.edu.ufabc.alunos.ui.battle.BattleField;
+import br.edu.ufabc.alunos.model.battle.BattleField;
 
 
 public abstract class BattleAction implements Action{

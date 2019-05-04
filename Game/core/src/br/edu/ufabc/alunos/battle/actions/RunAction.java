@@ -1,7 +1,7 @@
 package br.edu.ufabc.alunos.battle.actions;
 
-import br.edu.ufabc.alunos.ui.battle.BattleField;
-import br.edu.ufabc.alunos.ui.battle.BattleField.BATTLE_STATE;
+import br.edu.ufabc.alunos.model.battle.BattleField;
+import br.edu.ufabc.alunos.model.battle.BattleField.BATTLE_STATE;
 
 public class RunAction extends BattleAction {
 	

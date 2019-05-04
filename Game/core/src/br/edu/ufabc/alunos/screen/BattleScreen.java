@@ -15,9 +15,9 @@ import br.edu.ufabc.alunos.controllers.BattleController;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.core.GameMaster;
 import br.edu.ufabc.alunos.model.battle.BattleCharacter;
+import br.edu.ufabc.alunos.model.battle.BattleField;
 import br.edu.ufabc.alunos.model.battle.CharacterCreator;
 import br.edu.ufabc.alunos.model.battle.enums.Enemy;
-import br.edu.ufabc.alunos.ui.battle.BattleField;
 
 
 public class BattleScreen extends AbstractScreen {

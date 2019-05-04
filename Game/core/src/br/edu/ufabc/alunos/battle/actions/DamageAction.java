@@ -1,9 +1,9 @@
 package br.edu.ufabc.alunos.battle.actions;
 
-import br.edu.ufabc.alunos.ui.battle.BattleField;
 import br.edu.ufabc.alunos.ui.battle.CharaBox;
 import br.edu.ufabc.alunos.core.GameMaster;
 import br.edu.ufabc.alunos.model.battle.BattleCharacter;
+import br.edu.ufabc.alunos.model.battle.BattleField;
 import br.edu.ufabc.alunos.model.battle.enums.DAMAGE;
 
 public class DamageAction extends BattleAction {

@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import br.edu.ufabc.alunos.controllers.Controls;
 import br.edu.ufabc.alunos.core.GameApplication;
 import br.edu.ufabc.alunos.core.GameMaster;
-import br.edu.ufabc.alunos.ui.battle.BattleField.BATTLE_STATE;
+import br.edu.ufabc.alunos.model.battle.BattleField.BATTLE_STATE;
 
 public class LoseScreen extends AbstractScreen implements InputProcessor{
 	

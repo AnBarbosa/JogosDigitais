@@ -1,4 +1,4 @@
-package br.edu.ufabc.alunos.ui.battle;
+package br.edu.ufabc.alunos.model.battle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +15,11 @@ import br.edu.ufabc.alunos.battle.actions.SerieOfActions;
 import br.edu.ufabc.alunos.battle.actions.TextAction;
 import br.edu.ufabc.alunos.core.GameMaster;
 import br.edu.ufabc.alunos.model.achievements.AchievementManager;
-import br.edu.ufabc.alunos.model.battle.BattleCharacter;
-import br.edu.ufabc.alunos.model.battle.CharacterCreator;
 import br.edu.ufabc.alunos.model.battle.enums.DAMAGE;
 import br.edu.ufabc.alunos.model.battle.enums.Enemy;
 import br.edu.ufabc.alunos.ui.OptionBox;
+import br.edu.ufabc.alunos.ui.battle.CharaBox;
+import br.edu.ufabc.alunos.ui.battle.FixedSizeDialogue;
 
 
 public class BattleField extends Table {

@@ -5,7 +5,7 @@ import java.util.Stack;
 
 import com.badlogic.gdx.utils.Queue;
 
-import br.edu.ufabc.alunos.ui.battle.BattleField;
+import br.edu.ufabc.alunos.model.battle.BattleField;
 
 public class SerieOfActions extends BattleAction {
 	private Queue<BattleAction> actions;

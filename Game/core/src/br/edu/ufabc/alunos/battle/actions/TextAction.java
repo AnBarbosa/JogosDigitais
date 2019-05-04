@@ -4,7 +4,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 
 import br.edu.ufabc.alunos.controllers.Controls;
-import br.edu.ufabc.alunos.ui.battle.BattleField;
+import br.edu.ufabc.alunos.model.battle.BattleField;
 
 public class TextAction extends BattleAction implements InputProcessor{
 
